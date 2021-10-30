@@ -7,7 +7,7 @@ You can use Markdown language to render it as formatted **HTML** file.
 - Member 1
 - Member 2
 - Member 3
-- Member 4
+- Member 4 Alexey Serous
 
 # Repository organization
 Your project implementation should follow the skelaton organization in this repository.
