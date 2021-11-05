@@ -3,4 +3,4 @@ project(traffic_simulator)
 
 file(GLOB SOURCES "src/*.cpp")
 
-add_executable(testStudent ${SOURCES})
+add_executable(simulation ${SOURCES})
