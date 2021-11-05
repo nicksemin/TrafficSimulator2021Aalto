@@ -21,6 +21,12 @@
 
 # Shared objects (inc. Windows DLLs)
 
+#macOS and Clion
+*.DS_Store
+.AppleDouble
+.LSOverride
+.idea/**/workspace.xml
+.idea/**/tasks.xml
 
 # Executables
 *.exe
