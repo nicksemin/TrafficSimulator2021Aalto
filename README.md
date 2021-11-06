@@ -14,6 +14,17 @@ You can use Markdown language to render it as formatted **HTML** file.
 Your project implementation should follow the skelaton organization in this repository.
 See readme.md files in each folder.
 
+
+#How to run the project
+Prerequisites:
+Installed Cmake tool: https://cmake.org/install/
+Installed g++ compiler
+Run the following commands from the project's root directory:
+1) `Cmake .`
+2) `Make`
+3) `./simulation`
+
+
 # Project Implementation 
 You must use git repository for the work on the project, making frequent enough commits so 
 that the project group (and course staff) can follow the progress.
