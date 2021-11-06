@@ -1,4 +1,7 @@
-include <utility>
+#ifndef CITY_OBJECT_HPP
+#define CITY_OBJECT_HPP
+
+#include <utility>
 /*
  * =====================================================================================
  *        Class:  CityObject
@@ -43,3 +46,4 @@ class CityObject
 
 }; /* -----  end of class CityObject  ----- */
 
+#endif
