@@ -27,10 +27,11 @@
 
 //local inlude
 #include "./include/CityObject.hpp"
+#include "./include/Vehicle.hpp"
 
 int main( int argc, char* argv[] )
 {
 	std::cout << "Hello, I am an empty main function for Traffic Simulator\n";
-
+	
 	return 0;
 }
