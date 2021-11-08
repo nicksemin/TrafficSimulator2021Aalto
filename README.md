@@ -24,6 +24,12 @@ Run the following commands from the project's root directory:
 2) `Make`
 3) `./simulation`
 
+#Working with git and the codebase
+1) Create new branch for the feature you are working it 
+2) Pull from master before committing
+3) Commit often 
+4) Review code of your counterparts and give comments
+5) Before merging system-critical features create pull requests
 
 # Project Implementation 
 You must use git repository for the work on the project, making frequent enough commits so 
