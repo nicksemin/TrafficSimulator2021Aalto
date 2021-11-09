@@ -115,6 +115,7 @@ Alexey proposed the use of unsigned ints in whenever whenever there's a need str
 ## Actions
 
 As this weeks meeting was mostly about clarifying definitions set in the project plan last week, no new specific actions were assigned. Everyone will keep oon developing base classes of their responsibility. We hope to have a working baseline implementation of vehicles moving on a simple road structure from building to building by next week.
+Changes in project plan: CrossRoadClass now to be handled by Alexey due to a close connection with RoadLineClass
 
 ## Project status 
 
@@ -123,3 +124,6 @@ The overall structure starts to take shape. The development of Road-class functi
 ### TODOs
 
 As mentioned above, everyone will continue working on their respective classes.
+
+Milestone next meeting, Alexey to be done: to have a hardcoded sample of several roads connected by intersections
+and moving random cars for a couple of minutes.
