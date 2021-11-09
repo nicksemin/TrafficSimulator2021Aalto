@@ -12,7 +12,7 @@ public:
 
     Vehicle(int size);
 
-    const int& GetSize();
+    const int& GetSize() const;
 private:
     int size_;
 };
