@@ -30,7 +30,7 @@
 #include "./include/Vehicle.hpp"
 #include "./include/roadlineclass.hpp"
 #include "./include/Car.hpp"
-
+#include "./include/Navigator.hpp"
 int main( int argc, char* argv[] )
 {
 	std::cout << "Hello, I am an empty main function for Traffic Simulator\n";
@@ -55,7 +55,7 @@ int main( int argc, char* argv[] )
 
 
 	/*-----------------------------------------------------------------------------
-	 * Navigator tests, Nikita
+	 * Navigator tests by Nikita
 	 *-----------------------------------------------------------------------------*/
 
 	CrossroadClass cr1;
@@ -66,13 +66,9 @@ int main( int argc, char* argv[] )
 
 	std::vector<RoadLineClass*> map = {&road2, &road3};
 	Navigator* n = new Navigator(map);
-	Car car{1};
-
-	road2.takeVehicle( &car );
-	for ( int i{ 0 }; i < 5; ++i ){
-		road2.moveCars();
-	}
-
+	std::vector<RoadLineClass*> route = n->MakeRoute(cr1, cr2);
+	Car d{3};
+	d.setRoute(route);
 
 	return 0;
 }

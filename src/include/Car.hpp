@@ -2,14 +2,13 @@
 #define CAR_HPP
 
 #include "Vehicle.hpp"
-#include "Navigator.hpp"
+
 
 /* 
 * Car class, inherited from Vehicle and Navigator classes.
 * Methods: 
 * - GetSize()
 * - MakeRoute(CrossroadClass start, CrossroadClass end)
-* 
 */
 
 class Car: public Vehicle{
