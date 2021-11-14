@@ -6,7 +6,9 @@
 #include "roadlineclass.hpp"
 
 /* 
-* Navigator class.
+* Navigator class. Takes a map to be constructed.
+* Has a method MakeRoute which creates a route from start crossroad to end crossroad.
+* Contact info - Nikita
 */
 
 class Navigator{
