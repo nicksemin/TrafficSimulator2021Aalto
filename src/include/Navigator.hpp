@@ -6,18 +6,18 @@
 #include "roadlineclass.hpp"
 
 /* 
-* Navigator class. Can be embedded into a vehicle.
+* Navigator class.
 */
 
 class Navigator{
     public:
-        Navigator(std::vector<RoadLineClass*> map);
+        Navigator(const std::vector<RoadLineClass*> map);
         
         void MakeRoute(CrossroadClass& start, CrossroadClass& end);
-        const RoadLineClass* FindNextRoad(CrossroadClass& currentCross) const;
+        RoadLineClass* FindNextRoad(CrossroadClass* currentCross) ;
     private:
-        std::vector<RoadLineClass*> route_ = {};
-        std::vector<RoadLineClass*> map_;  
+    std::vector<RoadLineClass*> route_;
+    std::vector<RoadLineClass*> map_; 
 };
 
 #endif

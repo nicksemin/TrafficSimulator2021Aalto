@@ -9,12 +9,12 @@
 * Methods: 
 * - GetSize()
 * - MakeRoute(CrossroadClass start, CrossroadClass end)
-* - FindNextRoad(CrossroadClass* currentCross)
+* 
 */
 
-class Car: public Vehicle, public Navigator{
+class Car: public Vehicle{
 public:
-    Car(int size, std::vector<RoadLineClass*> map);
+    Car(int size);//: Vehicle(size), Navigator(map);
 };
 
 #endif
