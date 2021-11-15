@@ -112,3 +112,9 @@ RoadLineClass::moveCars ()
 		--i;
 	}
 }		/* -----  end of function RoadLineClass::moveCars  ----- */
+
+RoadLineClass* Vehicle::FindNextRoad(CrossroadClass* currentCross)  {
+    //returns a road from route_, which starts with given crossroad
+    std::vector<RoadLineClass*>::iterator it = std::find_if(route_.begin(), route_.end(), [=] (RoadLineClass* r) {return r->GetStart() == currentCross;});
+    return *it;
+};

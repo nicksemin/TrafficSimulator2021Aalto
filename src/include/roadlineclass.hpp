@@ -40,6 +40,10 @@ class RoadLineClass
 
 	void moveCars();
 
+	const CrossroadClass* GetStart() const {
+		return m_start;
+	}
+
     protected:
 
     private:
