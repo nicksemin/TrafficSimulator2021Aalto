@@ -6,9 +6,8 @@
  * contact info - Alexey Serous 
  *-----------------------------------------------------------------------------*/
 
-std::size_t CrossroadClass::numOfCrossroads{ 0 };
-
-CrossroadClass::CrossroadClass()
+CrossroadClass::CrossroadClass( int x, int y ) :
+	m_x{ x }, m_y{ y }
 {
     //ctor
 }
@@ -90,3 +89,27 @@ CrossroadClass::addExitRoad ( RoadObjectClass* ptrToExitRoad )
 	m_exitRoads.push_back( ptrToExitRoad );
 	return true;
 }		/* -----  end of function CrossroadClass::addExitRoad  ----- */
+
+/* 
+ * ===  FUNCTION  ======================================================================
+ *         Name:  CrossroadClass::getX
+ *  Description:  returns the coordinate
+ * =====================================================================================
+ */
+	int
+CrossroadClass::getX ()
+{
+	return m_x;
+}		/* -----  end of function CrossroadClass::getX  ----- */
+
+/* 
+ * ===  FUNCTION  ======================================================================
+ *         Name:  CrossroadClass::getY
+ *  Description:  returns the coordinate
+ * =====================================================================================
+ */
+	int
+CrossroadClass::getY ()
+{
+	return m_y;
+}		/* -----  end of function CrossroadClass::getY  ----- */

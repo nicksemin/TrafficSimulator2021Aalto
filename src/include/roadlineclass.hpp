@@ -35,7 +35,7 @@ class CrossroadClass
 class RoadLineClass : public RoadObjectClass
 {
     public:
-        RoadLineClass( std::size_t size, CrossroadClass* start, CrossroadClass* end );
+        RoadLineClass( CrossroadClass* start, CrossroadClass* end );
 
 	bool takeVehicle( Vehicle* ptrToCar, const RoadObjectClass* ptrToRoadObject ) override;
 
@@ -57,6 +57,8 @@ class RoadLineClass : public RoadObjectClass
 	CrossroadClass* m_start;
 	CrossroadClass* m_end;
 
+	//car size
+	static std::size_t cellSize;
 };
 
 #endif // ROADLINECLASS_H

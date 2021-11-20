@@ -61,12 +61,12 @@ int main( int argc, char* argv[] )
 	/*-----------------------------------------------------------------------------
 	 * BuildingExitCrossroad initial test, Alexey
 	 *-----------------------------------------------------------------------------*/
-	BuildingExitCrossroad cross1{};
-	BuildingExitCrossroad cross2{};
-	BuildingExitCrossroad cross3{};
+	BuildingExitCrossroad cross1{ 0, 0 };
+	BuildingExitCrossroad cross2{ 10, 0};
+	BuildingExitCrossroad cross3{ 110, 0 };
 
-	RoadLineClass road1{ 2, &cross1, &cross2 };
-	RoadLineClass road2{ 20, &cross2, &cross3 };
+	RoadLineClass road1{ &cross1, &cross2 };
+	RoadLineClass road2{ &cross2, &cross3 };
 
 	std::vector<RoadLineClass*> route { &road1, &road2 };
 
@@ -82,9 +82,6 @@ int main( int argc, char* argv[] )
 	car2.setRoute( route );
 
 	car1.setDestination( &building2 );
-
-	cross2.setEntry( &road1 );
-	cross3.setEntry( &road2 );
 
 	road1.takeVehicle( &car1, nullptr );
 	building1.takeVehicle( &car2, nullptr);

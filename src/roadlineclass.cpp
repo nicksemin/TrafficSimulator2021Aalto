@@ -1,24 +1,32 @@
 #include "./include/roadlineclass.hpp"
+#include <cmath>
 
 /*-----------------------------------------------------------------------------
  * RoadLineClass, for the description see the header file
  * contact info - Alexey Serous
  *-----------------------------------------------------------------------------*/
 
+std::size_t RoadLineClass::cellSize{ 5 };
 /*
  * ===  FUNCTION  ======================================================================
  *         Name:  RoadLineClass::RoadLineClass
  *  Description:  The constructor, currently cannot define the size automatically
  * =====================================================================================
  */
-RoadLineClass::RoadLineClass ( std::size_t size, CrossroadClass* start, CrossroadClass* end ) :
-	m_size{ size }, m_start{ start }, m_end{ end }
+RoadLineClass::RoadLineClass ( CrossroadClass* start, CrossroadClass* end ) :
+	m_start{ start }, m_end{ end }
 {
 	//add the road to start and end crossroads
 	start->addExitRoad( this );
 	end->addEntryRoad( this );
+	//add the end road being the only entry road for a building exit cross-road
+	end->setOnlyEntryRoad( this );
+
+	//define the size
 
 	//make the cell vector to have required number of elements
+	std::size_t size{ static_cast<std::size_t>(
+			pow( pow( start->getX() - end->getX(), 2.00 ) + pow( start->getY() - end->getY(), 2.00 ), 0.50 ) ) / cellSize };
 	m_cells.resize( size );
 
 	//initially, there are no cars, so every cell is a nullptr

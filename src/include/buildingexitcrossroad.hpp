@@ -15,19 +15,13 @@
 class BuildingExitCrossroad : public CrossroadClass
 {
     public:
-        BuildingExitCrossroad();
-	//temporary
-	void setEntry( const RoadObjectClass* ptrToEntry ){
-		m_onlyEntryRoad = ptrToEntry;
-	}
+        BuildingExitCrossroad( int x, int y );
 
     protected:
 
     private:
 	virtual bool checkRightToGo
 		( const RoadObjectClass* ptrToEntry, RoadObjectClass* ptrToExit ) override;
-
-	const RoadObjectClass* m_onlyEntryRoad;
 
 };
 

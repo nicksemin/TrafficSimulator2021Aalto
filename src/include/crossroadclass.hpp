@@ -25,7 +25,7 @@
 class CrossroadClass : public RoadObjectClass
 {
     public:
-        CrossroadClass();
+        CrossroadClass( int x, int y );
 
 	bool takeVehicle( Vehicle* ptrToCar, const RoadObjectClass* ptrToRoadObject ) override;
 
@@ -34,11 +34,21 @@ class CrossroadClass : public RoadObjectClass
 	bool addEntryRoad ( const RoadObjectClass* ptrToEntryRoad );
 	bool addExitRoad ( RoadObjectClass* ptrToExitRoad );
 
+	//used only in a building exit crossroad, added here so that a road can set a value
+	void setOnlyEntryRoad( const RoadObjectClass* ptrToEntry ){
+		m_onlyEntryRoad = ptrToEntry;
+	}
+	//get coordinates
+	int getX();
+	int getY();
 
     protected:
 
         std::map<const RoadObjectClass*, Vehicle*> m_entryRoads;
 	std::vector<RoadObjectClass*> m_exitRoads;
+
+	//used only in a building exit crossroad, added here so that a road can set a value
+	const RoadObjectClass* m_onlyEntryRoad;
 
     private:
 	
@@ -51,8 +61,6 @@ class CrossroadClass : public RoadObjectClass
 	int m_x;
 	int m_y;
 
-	//counter
-	static std::size_t numOfCrossroads;
 };
 
 #endif // CROSSROADCLASS_H
