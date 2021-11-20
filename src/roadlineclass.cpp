@@ -14,6 +14,10 @@
 RoadLineClass::RoadLineClass ( std::size_t size, CrossroadClass* start, CrossroadClass* end ) :
 	m_size{ size }, m_start{ start }, m_end{ end }
 {
+	//add the road to start and end crossroads
+	start->addExitRoad( this );
+	end->addEntryRoad( this );
+
 	//make the cell vector to have required number of elements
 	m_cells.resize( size );
 
@@ -54,7 +58,7 @@ RoadLineClass::isEnoughSpace ( std::size_t index, std::size_t size )
  * =====================================================================================
  */
 	bool
-RoadLineClass::takeVehicle ( const Vehicle* ptrToCar )
+RoadLineClass::takeVehicle ( Vehicle* ptrToCar, const RoadObjectClass* ptrToRoadObject )
 {
 	//if there is enough space, occupy all the required cells with the car
 	if ( isEnoughSpace( 0, ptrToCar->GetSize() ) ) {
@@ -70,32 +74,23 @@ RoadLineClass::takeVehicle ( const Vehicle* ptrToCar )
 
 /*
  * ===  FUNCTION  ======================================================================
- *         Name:  RoadLineClass::moveCars
+ *         Name:  RoadLineClass::performTimeStep
  *  Description:  Starting from the end, moves all cars one cell up
  *  To be modified later after the crossroad class is defined
  * =====================================================================================
  */
 	void
-RoadLineClass::moveCars ()
+RoadLineClass::performTimeStep ()
 {
 	//if the last cell is occupied, try to send the car to a crossroad:
 	if ( m_cells.at( m_cells.size() - 1 ) != nullptr ) {
-		//if the road ends, define later how to mark the person arrived:
-		if ( m_end == nullptr ) {
+		//if the road has a cross road, try to push a car:
+		//if succeeded:
+		if ( m_end->takeVehicle( m_cells.at( m_cells.size() - 1 ), this ) ){
 			//delete all the cells that the end car occupies:
 			int ii{ m_cells.at( m_cells.size() - 1 )->GetSize() };
 			for ( std::size_t i{ 0 }; i < ii; ++i ){
 				m_cells.at( m_cells.size() - 1 - i ) = nullptr;
-			}
-		}
-		//if the road has a cross road, try to push a car:
-		else {
-			//if succeeded:
-			if ( m_end->takeVehicle( m_cells.at( m_cells.size() - 1 ) ) ){
-				//delete all the cells that the end car occupies:
-				for ( std::size_t i{ 0 }; i < m_cells.at( m_cells.size() - 1 )->GetSize(); ++i ){
-					m_cells.at( m_cells.size() - 1 - i ) = nullptr;
-				}
 			}
 		}
 	}
@@ -111,10 +106,13 @@ RoadLineClass::moveCars ()
 		}
 		--i;
 	}
-}		/* -----  end of function RoadLineClass::moveCars  ----- */
+}		/* -----  end of function RoadLineClass::performTimeStep  ----- */
 
-RoadLineClass* Vehicle::FindNextRoad(CrossroadClass* currentCross)  {
+RoadObjectClass* Vehicle::FindNextRoad(CrossroadClass* currentCross)  {
     //returns a road from route_, which starts with given crossroad
     std::vector<RoadLineClass*>::iterator it = std::find_if(route_.begin(), route_.end(), [=] (RoadLineClass* r) {return r->GetStart() == currentCross;});
+    if ( it == route_.end() ) {
+	    return destination_;
+    }
     return *it;
 };

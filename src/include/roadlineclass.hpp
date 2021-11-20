@@ -3,7 +3,7 @@
 
 #include <vector>
 
-#include "Vehicle.hpp"
+#include "crossroadclass.hpp"
 
 /*-----------------------------------------------------------------------------
  * RoadLineClass
@@ -21,24 +21,25 @@
  * The end car is gived to the end cross-road as a start of the moving function
  *-----------------------------------------------------------------------------*/
 
-//for abstract purposes, to be deleted after the real class is implemented
+/*for abstract purposes, to be deleted after the real class is implemented
 
-class CrossroadClass{
+class CrossroadClass
+{
 	public:
 		bool takeVehicle( const Vehicle* ptrToVehicle )
 		{
 		return true;
 		}
-};
+};*/
 
-class RoadLineClass
+class RoadLineClass : public RoadObjectClass
 {
     public:
         RoadLineClass( std::size_t size, CrossroadClass* start, CrossroadClass* end );
 
-	bool takeVehicle( const Vehicle* ptrToCar );
+	bool takeVehicle( Vehicle* ptrToCar, const RoadObjectClass* ptrToRoadObject ) override;
 
-	void moveCars();
+	void performTimeStep() override;
 
 	const CrossroadClass* GetStart() const {
 		return m_start;
@@ -51,7 +52,7 @@ class RoadLineClass
 
 	std::size_t m_size;
 
-	std::vector<const Vehicle*> m_cells;
+	std::vector<Vehicle*> m_cells;
 
 	CrossroadClass* m_start;
 	CrossroadClass* m_end;

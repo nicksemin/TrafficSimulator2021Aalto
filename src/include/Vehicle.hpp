@@ -10,6 +10,15 @@
 */
 class RoadLineClass;
 class CrossroadClass;
+
+/*-----------------------------------------------------------------------------
+ * Alexey's modifications, declared the RoadObjectClass
+ *-----------------------------------------------------------------------------*/
+class RoadObjectClass;
+/*-----------------------------------------------------------------------------
+ * Alexey's modifications end 
+ *-----------------------------------------------------------------------------*/
+
 class Vehicle{
 public:
 
@@ -18,11 +27,23 @@ public:
 
      void setRoute( std::vector<RoadLineClass*> newRoute);
      //FindNextRoad defined in roadlineclass.cpp because of circular dependency
-     RoadLineClass* FindNextRoad(CrossroadClass* currentCross);
+
+     /*-----------------------------------------------------------------------------
+      * Alexey's modifications, changed the return type for RoadObjectClass*,
+      * added the functions for destination
+      *-----------------------------------------------------------------------------*/
+     void setDestination( RoadObjectClass* ptrToBuilding );
+     RoadObjectClass* getDestination();
+     RoadObjectClass* FindNextRoad(CrossroadClass* currentCross);
 private:
     //Navigator* navigator_;
     int size_;
     std::vector<RoadLineClass*> route_;
+
+    /*-----------------------------------------------------------------------------
+     * Alexey's modification, added the destination building
+     *-----------------------------------------------------------------------------*/
+    RoadObjectClass* destination_;
 };
 
 #endif
