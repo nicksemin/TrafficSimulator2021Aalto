@@ -2,9 +2,15 @@
 
 #include <algorithm>
 
+/*-----------------------------------------------------------------------------
+ * For the changes made by Alexey's merge request see the header file
+ *-----------------------------------------------------------------------------*/
+
 /*Constructor*/
-Building::Building(CrossroadClass* exitCrossRoad, unsigned int vehiclecapacity) {
-    exitCrossRoad_ = exitCrossRoad;
+Building::Building(  BuildingExitCrossroad* exitCrossRoad, unsigned int vehiclecapacity ) {
+    if ( exitCrossRoad->addExitRoad( this ) && exitCrossRoad->addEntryRoad( this ) ) {
+	    exitCrossRoad_ = exitCrossRoad;
+    }
     vehiclecapacity_ = vehiclecapacity;
 }
 
@@ -19,9 +25,9 @@ Building::Building(CrossroadClass* exitCrossRoad, unsigned int vehiclecapacity) 
 //}
 
 /*Take in a vehicle*/
-bool Building::TakeVehicle (Vehicle* vehicle){
+bool Building::takeVehicle( Vehicle* ptrToCar, const RoadObjectClass* ptrToRoadObject ){
     if (vehicles_.size()<vehiclecapacity_){
-        vehicles_.push_back(vehicle);
+        vehicles_.push_back( ptrToCar );
         return true;
     }
     return false;
@@ -31,8 +37,11 @@ bool Building::TakeVehicle (Vehicle* vehicle){
 bool Building::RemoveVehicle (Vehicle* vehicle){
     auto it = std::find(vehicles_.begin(), vehicles_.end(), vehicle);
     if (it != vehicles_.end()) { 
-        vehicles_.erase(it);
-        return true;
+    //send the vehicle to the crossroad and erase it only if the crossroad accepts it
+	if ( exitCrossRoad_->takeVehicle( *it, this ) ) {
+		vehicles_.erase(it);
+		return true;
+	}
     }
     return false;
 }
@@ -54,7 +63,7 @@ bool Building::RemoveVehicle (Vehicle* vehicle){
 
 
 /*Get the CrossRoads through which the building is accessed*/
-CrossroadClass* Building::GetExit() const{
+BuildingExitCrossroad* Building::GetExit() const{
     return exitCrossRoad_;
 }
 
@@ -67,3 +76,14 @@ std::vector<Vehicle*> Building::GetVehicles() const{
 // std::vector<Person*> Building::GetPeople() const{
 //     return people_;
 // }
+
+/* 
+ * ===  FUNCTION  ======================================================================
+ *         Name:  Building::performTimeStep
+ *  Description:  
+ * =====================================================================================
+ */
+	void
+Building::performTimeStep ()
+{
+}		/* -----  end of function Building::performTimeStep  ----- */
