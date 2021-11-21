@@ -16,7 +16,7 @@ class RoadObjectClass
 {
 	public:
 		/* ====================  LIFECYCLE     ======================================= */
-		RoadObjectClass ();                             /* constructor */
+		RoadObjectClass ( bool hasTriangle = false );                             /* constructor */
 
 		/* ====================  ACCESSORS     ======================================= */
 
@@ -30,6 +30,7 @@ class RoadObjectClass
 
 	protected:
 		/* ====================  METHODS       ======================================= */
+		bool hasTriangle();
 
 		/* ====================  DATA MEMBERS  ======================================= */
 
@@ -37,6 +38,7 @@ class RoadObjectClass
 		/* ====================  METHODS       ======================================= */
 
 		/* ====================  DATA MEMBERS  ======================================= */
+		bool m_hasTriangle;
 
 }; /* -----  end of class RoadObjectClass  ----- */
 

@@ -35,7 +35,7 @@ class CrossroadClass
 class RoadLineClass : public RoadObjectClass
 {
     public:
-        RoadLineClass( CrossroadClass* start, CrossroadClass* end );
+        RoadLineClass( CrossroadClass* start, CrossroadClass* end, bool hasTriangle = false );
 
 	bool takeVehicle( Vehicle* ptrToCar, const RoadObjectClass* ptrToRoadObject ) override;
 

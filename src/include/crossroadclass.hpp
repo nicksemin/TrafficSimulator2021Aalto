@@ -31,8 +31,12 @@ class CrossroadClass : public RoadObjectClass
 
 	void performTimeStep() override;
 
+	//for the RoadLineClass, add entry and exit roads
 	bool addEntryRoad ( const RoadObjectClass* ptrToEntryRoad );
 	bool addExitRoad ( RoadObjectClass* ptrToExitRoad );
+	//for the RoadLineClass, define angles for entry and exit roads
+	void addEntryAngle ( const RoadObjectClass* ptrToEntryRoad, double angle );
+	void addExitAngle ( RoadObjectClass* ptrToExitRoad, double angle );
 
 	//used only in a building exit crossroad, added here so that a road can set a value
 	void setOnlyEntryRoad( const RoadObjectClass* ptrToEntry ){
@@ -44,14 +48,22 @@ class CrossroadClass : public RoadObjectClass
 
     protected:
 
-        std::map<const RoadObjectClass*, Vehicle*> m_entryRoads;
+	//delete the road-only function
+	bool hasTriangle() = delete;
+
+	//entry and exit roads
+	std::map<const RoadObjectClass*, Vehicle*> m_entryRoads;
 	std::vector<RoadObjectClass*> m_exitRoads;
+
+	//entry and exit roads angles
+	std::map<const RoadObjectClass*, double> m_entryAngles;
+	std::map<const RoadObjectClass*, double> m_exitAngles;
 
 	//used only in a building exit crossroad, added here so that a road can set a value
 	const RoadObjectClass* m_onlyEntryRoad;
 
     private:
-	
+
 	//the main function of every particular crossroad type, defines if it is ok
 	//for a car to go
 	virtual bool checkRightToGo

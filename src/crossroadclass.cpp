@@ -113,3 +113,27 @@ CrossroadClass::getY ()
 {
 	return m_y;
 }		/* -----  end of function CrossroadClass::getY  ----- */
+
+/* 
+ * ===  FUNCTION  ======================================================================
+ *         Name:  CrossroadClass::addEntryAngle
+ *  Description:  For the RoadLineClass, add the angle for a road
+ * =====================================================================================
+ */
+	void
+CrossroadClass::addEntryAngle ( const RoadObjectClass* ptrToEntryRoad, double angle )
+{
+	m_entryAngles.insert( std::make_pair( ptrToEntryRoad, angle ) );
+}		/* -----  end of function CrossroadClass::addEntryAngle  ----- */
+
+/* 
+ * ===  FUNCTION  ======================================================================
+ *         Name:  CrossroadClass::addExitAngle
+ *  Description:  For the RoadLineClass, add the angle for a road
+ * =====================================================================================
+ */
+	void
+CrossroadClass::addExitAngle ( RoadObjectClass* ptrToExitRoad, double angle )
+{
+	m_exitAngles.insert( std::make_pair( ptrToExitRoad, angle ) );
+}		/* -----  end of function CrossroadClass::addExitAngle  ----- */

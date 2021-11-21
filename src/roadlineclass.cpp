@@ -6,15 +6,22 @@
  * contact info - Alexey Serous
  *-----------------------------------------------------------------------------*/
 
+const double PI{ 3.14 };
 std::size_t RoadLineClass::cellSize{ 5 };
 /*
  * ===  FUNCTION  ======================================================================
  *         Name:  RoadLineClass::RoadLineClass
- *  Description:  The constructor, currently cannot define the size automatically
+ *  Description:  The constructor. Since the CrossroadClass does not know about the
+ *  RoadLineClass, it is up to the latter to set up some fields for the start and end
+ *  corssroads. Does the following:
+ *  - adds the roads as an entry and exit RoadObjectClass* for the crossroads
+ *  - based on the x and y values of the crossroads, defines the road size
+ *  - defines also the angle of the road with respect to the global coordinate
+ *  system and adds the value to the adjacent crossroads
  * =====================================================================================
  */
-RoadLineClass::RoadLineClass ( CrossroadClass* start, CrossroadClass* end ) :
-	m_start{ start }, m_end{ end }
+RoadLineClass::RoadLineClass ( CrossroadClass* start, CrossroadClass* end, bool hasTriangle ) :
+	RoadObjectClass( hasTriangle ), m_start{ start }, m_end{ end }
 {
 	//add the road to start and end crossroads
 	start->addExitRoad( this );
@@ -22,12 +29,57 @@ RoadLineClass::RoadLineClass ( CrossroadClass* start, CrossroadClass* end ) :
 	//add the end road being the only entry road for a building exit cross-road
 	end->setOnlyEntryRoad( this );
 
-	//define the size
+	//define the size and crossroad angles
+	double dx{ static_cast<double>( end->getX() - start->getX() ) };
+	double dy{ static_cast<double>( end->getY() - start->getY() ) };
+	double d{ sqrt( pow( dx, 2.00 ) + pow( dy, 2.00 ) ) };
 
+	//compute the integer size
+	std::size_t size{ static_cast<std::size_t>( d / cellSize ) };
 	//make the cell vector to have required number of elements
-	std::size_t size{ static_cast<std::size_t>(
-			pow( pow( start->getX() - end->getX(), 2.00 ) + pow( start->getY() - end->getY(), 2.00 ), 0.50 ) ) / cellSize };
 	m_cells.resize( size );
+
+	/* 
+	 * ===  FUNCTION  ======================================================================
+	 *         Name:  defineAngle
+	 *  Description:  a lambda to define the angle between two crossroads based on dx and dy
+	 *  necessary because there are two crossroads with different angles
+	 * =====================================================================================
+	 */
+	auto
+		defineAngle
+		{
+			[ &d ]( double dX, double dY ) -> double
+			{
+				//define the basic angle
+				double angle{ asin( abs( dY ) / d ) };
+				//based on the geometry, modify the angle. 180 < Angle < 90
+				if ( dX < 0 && dY > 0 ){
+					angle += PI / 2.00;
+				}
+				//180 < Angle < 270
+				if ( dX < 0 && dY < 0 ) {
+					angle += PI;
+				}
+				//270 < Angle < 360
+				if ( dX > 0 && dY < 0 ) {
+					angle += 1.50 * PI;
+				}
+				//Angle 180
+				if ( angle == 0.00 && dX < 0 ) {
+					angle = PI;
+				}
+				//Angle 270
+				if ( dX == 0.00 && dY < 0 ) {
+					angle = 1.5 * PI;
+				}
+				return angle;
+			}
+		};		/* -----  end of function defineAngle  ----- */
+
+	//add angles for the crossroads
+	start->addExitAngle( this, defineAngle( dx, dy ) );
+	end->addEntryAngle( this, defineAngle( -dx, -dy ) );
 
 	//initially, there are no cars, so every cell is a nullptr
 	for ( auto element : m_cells )
