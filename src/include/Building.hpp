@@ -1,24 +1,40 @@
 #ifndef BUILDING_HPP
 #define BUILDING_HPP
 
-#include "Vehicle.hpp"
-#include "roadlineclass.hpp"
+/*-----------------------------------------------------------------------------
+ * Alexey's changes for merge request
+ * the class now inherits RoadObjectClass
+ * added required override functions to satisfy RoadObject interfaces
+ * modified the constructor for correct interraction with crossroads
+ * changed the type of crossroad inside the container
+ * modified Remove function to send a vehicle to the road
+ *
+ * CrossroadClass and RoadLineClass do not know about buildings to avoid
+ * cross-dependency. They can treat buildings as RoadObjecClass* via virtual
+ * functions
+ *-----------------------------------------------------------------------------*/
+
+#include "buildingexitcrossroad.hpp" //already includes vehicle and road object
+
 // #include "Person.hpp"
-// #include "Crossroad.hpp" REPLACED BY ALEXEYs TEMPORARY CrossroadClass FOR NOW
 
 #include <string>
 #include <vector>
 
-class Building{
+class Building : public RoadObjectClass
+{
 public:
     /*Constructor*/
-    Building(CrossroadClass* exitCrossRoad, unsigned int vehiclecapacity); //name?
+    Building( BuildingExitCrossroad* exitCrossRoad, unsigned int vehiclecapacity); //name?
 
     /*Destructor MIGHT NOT BE NEEDED*/
     //~Building();
 
     /*Take in a vehicle*/
-    bool TakeVehicle (Vehicle* vehicle);
+    bool takeVehicle( Vehicle* ptrToCar, const RoadObjectClass* ptrToRoadObject ) override;
+
+    //perform actions during a time step, implemented as an empty function for now
+    void performTimeStep() override;
 
     /*Remove a vehicle*/
     bool RemoveVehicle (Vehicle* vehicle);
@@ -30,7 +46,7 @@ public:
     // bool RemovePerson(Person* person);
 
     /*Get the CrossRoads through which the building is accessed*/
-    CrossroadClass* GetExit() const;
+    BuildingExitCrossroad* GetExit() const;
 
     /*Get all vehicles currently in this building*/
     std::vector<Vehicle*> GetVehicles() const;
@@ -40,7 +56,7 @@ public:
 
 private:
     /*Get the CrossRoads through which the building is accessed*/
-    CrossroadClass* exitCrossRoad_;
+    BuildingExitCrossroad* exitCrossRoad_;
     /*The maximum number of vehicles that fit inside the building*/
     unsigned int vehiclecapacity_;
     /*All vehicles currently in this building*/
