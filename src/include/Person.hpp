@@ -8,15 +8,13 @@
  * =====================================================================================
  */
 #include <string>
-#include "./include/Vehicle.hpp"
-#include "./include/Building.hpp"
+#include "Vehicle.hpp"
+#include "Building.hpp"
 class Person{
 private:
 
-    Vehicle* ownVehicle;
-    Building* livingPlace;
+    //Building* livingPlace;
     std::string name_;
-    //int age_; is not needed now
     int happiness_;
     bool occupied_;
     std::string occupation_;
@@ -24,8 +22,7 @@ private:
     bool drivingLicense_;//will not be needed for the first iteration; will be used when pedestrians
     int hunger_;
     int food_;
-    int tiredness_;
-    Vehicle* own_vehicle;
+   // Vehicle* own_vehicle;
     int time_leaving_;
     int time_coming_;
 public:
@@ -35,13 +32,25 @@ public:
 
     const std::string& get_occupation() const;
 
-    bool is_tired() const;
+    double get_money() const;
+
+    int get_time_leaving() const;
+
+    int get_time_coming() const;
+
+    int get_happiness() const;
+
+    int get_food() const;
+
+    int get_hunger() const;
 
     bool is_hungry() const;
 
-    bool is_unhappy() const;
+    bool is_happy() const;
 
     bool has_money() const;
+
+    bool shouldLeave() const;
 
     void eat_food(int);
 
@@ -55,10 +64,5 @@ public:
 
     void decrease_happiness(int);
 
-    void increase_tiredeness(int);
-
-    void decrease_tiredeness(int);
-
-    Building* leave_home() const;
 };
 #endif

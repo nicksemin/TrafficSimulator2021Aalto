@@ -1,23 +1,46 @@
 #include "./include/Person.hpp"
- const std::string& Person::get_name() const {return name_;}
 
- const std::string& Person::get_occupation() const {return occupation_;}
+#include <random>
+ int tickTime; //tickTime used as a placeholder for system ticks
 
 Person::Person(const std::string& name, const std::string& occupation) {
     name_ = name;
     occupation_ = occupation;
+
+    std::random_device rd;
+    std::mt19937 mt(rd());
+    std::uniform_int_distribution<int> dist(1, 192001);
+
+    time_leaving_ = dist(rd) % 192000;//192 000 ticks in one day of the simulation, if tick is 0.45 seconds
+    time_coming_ = dist(rd) % 192000;
+
+    money_ = 500;
+    hunger_ =1500;
+    happiness_ = 1000;
+    food_ = 100;
+
 }
-/*
- * THE CLASS IS NOT YET TESTED AND THE TESTING WILL BE DONE WITH GOOGLE TESTS BY/ON MONDAY
- *
- * FOR CONSTRUCTOR ILL ALSO ADD RANDOM GENERATOR FOR TIME LEAVING AND COMING
- */
- bool Person::is_tired() const {
-    if (tiredness_ > 0)
-        return false;
-    else
-            return true;
-}
+
+ const std::string& Person::get_name() const {return name_;}
+
+ const std::string& Person::get_occupation() const {return occupation_;}
+
+double Person::get_money() const{
+    return money_;
+};
+
+int Person::get_happiness  () const{
+    return happiness_;
+};
+
+int Person::get_food() const{
+    return food_;
+};
+
+int Person::get_hunger() const{
+    return hunger_;
+};
+
 
 bool Person::is_hungry() const {
     if (hunger_ > 0)
@@ -26,11 +49,11 @@ bool Person::is_hungry() const {
         return true;
 }
 
-bool Person::is_unhappy() const {
-    if (hunger_ > 0)
-        return false;
-    else
+bool Person::is_happy() const {
+    if (happiness_ > 0)
         return true;
+    else
+        return false;
 }
 
 bool Person::has_money() const{
@@ -67,26 +90,21 @@ void Person::decrease_happiness(int i){
     happiness_ -= i;
 }
 
-void Person::increase_tiredeness(int i){
-    tiredness_ += i;
+int Person::get_time_leaving() const{
+    return time_leaving_;
+};
+
+int Person::get_time_coming() const{
+    return time_coming_;
+};
+
+
+bool Person::shouldLeave() const{
+    /*if (tickTime == time_coming_ || tickTime == time_leaving_){
+
+    }*/
+    return true;
 }
-
-void Person::decrease_tiredeness(int i) {
-    tiredness_ -= i;
-}
-
-Building* Person::leave_home() const {
-    Building* work_place;
-    if (is_hungry() && is_tired() && is_unhappy()){
-        /* for loop that is looking for a building with same name as Person's occupation
-         * and assigns work_place with it. For now it is just nullptr
-         */
-        work_place = nullptr;
-    }
-    else
-        work_place = nullptr;
-
-    return work_place;
 
 
 
