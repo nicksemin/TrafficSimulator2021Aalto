@@ -1,5 +1,0 @@
-if(EXISTS "/Users/nicksemin/Programming/traffic-simulator-1/cmake-build-debug/person_test[1]_tests.cmake")
-  include("/Users/nicksemin/Programming/traffic-simulator-1/cmake-build-debug/person_test[1]_tests.cmake")
-else()
-  add_test(person_test_NOT_BUILT person_test_NOT_BUILT)
-endif()
