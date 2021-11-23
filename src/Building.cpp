@@ -100,14 +100,14 @@ std::vector<Vehicle*> Building::GetVehicles() const{
 
 void RecreationalBuilding::performTimeStep(){
     // for(auto person : people_) {
-    //     person->increase_happines(1);
+    //     person->increase_happiness(1);
     //     person->remove_money(1);
     // }
 }
 
 void ResidentialBuilding::performTimeStep(){
     // for(auto person : people_) {
-    //     person->increase_happines(1);
+    //     person->increase_happiness(1);
     //     person->eat_food(1);
     // }
 }
