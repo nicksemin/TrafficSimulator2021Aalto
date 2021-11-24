@@ -44,9 +44,9 @@ int Person::get_hunger() const{
 
 bool Person::is_hungry() const {
     if (hunger_ > 0)
-        return false;
-    else
         return true;
+    else
+        return false;
 }
 
 bool Person::is_happy() const {
