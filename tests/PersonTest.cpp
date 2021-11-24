@@ -40,7 +40,6 @@ TEST(person_test, foodAndHunger){
     guy.add_food(300);
     EXPECT_EQ(guy.get_food(), 400);
     guy.eat_food(400);
-    EXPECT_EQ(guy.get_food(), 400);
-    guy.eat_food(400);
-    EXPECT_EQ(guy.is_hungry(), 0);
+    EXPECT_EQ(guy.get_food(), 0);
+    EXPECT_EQ(guy.is_hungry(), 1);
 }
