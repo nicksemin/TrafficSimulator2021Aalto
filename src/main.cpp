@@ -70,8 +70,8 @@ int main( int argc, char* argv[] )
 
 	std::vector<RoadLineClass*> route { &road1, &road2 };
 
-	Building building1( &cross2, 1 );
-	Building building2( &cross3, 2 );
+	RecreationalBuilding building1( &cross2, 1 );
+	CommercialBuilding building2( &cross3, 2 );
 
 	Vehicle car1{ 1 };
 	Vehicle car2{ 4 };
@@ -116,5 +116,25 @@ int main( int argc, char* argv[] )
 	Car d{3};
 	d.setRoute(route);*/
 
+	/*-----------------------------------------------------------------------------
+	 * Building tests by Emma
+	 *-----------------------------------------------------------------------------
+
+	std::cout << building1.GetID() <<std::endl;
+	std::cout << building2.GetID() <<std::endl;
+
+	std::cout << building1.GetType() <<std::endl;
+	std::cout << building2.GetType() <<std::endl;
+
+	building2.takeVehicle( &car1, nullptr);
+	building2.takeVehicle( &car2, nullptr);
+
+
+	for (auto vehicle : building2.GetVehicles()){
+		std::cout<< vehicle->GetSize()<<std::endl;
+	}
+	*/
+
 	return 0;
+	
 }

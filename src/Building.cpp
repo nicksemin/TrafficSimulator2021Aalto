@@ -1,18 +1,24 @@
 #include "./include/Building.hpp"
 
 #include <algorithm>
+#include <string>
 
 /*-----------------------------------------------------------------------------
  * For the changes made by Alexey's merge request see the header file
  *-----------------------------------------------------------------------------*/
 
 /*Constructor*/
-Building::Building(  BuildingExitCrossroad* exitCrossRoad, unsigned int vehiclecapacity ) {
+Building::Building(  BuildingExitCrossroad* exitCrossRoad, unsigned int vehiclecapacity, const std::string& type ) {
     if ( exitCrossRoad->addExitRoad( this ) && exitCrossRoad->addEntryRoad( this ) ) {
 	    exitCrossRoad_ = exitCrossRoad;
     }
     vehiclecapacity_ = vehiclecapacity;
+    id_ = ++nextID;
+    type_ = type;
 }
+
+unsigned int Building::nextID = 0;
+
 
 /*Destructor MIGHT NOT BE NEEDED*/
 //Building::~Building(){
@@ -61,6 +67,13 @@ bool Building::RemoveVehicle (Vehicle* vehicle){
 //     return false;
 // }
 
+unsigned int Building::GetID() const{
+    return id_;
+}
+
+const std::string& Building::GetType() const{
+    return type_;
+}
 
 /*Get the CrossRoads through which the building is accessed*/
 BuildingExitCrossroad* Building::GetExit() const{
@@ -79,11 +92,36 @@ std::vector<Vehicle*> Building::GetVehicles() const{
 
 /* 
  * ===  FUNCTION  ======================================================================
- *         Name:  Building::performTimeStep
- *  Description:  
+ *         Name:    performTimestep
+ *  Description:    Implemented for each building type (subclass) separately, according to
+ *                  what is supposed to happen to people in that specific type of building
  * =====================================================================================
  */
-	void
-Building::performTimeStep ()
-{
-}		/* -----  end of function Building::performTimeStep  ----- */
+
+void RecreationalBuilding::performTimeStep(){
+    // for(auto person : people_) {
+    //     person->increase_happiness(1);
+    //     person->remove_money(1);
+    // }
+}
+
+void ResidentialBuilding::performTimeStep(){
+    // for(auto person : people_) {
+    //     person->increase_happiness(1);
+    //     person->eat_food(1);
+    // }
+}
+
+void IndustrialBuilding::performTimeStep(){
+    // for(auto person : people_) {
+    //     person->decrease_happiness(1);
+    //     person->add_money(1);
+    // }
+}
+
+void CommercialBuilding::performTimeStep(){
+    // for(auto person : people_) {
+    //     person->add_food(1);
+    //     person->remove_money(1);
+    // }
+}
