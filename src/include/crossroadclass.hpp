@@ -49,7 +49,7 @@ class CrossroadClass : public RoadObjectClass
     protected:
 
 	//delete the road-only function
-	bool hasTriangle() = delete;
+	bool hasTriangle() const = delete;
 
 	//entry and exit roads
 	std::map<const RoadObjectClass*, Vehicle*> m_entryRoads;

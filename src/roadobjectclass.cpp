@@ -2,7 +2,7 @@
 
 /*-----------------------------------------------------------------------------
  * For the class description see the include file
- * Contact info - Alexey Serous 
+ * Contact info - Alexey Serous
  *-----------------------------------------------------------------------------*/
 
 RoadObjectClass::RoadObjectClass( bool hasTriangle ) : m_hasTriangle{ hasTriangle }
@@ -10,14 +10,14 @@ RoadObjectClass::RoadObjectClass( bool hasTriangle ) : m_hasTriangle{ hasTriangl
     //ctor
 }
 
-/* 
+/*
  * ===  FUNCTION  ======================================================================
  *         Name:  RoadObjectClass::hasTriangle
  *  Description:  used only for the roads, to be deleted in other classes
  * =====================================================================================
  */
 	bool
-RoadObjectClass::hasTriangle ()
+RoadObjectClass::hasTriangle () const
 {
 	return m_hasTriangle;
 }		/* -----  end of function RoadObjectClass::hasTriangle  ----- */
