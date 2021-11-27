@@ -6,7 +6,7 @@ UnregulatedCrossroad::UnregulatedCrossroad(int x, int y) : CrossroadClass( x, y 
 }
 
 
-/* 
+/*
  * ===  FUNCTION  ======================================================================
  *         Name:  UnregulatedCrossroad::checkRightToGo
  *  Description:  Uses the right hand rule to define if the car can go
@@ -20,7 +20,7 @@ UnregulatedCrossroad::checkRightToGo ( const RoadObjectClass* ptrToEntry, RoadOb
 	std::map<const RoadObjectClass*, double> localEntryAngles{};
 	std::map<const RoadObjectClass*, double> localExitAngles{};
 
-	/* 
+	/*
 	 * ===  FUNCTION  ======================================================================
 	 *         Name:  defineAngle
 	 *  Description:  A labmda that returns the rotated angle with respect to the entry
@@ -37,9 +37,9 @@ UnregulatedCrossroad::checkRightToGo ( const RoadObjectClass* ptrToEntry, RoadOb
 				if ( angle <= m_entryAngles[ ptrToEntry ] ) {
 					return 2 * PI - m_entryAngles[ ptrToEntry ] + angle;
 				}
-				//if the angle is bigger, then the angle is entryAngle - road angle
+				//if the angle is bigger, then the angle is road angle - entryAngle
 				else {
-					return m_entryAngles[ ptrToEntry ] - angle;
+					return angle - m_entryAngles[ ptrToEntry ];
 				}
 			}
 		};		/* -----  end of function defineAngle  ----- */
@@ -50,7 +50,7 @@ UnregulatedCrossroad::checkRightToGo ( const RoadObjectClass* ptrToEntry, RoadOb
 		localEntryAngles.insert( std::make_pair( element.first, defineAngle( element.second ) ) );
 	}
 	//the algorithm has assinged the angle 360 for the entry road itself, should be 0
-	m_entryAngles[ ptrToEntry ] = 0.00;
+	localEntryAngles[ ptrToEntry ] = 0.00;
 	//... for the exit
 	for ( auto& element : m_exitAngles ){
 		localExitAngles.insert( std::make_pair( element.first, defineAngle( element.second ) ) );
@@ -64,7 +64,8 @@ UnregulatedCrossroad::checkRightToGo ( const RoadObjectClass* ptrToEntry, RoadOb
 		//we are interested only in the road with the angle less than our desired exit road
 		//in other words, from the right
 		//and if there is a car standing
-		if ( element.second < m_exitAngles[ ptrToExit ] && m_entryRoads[ element.first ] ) {
+		//and if it's not our road of consideration itself, otherwise it looses the priority battle to itsef
+		if ( element.second < localExitAngles[ ptrToExit ] && m_entryRoads[ element.first ] && element.first != ptrToEntry ) {
 			//if it does not have the triangle and we do
 			if ( ptrToEntry->hasTriangle() && !element.first->hasTriangle() ) {
 				canGo = false;
