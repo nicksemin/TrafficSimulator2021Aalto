@@ -6,8 +6,8 @@
  * contact info - Alexey Serous 
  *-----------------------------------------------------------------------------*/
 
-CrossroadClass::CrossroadClass( int x, int y ) :
-	m_x{ x }, m_y{ y }
+CrossroadClass::CrossroadClass( int x, int y, size_t id ) :
+	m_x{ x }, m_y{ y }, id_{id}
 {
     //ctor
 }
@@ -113,6 +113,17 @@ CrossroadClass::getY ()
 {
 	return m_y;
 }		/* -----  end of function CrossroadClass::getY  ----- */
+
+
+bool CrossroadClass::operator==(const CrossroadClass& a){
+	bool isEqual = a.m_x == m_x && a.m_y == m_y;
+	return isEqual;
+}
+
+bool CrossroadClass::operator==(CrossroadClass& a){
+	bool isEqual = a.m_x == m_x && a.m_y == m_y;
+	return isEqual;
+}
 
 /* 
  * ===  FUNCTION  ======================================================================

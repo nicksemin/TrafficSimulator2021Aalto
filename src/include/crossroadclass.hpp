@@ -5,6 +5,7 @@
 #include <utility>
 #include <vector>
 #include <algorithm>
+#include <iostream>
 
 #include "roadobjectclass.hpp"
 
@@ -25,7 +26,7 @@
 class CrossroadClass : public RoadObjectClass
 {
     public:
-        CrossroadClass( int x, int y );
+        CrossroadClass( int x, int y, size_t id );
 
 	bool takeVehicle( Vehicle* ptrToCar, const RoadObjectClass* ptrToRoadObject ) override;
 
@@ -45,6 +46,15 @@ class CrossroadClass : public RoadObjectClass
 	//get coordinates
 	int getX();
 	int getY();
+
+	bool operator==(const CrossroadClass& a);
+
+	bool operator==(CrossroadClass& a);
+
+	friend std::ostream &operator<<(std::ostream& out, const CrossroadClass& a) {
+    out << "Crossroad with id " << a.id_;
+    return out;
+}
 
     protected:
 
@@ -72,6 +82,7 @@ class CrossroadClass : public RoadObjectClass
 	//coordinates
 	int m_x;
 	int m_y;
+	size_t id_;
 
 };
 

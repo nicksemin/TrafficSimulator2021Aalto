@@ -45,6 +45,15 @@ class RoadLineClass : public RoadObjectClass
 		return m_start;
 	}
 
+	const CrossroadClass* GetEnd() const {
+		return m_end;
+	}
+
+	const size_t GetSize() const {
+		return m_size;
+	}
+
+
     protected:
 
     private:

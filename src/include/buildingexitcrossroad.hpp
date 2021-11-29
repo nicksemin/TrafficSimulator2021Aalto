@@ -15,7 +15,7 @@
 class BuildingExitCrossroad : public CrossroadClass
 {
     public:
-        BuildingExitCrossroad( int x, int y );
+        BuildingExitCrossroad( int x, int y, size_t id );
 
     protected:
 

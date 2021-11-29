@@ -1,6 +1,6 @@
 #include "./include/unregulatedcrossroad.hpp"
 
-UnregulatedCrossroad::UnregulatedCrossroad(int x, int y) : CrossroadClass( x, y )
+UnregulatedCrossroad::UnregulatedCrossroad(int x, int y, size_t id) : CrossroadClass( x, y, id)
 {
     //ctor
 }
