@@ -21,11 +21,11 @@ void Vehicle::setRoute( std::vector<RoadLineClass*> newRoute){
  *  Description:  added by Alexey, returns the destination building
  * =====================================================================================
  */
-	RoadObjectClass*
-Vehicle::getDestination ()
+RoadObjectClass* Vehicle::getDestination ()
 {
 	return destination_;
-}		/* -----  end of function Vehicle::getDestination  ----- */
+}
+/* -----  end of function Vehicle::getDestination  ----- */
 
 /* 
  * ===  FUNCTION  ======================================================================
@@ -33,8 +33,8 @@ Vehicle::getDestination ()
  *  Description:  added by Alexey, sets the destination
  * =====================================================================================
  */
-	void
-Vehicle::setDestination ( RoadObjectClass* ptrToBuilding )
+void Vehicle::setDestination ( RoadObjectClass* ptrToBuilding )
 {
 	destination_ = ptrToBuilding;
-}		/* -----  end of function Vehicle::setDestination  ----- */
+}
+/* -----  end of function Vehicle::setDestination  ----- */
