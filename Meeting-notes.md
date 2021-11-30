@@ -127,3 +127,48 @@ As mentioned above, everyone will continue working on their respective classes.
 
 Milestone next meeting, Alexey to be done: to have a hardcoded sample of several roads connected by intersections
 and moving random cars for a couple of minutes.
+# Meeting 16.11.2021 18::10
+
+**Participants**:
+1. Alexey
+2. Nikolai
+3. Nikita
+4. Emma
+
+## Summary of works
+1. Alexey
+
+   Still working on the interactions between classes and passing vehicles from buildings to roads
+
+2. Nikolai
+
+   Tests took a bit more time to implement, but they are coming soon  
+
+3. Nikita
+
+   Implementing algorithm for pathfinding
+
+4. Emma
+
+   Added interaction methods for buildings 
+
+## Challenges
+
+The main challenge so far is to set up proper interaction between classes.
+
+There also was a discussion about making changes into classes that are responsibility of other team members. It was agreed that such "interventions" can be done, but class owners should be notified. 
+
+## Actions
+
+No significant progress made, mostly finalising base classes and working on supportive moduless.
+
+## Project status
+
+The project is close to work with minimal functionality. 
+
+### TODOs
+-Working Prototype
+
+-Parsing module
+
+-Start additional features

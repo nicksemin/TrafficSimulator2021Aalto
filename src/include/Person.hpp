@@ -13,7 +13,7 @@
 class Person{
 private:
 
-    //Building* livingPlace;
+    Building* home_;
     std::string name_;
     int happiness_;
     bool occupied_;
@@ -22,7 +22,7 @@ private:
     bool drivingLicense_;//will not be needed for the first iteration; will be used when pedestrians
     int hunger_;
     int food_;
-   // Vehicle* own_vehicle;
+    Vehicle* own_vehicle_;
     int time_leaving_;
     int time_coming_;
 public:

@@ -15,11 +15,22 @@
  *-----------------------------------------------------------------------------*/
 
 #include "buildingexitcrossroad.hpp" //already includes vehicle and road object
-
-// #include "Person.hpp"
+#include "Person.hpp"
 
 #include <string>
 #include <vector>
+/*-----------------------------------------------------------------------------
+ *Abstract class Building (cannot be initialized). Works as a base class for
+    RecreationalBuilding
+    ResidentialBuilding
+    IndustrialBuilding
+    CommercialBuilding
+    
+All other members are common to all Buildings except for:
+    performTimeStep
+    (the string variable "type_")
+ *-----------------------------------------------------------------------------*/
+class Person;
 
 /*-----------------------------------------------------------------------------
  *Abstract class Building (cannot be initialized). Works as a base class for
@@ -39,7 +50,10 @@ protected:
    
    /*To keep tracks of used IDs*/
    static unsigned int nextID;
-
+    /*All vehicles currently in this building*/
+    std::vector<Vehicle*> vehicles_;
+    /*All people currently in this building*/
+    std::vector<Person*> people_;
 public:
     
     /*Constructor*/
@@ -58,10 +72,10 @@ public:
     bool RemoveVehicle (Vehicle* vehicle);
 
     // /*Take in a person*/
-    // void TakePerson(Person* person);
+    void TakePerson(Person* person);
 
     // /*Remove a person*/
-    // bool RemovePerson(Person* person);
+    bool RemovePerson(Person* person);
 
     /*Get the unique ID of the building*/
     unsigned int GetID() const;
@@ -76,7 +90,7 @@ public:
     std::vector<Vehicle*> GetVehicles() const;
 
     /*Get all people currently in this building*/
-    // std::vector<Person*> GetPeople() const;
+    std::vector<Person*> GetPeople() const;
 
 private:
 
@@ -88,10 +102,6 @@ private:
     BuildingExitCrossroad* exitCrossRoad_;
     /*The maximum number of vehicles that fit inside the building*/
     unsigned int vehiclecapacity_;
-    /*All vehicles currently in this building*/
-    std::vector<Vehicle*> vehicles_;
-    /*All people currently in this building*/
-    // std::vector<Person*> people_;
 };
 
 class RecreationalBuilding : public Building
@@ -121,5 +131,6 @@ public:
     CommercialBuilding(BuildingExitCrossroad* exitCrossRoad, unsigned int vehiclecapacity) : Building(exitCrossRoad, vehiclecapacity, "Commercial") {}
     virtual void performTimeStep();
 };
+
 
 #endif
