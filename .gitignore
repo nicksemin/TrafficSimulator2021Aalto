@@ -26,6 +26,7 @@
 .AppleDouble
 .LSOverride
 .idea/
+cmake-build-debug
 
 # Executables
 *.exe
