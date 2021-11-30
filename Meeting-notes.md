@@ -167,6 +167,8 @@ No significant progress made, mostly finalising base classes and working on supp
 The project is close to work with minimal functionality. 
 
 ### TODOs
-Working Prototype
-Parsing module
-Start additional features
+-Working Prototype
+
+-Parsing module
+
+-Start additional features
