@@ -109,7 +109,7 @@ int main( int argc, char* argv[] )
 	UnregulatedCrossroad left{ -20, 0 };
 	UnregulatedCrossroad right{ 20, 0 };
 	UnregulatedCrossroad down{ 0, -20 };
-	UnregulatedCrossroad up{ 0, 20 };
+	UnregulatedCrossroad up{ 0, 120 };
 
 	RoadLineClass leftRoad{ &left, &center };
 	RoadLineClass rightRoad{ &right, &center };
@@ -143,9 +143,23 @@ int main( int argc, char* argv[] )
 	rightRoad.performTimeStep();
 	rightRoad.takeVehicle( &rightCar3, nullptr );
 
+	route[ 0 ] = &downRoad;
+
+	Vehicle downCar1{ 1 };
+	Vehicle downCar2{ 1 };
+	Vehicle downCar3{ 1 };
+	downCar1.setRoute( route );
+	downCar2.setRoute( route );
+	downCar3.setRoute( route );
+	downRoad.takeVehicle( &downCar1, nullptr );
+	downRoad.performTimeStep();
+	downRoad.takeVehicle( &downCar2, nullptr );
+	downRoad.performTimeStep();
+	downRoad.takeVehicle( &downCar3, nullptr );
+
 	std::vector<RoadObjectClass*> objects { &leftRoad, &rightRoad, &upRoad,
 		&downRoad, &center };
-	for ( int i{ 0 }; i < 5; ++i ){
+	for ( int i{ 0 }; i < 15; ++i ){
 		for ( auto& element : objects ){
 			element->performTimeStep();
 		}
