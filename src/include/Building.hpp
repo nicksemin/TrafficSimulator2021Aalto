@@ -83,12 +83,6 @@ public:
     /*Get the type of the building*/
     const std::string& GetType() const;
 
-    /*Get the unique ID of the building*/
-    unsigned int GetID() const;
-
-    /*Get the type of the building*/
-    const std::string& GetType() const;
-
     /*Get the CrossRoads through which the building is accessed*/
     BuildingExitCrossroad* GetExit() const;
 
@@ -138,32 +132,5 @@ public:
     virtual void performTimeStep();
 };
 
-class RecreationalBuilding : public Building
-{
-public:
-    RecreationalBuilding(BuildingExitCrossroad* exitCrossRoad, unsigned int vehiclecapacity) : Building(exitCrossRoad, vehiclecapacity, "Recreational") {}
-    virtual void performTimeStep();
-};
-
-class ResidentialBuilding : public Building
-{
-public:
-    ResidentialBuilding(BuildingExitCrossroad* exitCrossRoad, unsigned int vehiclecapacity) : Building(exitCrossRoad, vehiclecapacity, "Residential") {}
-    virtual void performTimeStep();
-};
-
-class IndustrialBuilding : public Building
-{
-public:
-    IndustrialBuilding(BuildingExitCrossroad* exitCrossRoad, unsigned int vehiclecapacity) : Building(exitCrossRoad, vehiclecapacity, "Industrial") {}
-    virtual void performTimeStep();
-};
-
-class CommercialBuilding : public Building
-{
-public:
-    CommercialBuilding(BuildingExitCrossroad* exitCrossRoad, unsigned int vehiclecapacity) : Building(exitCrossRoad, vehiclecapacity, "Commercial") {}
-    virtual void performTimeStep();
-};
 
 #endif
