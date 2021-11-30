@@ -3,7 +3,7 @@
 
 #include "Vehicle.hpp"
 
-
+const double PI{ 3.14 };
 /*
  * =====================================================================================
  *        Class:  RoadObjectClass
@@ -19,6 +19,7 @@ class RoadObjectClass
 		RoadObjectClass ( bool hasTriangle = false );                             /* constructor */
 
 		/* ====================  ACCESSORS     ======================================= */
+		bool hasTriangle() const;
 
 		/* ====================  MUTATORS      ======================================= */
 
@@ -30,7 +31,6 @@ class RoadObjectClass
 
 	protected:
 		/* ====================  METHODS       ======================================= */
-		bool hasTriangle();
 
 		/* ====================  DATA MEMBERS  ======================================= */
 

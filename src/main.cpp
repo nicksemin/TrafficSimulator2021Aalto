@@ -28,6 +28,7 @@
 
 //local inlude
 #include "./include/buildingexitcrossroad.hpp"
+#include "./include/unregulatedcrossroad.hpp"
 #include "./include/CityObject.hpp"
 #include "./include/Vehicle.hpp"
 #include "./include/roadlineclass.hpp"
@@ -58,9 +59,9 @@ int main( int argc, char* argv[] )
 	Obsolete 16.11.2021, Alexey
 	 *-----------------------------------------------------------------------------*/
 
-	/*-----------------------------------------------------------------------------
+	/* Obsolete 26.11.2021, Alexey
 	 * BuildingExitCrossroad initial test, Alexey
-	 *-----------------------------------------------------------------------------*/
+	 *-----------------------------------------------------------------------------
 	BuildingExitCrossroad cross1{ 0, 0 };
 	BuildingExitCrossroad cross2{ 10, 0};
 	BuildingExitCrossroad cross3{ 110, 0 };
@@ -99,10 +100,69 @@ int main( int argc, char* argv[] )
 		}
 		++i;
 	}
+	*/
 
+	/*-----------------------------------------------------------------------------
+	 * UnregulatedCrossRoad tests, Alexey
+	 *-----------------------------------------------------------------------------*/
+	UnregulatedCrossroad center{ 0, 0, 1 };
+	UnregulatedCrossroad left{ -20, 0, 2 };
+	UnregulatedCrossroad right{ 20, 0, 3 };
+	UnregulatedCrossroad down{ 0, -20, 4 };
+	UnregulatedCrossroad up{ 0, 20, 5 };
+
+	RoadLineClass leftRoad{ &left, &center };
+	RoadLineClass rightRoad{ &right, &center };
+	RoadLineClass downRoad{ &down, &center };
+	RoadLineClass upRoad{ &center, &up };
+
+	std::vector<RoadLineClass*> route { &leftRoad, &upRoad };
+	Vehicle leftCar1{ 1 };
+	Vehicle leftCar2{ 1 };
+	Vehicle leftCar3{ 1 };
+	leftCar1.setRoute( route );
+	leftCar2.setRoute( route );
+	leftCar3.setRoute( route );
+	leftRoad.takeVehicle( &leftCar1, nullptr );
+	leftRoad.performTimeStep();
+	leftRoad.takeVehicle( &leftCar2, nullptr );
+	leftRoad.performTimeStep();
+	leftRoad.takeVehicle( &leftCar3, nullptr );
+
+	route[ 0 ] = &rightRoad;
+
+	Vehicle rightCar1{ 1 };
+	Vehicle rightCar2{ 1 };
+	Vehicle rightCar3{ 1 };
+	rightCar1.setRoute( route );
+	rightCar2.setRoute( route );
+	rightCar3.setRoute( route );
+	rightRoad.takeVehicle( &rightCar1, nullptr );
+	rightRoad.performTimeStep();
+	rightRoad.takeVehicle( &rightCar2, nullptr );
+	rightRoad.performTimeStep();
+	rightRoad.takeVehicle( &rightCar3, nullptr );
+
+	std::vector<RoadObjectClass*> objects { &leftRoad, &rightRoad, &upRoad,
+		&downRoad, &center };
+	for ( int i{ 0 }; i < 5; ++i ){
+		for ( auto& element : objects ){
+			element->performTimeStep();
+		}
+	}
+
+	std::cout << "Done\n";
 	/*-----------------------------------------------------------------------------
 	 * Navigator tests by Nikita
 	 *-----------------------------------------------------------------------------*/
+
+
+	std::vector<RoadLineClass*> map = {&leftRoad, &upRoad};
+	std::vector<CrossroadClass*> crossroads = {&left, &center, &up};
+	Navigator* n = new Navigator(map, crossroads);
+
+	std::vector<RoadLineClass*> route2 = n->MakeRoute(left, up);
+
 
 	/* CrossroadClass cr1;
 	CrossroadClass cr2;
@@ -138,3 +198,5 @@ int main( int argc, char* argv[] )
 	return 0;
 	
 }
+
+
