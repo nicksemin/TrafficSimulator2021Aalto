@@ -53,19 +53,19 @@ bool Building::RemoveVehicle (Vehicle* vehicle){
 }
 
 // /*Take in a person*/
-// void Building::TakePerson(Person* person){
-//     people_.push_back(person);
-// }
+void Building::TakePerson(Person* person){
+    people_.push_back(person);
+ }
 
 // /*Remove a person*/
-// bool Building::RemovePerson(Person* person){
-//     auto it = std::find(people_.begin(), people_.end(), person);
-//     if (it != people_.end()) { 
-//         people_.erase(it);
-//         return true;
-//     }
-//     return false;
-// }
+bool Building::RemovePerson(Person* person){
+    auto it = std::find(people_.begin(), people_.end(), person);
+     if (it != people_.end()) {
+         people_.erase(it);
+         return true;
+     }
+    return false;
+ }
 
 unsigned int Building::GetID() const{
     return id_;
@@ -86,9 +86,9 @@ std::vector<Vehicle*> Building::GetVehicles() const{
 }
 
 /*Get all people currently in this building*/
-// std::vector<Person*> Building::GetPeople() const{
-//     return people_;
-// }
+ std::vector<Person*> Building::GetPeople() const{
+    return people_;
+ }
 
 /* 
  * ===  FUNCTION  ======================================================================
@@ -99,29 +99,29 @@ std::vector<Vehicle*> Building::GetVehicles() const{
  */
 
 void RecreationalBuilding::performTimeStep(){
-    // for(auto person : people_) {
-    //     person->increase_happiness(1);
-    //     person->remove_money(1);
-    // }
+     for(auto person : people_) {
+         person->increase_happiness(1);
+         person->remove_money(1);
+     }
 }
 
 void ResidentialBuilding::performTimeStep(){
-    // for(auto person : people_) {
-    //     person->increase_happiness(1);
-    //     person->eat_food(1);
-    // }
+     for(auto person : people_) {
+         person->increase_happiness(1);
+         person->eat_food(1);
+     }
 }
 
 void IndustrialBuilding::performTimeStep(){
-    // for(auto person : people_) {
-    //     person->decrease_happiness(1);
-    //     person->add_money(1);
-    // }
+    for(auto person : people_) {
+         person->decrease_happiness(1);
+         person->add_money(1);
+     }
 }
 
 void CommercialBuilding::performTimeStep(){
-    // for(auto person : people_) {
-    //     person->add_food(1);
-    //     person->remove_money(1);
-    // }
+     for(auto person : people_) {
+         person->add_food(1);
+         person->remove_money(1);
+     }
 }

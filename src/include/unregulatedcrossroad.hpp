@@ -12,7 +12,7 @@
 class UnregulatedCrossroad : public CrossroadClass
 {
     public:
-        UnregulatedCrossroad(int x, int y);
+        UnregulatedCrossroad(int x, int y, size_t id);
 
     protected:
 

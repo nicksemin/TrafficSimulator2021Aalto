@@ -13,11 +13,12 @@
 
 class Navigator{
     public:
-        Navigator(const std::vector<RoadLineClass*> map);
+        Navigator(const std::vector<RoadLineClass*> roads_, const std::vector<CrossroadClass*> crossroads_);
         
-        std::vector<RoadLineClass*>  MakeRoute(CrossroadClass& start, CrossroadClass& end);
+        std::vector<RoadLineClass*>  MakeRoute(CrossroadClass& start, CrossroadClass& finish);
     private:
-    std::vector<RoadLineClass*> map_;
+    std::vector<RoadLineClass*> roads_;
+    std::vector<CrossroadClass*> crossroads_;
 };
 
 #endif
