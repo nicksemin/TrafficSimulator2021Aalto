@@ -168,4 +168,4 @@ std::vector<RoadLineClass*> Navigator::MakeRoute(CrossroadClass& start, Crossroa
     }
 
     return result;
-};
+}

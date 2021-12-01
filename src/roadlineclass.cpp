@@ -174,4 +174,4 @@ RoadObjectClass* Vehicle::FindNextRoad(CrossroadClass* currentCross)  {
 	    return destination_;
     }
     return *it;
-};
+}
