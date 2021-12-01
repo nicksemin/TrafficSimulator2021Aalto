@@ -32,6 +32,7 @@
 #include "./include/CityObject.hpp"
 #include "./include/Vehicle.hpp"
 #include "./include/roadlineclass.hpp"
+#include "./include/cityclass.hpp"
 #include "./include/Car.hpp"
 #include "./include/Navigator.hpp"
 #include "./include/Building.hpp"
@@ -217,6 +218,11 @@ int main( int argc, char* argv[] )
 	}
 	*/
 
+	/*-----------------------------------------------------------------------------
+	 * CityClass tests, Alexey
+	 *-----------------------------------------------------------------------------*/
+	std::string filename{ "../build/samplecity.txt" };
+	CityClass testCity { filename };
 	return 0;
 
 }
