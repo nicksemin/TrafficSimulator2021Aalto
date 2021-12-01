@@ -5,10 +5,12 @@
  * For the description, see the include file
  * contact info - Alexey Serous 
  *-----------------------------------------------------------------------------*/
+std::size_t CrossroadClass::numOfCrossroads{ 0 };
 
-CrossroadClass::CrossroadClass( int x, int y, size_t id ) :
-	m_x{ x }, m_y{ y }, id_{id}
+CrossroadClass::CrossroadClass( int x, int y ) :
+	m_x{ x }, m_y{ y }
 {
+	id_ = ++numOfCrossroads;
     //ctor
 }
 

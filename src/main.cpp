@@ -179,7 +179,7 @@ int main( int argc, char* argv[] )
 	 *-----------------------------------------------------------------------------*/
 
 
-	std::vector<RoadLineClass*> map = {&leftRoad, &upRoad};
+	/*std::vector<RoadLineClass*> map = {&leftRoad, &upRoad};
 	std::vector<CrossroadClass*> crossroads = {&left, &center, &up};
 	Navigator* n = new Navigator(map, crossroads);
 
@@ -218,7 +218,7 @@ int main( int argc, char* argv[] )
 	*/
 
 	return 0;
-	
+
 }
 
 

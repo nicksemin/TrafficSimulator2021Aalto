@@ -21,17 +21,6 @@
  * The end car is gived to the end cross-road as a start of the moving function
  *-----------------------------------------------------------------------------*/
 
-/*for abstract purposes, to be deleted after the real class is implemented
-
-class CrossroadClass
-{
-	public:
-		bool takeVehicle( const Vehicle* ptrToVehicle )
-		{
-		return true;
-		}
-};*/
-
 class RoadLineClass : public RoadObjectClass
 {
     public:

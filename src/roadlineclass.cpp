@@ -35,6 +35,7 @@ RoadLineClass::RoadLineClass ( CrossroadClass* start, CrossroadClass* end, bool 
 
 	//compute the integer size
 	std::size_t size{ static_cast<std::size_t>( d / cellSize ) };
+	m_size = size;
 	//make the cell vector to have required number of elements
 	m_cells.resize( size );
 

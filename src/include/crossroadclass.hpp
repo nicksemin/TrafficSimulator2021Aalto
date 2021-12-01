@@ -26,7 +26,7 @@
 class CrossroadClass : public RoadObjectClass
 {
     public:
-        CrossroadClass( int x, int y, size_t id );
+        CrossroadClass( int x, int y );
 
 	bool takeVehicle( Vehicle* ptrToCar, const RoadObjectClass* ptrToRoadObject ) override;
 
@@ -82,7 +82,10 @@ class CrossroadClass : public RoadObjectClass
 	//coordinates
 	int m_x;
 	int m_y;
-	size_t id_;
+	std::size_t id_;
+
+	//counter
+	static std::size_t numOfCrossroads;
 
 };
 

@@ -4,8 +4,8 @@
  * For the description see the header file 
  *-----------------------------------------------------------------------------*/
 
-BuildingExitCrossroad::BuildingExitCrossroad( int x, int y, size_t id ) :
-	CrossroadClass( x, y, id )
+BuildingExitCrossroad::BuildingExitCrossroad( int x, int y ) :
+	CrossroadClass( x, y )
 {
     //ctor
 }
