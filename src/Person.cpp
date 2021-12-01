@@ -27,19 +27,19 @@ Person::Person(const std::string& name, const std::string& occupation) {
 
 double Person::get_money() const{
     return money_;
-};
+}
 
 int Person::get_happiness  () const{
     return happiness_;
-};
+}
 
 int Person::get_food() const{
     return food_;
-};
+}
 
 int Person::get_hunger() const{
     return hunger_;
-};
+}
 
 
 bool Person::is_hungry() const {
@@ -92,11 +92,11 @@ void Person::decrease_happiness(int i){
 
 int Person::get_time_leaving() const{
     return time_leaving_;
-};
+}
 
 int Person::get_time_coming() const{
     return time_coming_;
-};
+}
 
 
 bool Person::shouldLeave() const{
