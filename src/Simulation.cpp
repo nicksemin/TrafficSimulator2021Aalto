@@ -1,4 +1,5 @@
 #include "./include/Simulation.hpp"
+#include <stdlib.h>
 
 Simulation::Simulation(CityClass* city, unsigned int npeople, unsigned int starttime, unsigned int endtime){ //outputfile
     city_ = city;
@@ -7,13 +8,23 @@ Simulation::Simulation(CityClass* city, unsigned int npeople, unsigned int start
     endtime_ = endtime;
 }
 
-void Init(){
-    // TO DO AT LEAST:
-    //  -create random people 
-    // -create the same amount of vehicles
-    
-    // -assign people homes
-    // -assign people and their vehicles initial locations
+
+/*
+* void Simulation::Init() initializes npeople number of people in random location in given city.
+*/
+
+void Simulation::Init(){
+    std::vector<std::pair<std::string,Building*>>  allCityBuildings = city_ -> GetBuildings();
+
+    int peopleToSettle = npeople_;
+    while (peopleToSettle > 0) {
+        int randomBuildingIndex = rand() % allCityBuildings.size();
+        int carSize =  rand() % 5 + 1;
+        bool fitting = allCityBuildings[randomBuildingIndex].second->takeVehicle(new Car(carSize), nullptr); 
+        if (fitting)  allCityBuildings[randomBuildingIndex].second->TakePerson(new Person()); {
+             peopleToSettle --;
+        }
+    }
 }
 
 void Simulate(){
