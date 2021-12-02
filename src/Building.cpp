@@ -9,7 +9,7 @@
 int tickTime; //tickTime used as a placeholder for system ticks
 
 /*Constructor*/
-Building::Building(  BuildingExitCrossroad* exitCrossRoad, unsigned int vehiclecapacity, const std::string& type ) {
+Building::Building(  CrossroadClass* exitCrossRoad, unsigned int vehiclecapacity, const std::string& type ) {
     if ( exitCrossRoad->addExitRoad( this ) && exitCrossRoad->addEntryRoad( this ) ) {
 	    exitCrossRoad_ = exitCrossRoad;
     }
@@ -82,7 +82,7 @@ const std::string& Building::GetType() const{
 }
 
 /*Get the CrossRoads through which the building is accessed*/
-BuildingExitCrossroad* Building::GetExit() const{
+CrossroadClass* Building::GetExit() const{
     return exitCrossRoad_;
 }
 

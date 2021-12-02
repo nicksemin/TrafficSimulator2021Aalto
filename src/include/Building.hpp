@@ -57,7 +57,7 @@ protected:
 public:
     
     /*Constructor*/
-    Building( BuildingExitCrossroad* exitCrossRoad, unsigned int vehiclecapacity, const std::string& type);
+    Building( CrossroadClass* exitCrossRoad, unsigned int vehiclecapacity, const std::string& type);
 
     /*Destructor MIGHT NOT BE NEEDED*/
     //~Building();
@@ -84,7 +84,7 @@ public:
     const std::string& GetType() const;
 
     /*Get the CrossRoads through which the building is accessed*/
-    BuildingExitCrossroad* GetExit() const;
+    CrossroadClass* GetExit() const;
 
     /*Get all vehicles currently in this building*/
     std::vector<Vehicle*> GetVehicles() const;
@@ -99,7 +99,7 @@ private:
     /*The type of the building*/
     std::string type_;
     /*The CrossRoads through which the building is accessed*/
-    BuildingExitCrossroad* exitCrossRoad_;
+    CrossroadClass* exitCrossRoad_;
     /*The maximum number of vehicles that fit inside the building*/
     unsigned int vehiclecapacity_;
 };
@@ -107,28 +107,28 @@ private:
 class RecreationalBuilding : public Building
 {
 public:
-    RecreationalBuilding(BuildingExitCrossroad* exitCrossRoad, unsigned int vehiclecapacity) : Building(exitCrossRoad, vehiclecapacity, "Recreational") {}
+    RecreationalBuilding(CrossroadClass* exitCrossRoad, unsigned int vehiclecapacity) : Building(exitCrossRoad, vehiclecapacity, "Recreational") {}
     virtual void performTimeStep();
 };
 
 class ResidentialBuilding : public Building
 {
 public:
-    ResidentialBuilding(BuildingExitCrossroad* exitCrossRoad, unsigned int vehiclecapacity) : Building(exitCrossRoad, vehiclecapacity, "Residential") {}
+    ResidentialBuilding(CrossroadClass* exitCrossRoad, unsigned int vehiclecapacity) : Building(exitCrossRoad, vehiclecapacity, "Residential") {}
     virtual void performTimeStep();
 };
 
 class IndustrialBuilding : public Building
 {
 public:
-    IndustrialBuilding(BuildingExitCrossroad* exitCrossRoad, unsigned int vehiclecapacity) : Building(exitCrossRoad, vehiclecapacity, "Industrial") {}
+    IndustrialBuilding(CrossroadClass* exitCrossRoad, unsigned int vehiclecapacity) : Building(exitCrossRoad, vehiclecapacity, "Industrial") {}
     virtual void performTimeStep();
 };
 
 class CommercialBuilding : public Building
 {
 public:
-    CommercialBuilding(BuildingExitCrossroad* exitCrossRoad, unsigned int vehiclecapacity) : Building(exitCrossRoad, vehiclecapacity, "Commercial") {}
+    CommercialBuilding(CrossroadClass* exitCrossRoad, unsigned int vehiclecapacity) : Building(exitCrossRoad, vehiclecapacity, "Commercial") {}
     virtual void performTimeStep();
 };
 

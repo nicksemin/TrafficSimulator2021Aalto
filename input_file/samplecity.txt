@@ -1,11 +1,16 @@
 CROSSROADS
 U center 0 0
-U left -20 0
-U right 20 0
-U down 0 -20
-U up 0 120
+B left -20 0
+B right 20 0
+B down 0 -20
+B up 0 120
 ROADS
 leftRoad left center
 rightRoad right center
 downRoad down center HASTRIANGLE
 upRoad center up
+BUILDINGS
+REC gym left 10
+RES home right 10
+IND factory down 10 
+COM supermarket up 10
