@@ -73,10 +73,12 @@ public:
 
     void decrease_happiness(int);
 
-    bool set_destination();
+    bool set_destination(unsigned int);
 
     void set_current_place(Building*); //USE WHEN PLACING INSIDE A BUILDING
 
     Building* get_current_place() const;
+
+    void performTimeStep(unsigned int);
 };
 #endif
