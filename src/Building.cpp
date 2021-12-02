@@ -32,7 +32,7 @@ unsigned int Building::nextID = 0;
 
 /*Take in a vehicle*/
 bool Building::takeVehicle( Vehicle* ptrToCar, const RoadObjectClass* ptrToRoadObject ){
-    if (vehicles_.size()<vehiclecapacity_){
+    if (vehicles_.size() < vehiclecapacity_){
         vehicles_.push_back( ptrToCar );
         return true;
     }
@@ -58,14 +58,19 @@ void Building::TakePerson(Person* person){
  }
 
 // /*Remove a person*/
+
 bool Building::RemovePerson(Person* person){
     auto it = std::find(people_.begin(), people_.end(), person);
-     if (it != people_.end()) {
-         people_.erase(it);
-         return true;
-     }
+    if (it != people_.end()) {
+        vehicles_[0]->takePassenger(person);
+        vehicles_[0]->setDestination(person->get_destination());
+        people_.erase(it);
+        this->RemoveVehicle(vehicles_[0]);
+        person->set_current_place(nullptr);
+        return true;
+    }
     return false;
- }
+}
 
 unsigned int Building::GetID() const{
     return id_;
@@ -100,28 +105,28 @@ std::vector<Vehicle*> Building::GetVehicles() const{
 
 void RecreationalBuilding::performTimeStep(){
      for(auto person : people_) {
-         person->increase_happiness(1);
-         person->remove_money(1);
+         person->increase_happiness(20);
+         person->remove_money(10);
      }
 }
 
 void ResidentialBuilding::performTimeStep(){
      for(auto person : people_) {
-         person->increase_happiness(1);
+         person->increase_happiness(10);
          person->eat_food(1);
      }
 }
 
 void IndustrialBuilding::performTimeStep(){
     for(auto person : people_) {
-         person->decrease_happiness(1);
-         person->add_money(1);
+         person->decrease_happiness(15);
+         person->add_money(30);
      }
 }
 
 void CommercialBuilding::performTimeStep(){
      for(auto person : people_) {
-         person->add_food(1);
-         person->remove_money(1);
+         person->add_food(5);
+         person->remove_money(5);
      }
 }

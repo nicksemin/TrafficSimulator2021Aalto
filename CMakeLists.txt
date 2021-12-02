@@ -33,7 +33,7 @@ target_link_libraries(
 )
 
 include(GoogleTest)
-gtest_discover_tests(person_test )
+gtest_discover_tests(person_test)
 
 file(GLOB SOURCES "src/*.cpp")
 
