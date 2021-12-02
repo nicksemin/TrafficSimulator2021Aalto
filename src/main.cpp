@@ -109,19 +109,12 @@ int main( int argc, char* argv[] )
 	/*-----------------------------------------------------------------------------
 	 * UnregulatedCrossRoad tests, Alexey
 	 *-----------------------------------------------------------------------------*/
-/*<<<<<<< HEAD
 	UnregulatedCrossroad center{ 0, 0 };
 	UnregulatedCrossroad left{ -20, 0 };
 	UnregulatedCrossroad right{ 20, 0 };
 	UnregulatedCrossroad down{ 0, -20 };
 	UnregulatedCrossroad up{ 0, 120 };
-=======
-	UnregulatedCrossroad center{ 0, 0, 1 };
-	UnregulatedCrossroad left{ -20, 0, 2 };
-	UnregulatedCrossroad right{ 20, 0, 3 };
-	UnregulatedCrossroad down{ 0, -20, 4 };
-	UnregulatedCrossroad up{ 0, 20, 5 };
->>>>>>> 289a1fc66be8bb6633a89f73ca26671e5f92a3ea
+
 
 	RoadLineClass leftRoad{ &left, &center };
 	RoadLineClass rightRoad{ &right, &center };
@@ -177,30 +170,17 @@ int main( int argc, char* argv[] )
 		}
 	}
 
-	std::cout << "Done\n";*/
+	std::cout << "Done\n";
 	/*-----------------------------------------------------------------------------
 	 * Navigator tests by Nikita
 	 *-----------------------------------------------------------------------------*/
 
 
-	/*std::vector<RoadLineClass*> map = {&leftRoad, &upRoad};
+	std::vector<RoadLineClass*> map = {&leftRoad, &upRoad};
 	std::vector<CrossroadClass*> crossroads = {&left, &center, &up};
 	Navigator* n = new Navigator(map, crossroads);
 
 	std::vector<RoadLineClass*> route2 = n->MakeRoute(left, up);
-
-
-	 CrossroadClass cr1;
-	CrossroadClass cr2;
-	RoadLineClass road2{ 15, &cr1, &cr2 };
-	CrossroadClass cr3;
-	RoadLineClass road3{ 20, &cr2, &cr3 };
-
-	std::vector<RoadLineClass*> map = {&road2, &road3};
-	Navigator* n = new Navigator(map);
-	std::vector<RoadLineClass*> route = n->MakeRoute(cr1, cr2);
-	Car d{3};
-	d.setRoute(route);*/
 
 	/*-----------------------------------------------------------------------------
 	 * Building tests by Emma
