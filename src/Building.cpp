@@ -118,7 +118,7 @@ bool Person::set_destination(unsigned int tickTime){
     }
     else
         return false;
-};
+}
 
 void Person::performTimeStep(unsigned int tickTime){
     this->set_destination(tickTime);
