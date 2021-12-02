@@ -29,6 +29,7 @@
 //local inlude
 #include "./include/buildingexitcrossroad.hpp"
 #include "./include/unregulatedcrossroad.hpp"
+#include "./include/trafficlightcrossroad.hpp"
 #include "./include/CityObject.hpp"
 #include "./include/Vehicle.hpp"
 #include "./include/roadlineclass.hpp"
@@ -108,7 +109,7 @@ int main( int argc, char* argv[] )
 
 	/*-----------------------------------------------------------------------------
 	 * UnregulatedCrossRoad tests, Alexey
-	 *-----------------------------------------------------------------------------*/
+	 *-----------------------------------------------------------------------------
 	UnregulatedCrossroad center{ 0, 0 };
 	UnregulatedCrossroad left{ -20, 0 };
 	UnregulatedCrossroad right{ 20, 0 };
@@ -170,17 +171,17 @@ int main( int argc, char* argv[] )
 		}
 	}
 
-	std::cout << "Done\n";
+	std::cout << "Done\n";*/
 	/*-----------------------------------------------------------------------------
 	 * Navigator tests by Nikita
-	 *-----------------------------------------------------------------------------*/
+	 *-----------------------------------------------------------------------------
 
 
 	std::vector<RoadLineClass*> map = {&leftRoad, &upRoad};
 	std::vector<CrossroadClass*> crossroads = {&left, &center, &up};
 	Navigator* n = new Navigator(map, crossroads);
 
-	std::vector<RoadLineClass*> route2 = n->MakeRoute(left, up);
+	std::vector<RoadLineClass*> route2 = n->MakeRoute(left, up);*/
 
 	/*-----------------------------------------------------------------------------
 	 * Building tests by Emma
@@ -217,11 +218,26 @@ int main( int argc, char* argv[] )
 	 * CityClass tests, Alexey (and Emma)
 	 *-----------------------------------------------------------------------------*/
 
-    std::string filename{ "../input_file/samplecity.txt" };
+    /*std::string filename{ "../input_file/samplecity.txt" };
     CityClass testCity { filename };
     for (auto const& building : testCity.GetBuildings()){
         std::cout<< building.first<<std::endl;
-    }
+    }*/
+	/*-----------------------------------------------------------------------------
+	 * UnregulatedCrossRoad tests, Alexey
+	 *-----------------------------------------------------------------------------*/
+	TrafficLightCrossroad center{ 0, 0 };
+	UnregulatedCrossroad left{ -20, 0 };
+	UnregulatedCrossroad right{ 20, 0 };
+	UnregulatedCrossroad down{ 0, -20 };
+	UnregulatedCrossroad up{ 0, 120 };
+
+
+	RoadLineClass leftRoad{ &left, &center };
+	RoadLineClass rightRoad{ &right, &center };
+	RoadLineClass downRoad{ &down, &center };
+	RoadLineClass upRoad{ &center, &up };
+
     return 0;
 
 }

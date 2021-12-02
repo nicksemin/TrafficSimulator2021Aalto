@@ -35,8 +35,9 @@ class CrossroadClass : public RoadObjectClass
 	//for the RoadLineClass, add entry and exit roads
 	bool addEntryRoad ( const RoadObjectClass* ptrToEntryRoad );
 	bool addExitRoad ( RoadObjectClass* ptrToExitRoad );
-	//for the RoadLineClass, define angles for entry and exit roads
-	void addEntryAngle ( const RoadObjectClass* ptrToEntryRoad, double angle );
+	//for the RoadLineClass, define angles for entry and exit roads. Is virtual
+	//for the TrafficLightCrossroad
+	virtual void addEntryAngle ( const RoadObjectClass* ptrToEntryRoad, double angle );
 	void addExitAngle ( RoadObjectClass* ptrToExitRoad, double angle );
 
 	//used only in a building exit crossroad, added here so that a road can set a value
