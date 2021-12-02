@@ -222,10 +222,13 @@ int main( int argc, char* argv[] )
     */
 
 	/*-----------------------------------------------------------------------------
-	 * CityClass tests, Alexey
+	 * CityClass tests, Alexey (and Emma)
 	 *-----------------------------------------------------------------------------*/
 	std::string filename{ "../build/samplecity.txt" };
 	CityClass testCity { filename };
+	for (auto const& building : testCity.GetBuildings()){
+		std::cout<< building.first<<std::endl;
+	}
 	return 0;
 
 }

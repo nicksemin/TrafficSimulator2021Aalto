@@ -64,7 +64,7 @@ CityClass::CityClass(std::string fileName) : m_fileName{ fileName }
 	std::string end{};
 	std::string hasTriangle{};
 	std::getline( input, fileLine );
-	while ( fileLine != "NEXT_SETTING_NAME" && !input.eof() ) {
+	while ( fileLine != "BUILDINGS" && !input.eof() ) {
 		parameters.str( fileLine );
 		parameters >> objectName >> start >> end >> hasTriangle;
 		m_roads.insert(
@@ -75,4 +75,40 @@ CityClass::CityClass(std::string fileName) : m_fileName{ fileName }
 		parameters.clear();
 		hasTriangle = "";
 	}
+
+
+	std::getline( input, fileLine );
+
+	std::string buildingType{};
+	std::string exitCrossroad{};
+	int capacity{};
+	//start constructing of the building container
+	while ( fileLine != "NEXT_SETTING_NAME" && !input.eof() ) {
+		parameters.str( fileLine );
+		parameters >> buildingType >> objectName >> exitCrossroad >> capacity;
+		//depending on the type (Recreational, Residential...)
+		if (buildingType == "REC"){
+			m_buildings.insert(
+					std::make_pair( objectName, new RecreationalBuilding{ RecreationalBuilding( m_crossroads[exitCrossroad], capacity ) } )
+			);
+		}else if (buildingType=="RES"){
+			m_buildings.insert(
+					std::make_pair( objectName, new ResidentialBuilding{ ResidentialBuilding( m_crossroads[exitCrossroad], capacity ) } )
+					);
+		}else if (buildingType == "IND"){
+			m_buildings.insert(
+					std::make_pair( objectName, new IndustrialBuilding{ IndustrialBuilding( m_crossroads[exitCrossroad], capacity ) } )
+					);
+		}else if (buildingType == "COM"){
+			m_buildings.insert(
+					std::make_pair( objectName, new CommercialBuilding{ CommercialBuilding( m_crossroads[exitCrossroad], capacity ) } )
+					);
+		}
+		parameters.clear();
+		std::getline( input, fileLine );
+	}
+}
+
+std::map<std::string,Building*> CityClass::GetBuildings() const{
+	return m_buildings;
 }
