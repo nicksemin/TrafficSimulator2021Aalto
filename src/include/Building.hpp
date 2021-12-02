@@ -80,6 +80,8 @@ public:
     /*Get the unique ID of the building*/
     unsigned int GetID() const;
 
+    unsigned int GetVehicleCapacity() const;
+
     /*Get the type of the building*/
     const std::string& GetType() const;
 

@@ -79,6 +79,10 @@ unsigned int Building::GetID() const{
     return id_;
 }
 
+unsigned int Building::GetVehicleCapacity() const{
+    return vehiclecapacity_;
+}
+
 const std::string& Building::GetType() const{
     return type_;
 }
