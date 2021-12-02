@@ -190,7 +190,7 @@ int main( int argc, char* argv[] )
 	std::vector<RoadLineClass*> route2 = n->MakeRoute(left, up);
 
 
-	/* CrossroadClass cr1;
+	 CrossroadClass cr1;
 	CrossroadClass cr2;
 	RoadLineClass road2{ 15, &cr1, &cr2 };
 	CrossroadClass cr3;
@@ -224,7 +224,7 @@ int main( int argc, char* argv[] )
 	/*-----------------------------------------------------------------------------
 	 * CityClass tests, Alexey
 	 *-----------------------------------------------------------------------------*/
-    std::string filename{ "../build/samplecity.txt" };
+    std::string filename{ "../input_file/samplecity.txt" };
     CityClass testCity { filename };
     return 0;
 
