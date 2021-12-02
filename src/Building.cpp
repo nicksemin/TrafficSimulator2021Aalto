@@ -6,7 +6,6 @@
 /*-----------------------------------------------------------------------------
  * For the changes made by Alexey's merge request see the header file
  *-----------------------------------------------------------------------------*/
-int tickTime; //tickTime used as a placeholder for system ticks
 
 /*Constructor*/
 Building::Building(  CrossroadClass* exitCrossRoad, unsigned int vehiclecapacity, const std::string& type ) {
@@ -96,7 +95,7 @@ std::vector<Vehicle*> Building::GetVehicles() const{
     return people_;
  }
 
-bool Person::set_destination(){
+bool Person::set_destination(unsigned int tickTime){
     if (tickTime % 192000 == time_leaving_ || !(this->has_money())){
         destination_ = nullptr; //CHANGE LATER TO IndustrialBuilding
         current_place_->RemovePerson(this);
@@ -120,6 +119,10 @@ bool Person::set_destination(){
     else
         return false;
 };
+
+void Person::performTimeStep(unsigned int tickTime){
+    this->set_destination(tickTime);
+}
 
 /* 
  * ===  FUNCTION  ======================================================================
