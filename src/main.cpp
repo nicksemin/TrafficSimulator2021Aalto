@@ -37,7 +37,7 @@
 #include "./include/Navigator.hpp"
 #include "./include/Building.hpp"
 
-//int tickTime;
+static int tickTime;
 
 int main( int argc, char* argv[] )
 {
@@ -190,7 +190,7 @@ int main( int argc, char* argv[] )
 	std::vector<RoadLineClass*> route2 = n->MakeRoute(left, up);
 
 
-	/* CrossroadClass cr1;
+	 CrossroadClass cr1;
 	CrossroadClass cr2;
 	RoadLineClass road2{ 15, &cr1, &cr2 };
 	CrossroadClass cr3;
@@ -224,12 +224,13 @@ int main( int argc, char* argv[] )
 	/*-----------------------------------------------------------------------------
 	 * CityClass tests, Alexey (and Emma)
 	 *-----------------------------------------------------------------------------*/
-	std::string filename{ "../build/samplecity.txt" };
-	CityClass testCity { filename };
-	for (auto const& building : testCity.GetBuildings()){
-		std::cout<< building.first<<std::endl;
-	}
-	return 0;
+
+    std::string filename{ "../input_file/samplecity.txt" };
+    CityClass testCity { filename };
+    for (auto const& building : testCity.GetBuildings()){
+        std::cout<< building.first<<std::endl;
+    }
+    return 0;
 
 }
 
