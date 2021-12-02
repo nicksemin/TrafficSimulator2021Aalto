@@ -37,7 +37,6 @@ std::vector<std::pair<Distance, int>> FindAdjacentNodes(Distance currentDistance
              std::vector<Distance>::iterator d = find_if(distances.begin(), distances.end(),[&r] (const Distance& d) {return d.crossroad == r->GetEnd();} );
              Distance dd = *d;
              std::pair<Distance, int> pair = std::make_pair(*d, r->GetSize());
-             std::cout << "road size :;;;;; "<< r->GetSize() << std::endl;
              result.push_back(pair);
          }
          it++;

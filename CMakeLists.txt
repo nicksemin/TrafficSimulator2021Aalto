@@ -27,13 +27,24 @@ add_executable(
         tests/PersonTest.cpp
 )
 
+add_executable(
+        navigator_test
+        tests/NavigatorTest.cpp
+)
+
 target_link_libraries(
         person_test
         gtest_main
 )
 
+target_link_libraries(
+        navigator_test
+        gtest_main
+)
+
 include(GoogleTest)
 gtest_discover_tests(person_test)
+gtest_discover_tests(navigator_test)
 
 file(GLOB SOURCES "src/*.cpp")
 
