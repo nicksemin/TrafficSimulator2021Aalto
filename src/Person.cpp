@@ -1,6 +1,6 @@
 #include "./include/Person.hpp"
 #include <random>
- int tickTime; //tickTime used as a placeholder for system ticks
+
 
 Person::Person() {
 
@@ -111,30 +111,7 @@ Building* Person::get_current_place() const{
     return current_place_;
 }
 
-bool Person::set_destination(){
-    if (tickTime % 192000 == time_leaving_ || !(this->has_money())){
-        destination_ = nullptr; //CHANGE LATER TO IndustrialBuilding
-        current_place_->RemovePerson(this);
-        return true;
-    }
-    else if (tickTime % 192000 == time_coming_ ){
-        destination_ = home_;
-        current_place_->RemovePerson(this);
-        return true;
-    }
-    else if (!(this->is_happy())){
-       destination_ = nullptr; //CHANGE LATER TO RecreationalBuilding
-       current_place_->RemovePerson(this);
-        return true;
-    }
-    else if(this->is_hungry() && this->get_food() == 0){
-       destination_ = nullptr; //CHANGE LATER TO CommercialBuilding
-       current_place_->RemovePerson(this);
-        return true;
-    }
-    else
-        return false;
-};
+
 
 
 

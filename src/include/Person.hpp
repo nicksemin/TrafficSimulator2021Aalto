@@ -8,8 +8,7 @@
  * =====================================================================================
  */
 #include <string>
-#include "Vehicle.hpp"
-#include "Building.hpp"
+class Vehicle;
 class Building;
 
 class Person{

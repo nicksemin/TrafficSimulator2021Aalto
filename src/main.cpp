@@ -37,7 +37,7 @@
 #include "./include/Navigator.hpp"
 #include "./include/Building.hpp"
 
-//int tickTime;
+static int tickTime;
 
 int main( int argc, char* argv[] )
 {
@@ -224,9 +224,9 @@ int main( int argc, char* argv[] )
 	/*-----------------------------------------------------------------------------
 	 * CityClass tests, Alexey
 	 *-----------------------------------------------------------------------------*/
-	std::string filename{ "../build/samplecity.txt" };
-	CityClass testCity { filename };
-	return 0;
+    std::string filename{ "../build/samplecity.txt" };
+    CityClass testCity { filename };
+    return 0;
 
 }
 
