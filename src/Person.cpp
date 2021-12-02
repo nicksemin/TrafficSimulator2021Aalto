@@ -1,11 +1,10 @@
 #include "./include/Person.hpp"
-
 #include <random>
  int tickTime; //tickTime used as a placeholder for system ticks
 
-Person::Person(const std::string& name, const std::string& occupation) {
-    name_ = name;
-    occupation_ = occupation;
+Person::Person() {
+
+    id_ = ++nextID_;
 
     std::random_device rd;
     std::mt19937 mt(rd());
@@ -21,9 +20,19 @@ Person::Person(const std::string& name, const std::string& occupation) {
 
 }
 
- const std::string& Person::get_name() const {return name_;}
+unsigned int Person::nextID_ = 0;
 
- const std::string& Person::get_occupation() const {return occupation_;}
+unsigned int Person::get_id() const{
+    return id_;
+}
+
+void Person::set_current_place(Building* b){
+    current_place_ = b;
+}
+
+Building* Person::get_destination() const{
+    return destination_;
+}
 
 double Person::get_money() const{
     return money_;
@@ -44,9 +53,9 @@ int Person::get_hunger() const{
 
 bool Person::is_hungry() const {
     if (hunger_ > 0)
-        return true;
-    else
         return false;
+    else
+        return true;
 }
 
 bool Person::is_happy() const {
@@ -98,13 +107,36 @@ int Person::get_time_coming() const{
     return time_coming_;
 }
 
-
-bool Person::shouldLeave() const{
-    /*if (tickTime == time_coming_ || tickTime == time_leaving_){
-
-    }*/
-    return true;
+Building* Person::get_current_place() const{
+    return current_place_;
 }
+
+bool Person::set_destination(){
+    if (tickTime % 192000 == time_leaving_ || !(this->has_money())){
+        destination_ = nullptr; //CHANGE LATER TO IndustrialBuilding
+        current_place_->RemovePerson(this);
+        return true;
+    }
+    else if (tickTime % 192000 == time_coming_ ){
+        destination_ = home_;
+        current_place_->RemovePerson(this);
+        return true;
+    }
+    else if (!(this->is_happy())){
+       destination_ = nullptr; //CHANGE LATER TO RecreationalBuilding
+       current_place_->RemovePerson(this);
+        return true;
+    }
+    else if(this->is_hungry() && this->get_food() == 0){
+       destination_ = nullptr; //CHANGE LATER TO CommercialBuilding
+       current_place_->RemovePerson(this);
+        return true;
+    }
+    else
+        return false;
+};
+
+
 
 
 

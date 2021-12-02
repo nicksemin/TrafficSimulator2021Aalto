@@ -36,6 +36,9 @@
 #include "./include/Car.hpp"
 #include "./include/Navigator.hpp"
 #include "./include/Building.hpp"
+
+//int tickTime;
+
 int main( int argc, char* argv[] )
 {
 	std::cout << "Hello, I am an empty main function for Traffic Simulator\n";
@@ -216,7 +219,7 @@ int main( int argc, char* argv[] )
 	for (auto vehicle : building2.GetVehicles()){
 		std::cout<< vehicle->GetSize()<<std::endl;
 	}
-	*/
+    */
 
 	/*-----------------------------------------------------------------------------
 	 * CityClass tests, Alexey

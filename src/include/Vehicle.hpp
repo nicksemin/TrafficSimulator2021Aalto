@@ -10,6 +10,7 @@
 */
 class RoadLineClass;
 class CrossroadClass;
+class Person;
 
 /*-----------------------------------------------------------------------------
  * Alexey's modifications, declared the RoadObjectClass
@@ -33,13 +34,15 @@ public:
       * added the functions for destination
       *-----------------------------------------------------------------------------*/
      void setDestination( RoadObjectClass* ptrToBuilding );
+     void removePassenger(Person* person);
+     void takePassenger(Person* person);
      RoadObjectClass* getDestination();
      RoadObjectClass* FindNextRoad(CrossroadClass* currentCross);
 private:
     //Navigator* navigator_;
     int size_;
     std::vector<RoadLineClass*> route_;
-
+    std::vector<Person*> passengers_;
     /*-----------------------------------------------------------------------------
      * Alexey's modification, added the destination building
      *-----------------------------------------------------------------------------*/

@@ -10,14 +10,24 @@
 #include <string>
 #include "Vehicle.hpp"
 #include "Building.hpp"
+class Building;
+
 class Person{
 private:
 
     Building* home_;
-    std::string name_;
+    Building* fav_recreational_;
+    Building* fav_commercial_;
+    Building* work_;
+    Building* current_place_;
+    Building* destination_;
+
+    //Vehicle* current_car_;
+
+    static unsigned int nextID_;
+    unsigned int id_;
     int happiness_;
     bool occupied_;
-    std::string occupation_;
     double money_;
     bool drivingLicense_;//will not be needed for the first iteration; will be used when pedestrians
     int hunger_;
@@ -25,12 +35,12 @@ private:
     Vehicle* own_vehicle_;
     int time_leaving_;
     int time_coming_;
+
 public:
-    Person(const std::string& name, const std::string& occupation);
 
-    const std::string& get_name() const;
+    Person();
 
-    const std::string& get_occupation() const;
+    unsigned int get_id() const;
 
     double get_money() const;
 
@@ -44,13 +54,13 @@ public:
 
     int get_hunger() const;
 
+    Building* get_destination() const;
+
     bool is_hungry() const;
 
     bool is_happy() const;
 
     bool has_money() const;
-
-    bool shouldLeave() const;
 
     void eat_food(int);
 
@@ -64,5 +74,10 @@ public:
 
     void decrease_happiness(int);
 
+    bool set_destination();
+
+    void set_current_place(Building*); //USE WHEN PLACING INSIDE A BUILDING
+
+    Building* get_current_place() const;
 };
 #endif
