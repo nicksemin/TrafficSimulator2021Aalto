@@ -185,6 +185,19 @@ int main( int argc, char* argv[] )
 	/*-----------------------------------------------------------------------------
 	 * Building tests by Emma
 	 *-----------------------------------------------------------------------------
+	
+	BuildingExitCrossroad cross1{ 0, 0 };
+	BuildingExitCrossroad cross2{ 10, 0};
+
+	RecreationalBuilding building1( &cross1, 1 );
+	CommercialBuilding building2( &cross2, 2 );
+
+	Vehicle car1{ 1 };
+	Vehicle car2{ 4 };
+
+	Person person1;
+
+	car1.takePassenger(&person1);
 
 	std::cout << building1.GetID() <<std::endl;
 	std::cout << building2.GetID() <<std::endl;
@@ -196,11 +209,10 @@ int main( int argc, char* argv[] )
 	building2.takeVehicle( &car2, nullptr);
 
 
-	for (auto vehicle : building2.GetVehicles()){
-		std::cout<< vehicle->GetSize()<<std::endl;
+	for (auto vehicle : building2.GetPeople()){
+		std::cout<< vehicle->get_id()<<std::endl;
 	}
-    */
-
+	*/
 	/*-----------------------------------------------------------------------------
 	 * CityClass tests, Alexey (and Emma)
 	 *-----------------------------------------------------------------------------*/

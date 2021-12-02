@@ -36,6 +36,7 @@ public:
      void setDestination( RoadObjectClass* ptrToBuilding );
      void removePassenger(Person* person);
      void takePassenger(Person* person);
+     std::vector<Person*> getPassengers();
      RoadObjectClass* getDestination();
      RoadObjectClass* FindNextRoad(CrossroadClass* currentCross);
 private:

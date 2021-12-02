@@ -1,6 +1,8 @@
 
 #include "./include/Vehicle.hpp"
 
+#include <algorithm>
+
 Vehicle::Vehicle(int size):size_(size) {
     std::vector<RoadLineClass*> r;
     route_ = r;
@@ -46,3 +48,13 @@ void Vehicle::setDestination ( RoadObjectClass* ptrToBuilding )
 	destination_ = ptrToBuilding;
 }
 /* -----  end of function Vehicle::setDestination  ----- */
+
+/* 
+ * ===  FUNCTION  ======================================================================
+ *         Name:  Vehicle::getPassengers
+ *  Description:  added by Emma, get the passengers of the vehicle
+ * =====================================================================================
+ */
+std::vector<Person*> Vehicle::getPassengers(){
+    return passengers_;
+}

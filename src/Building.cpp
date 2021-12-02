@@ -33,6 +33,9 @@ unsigned int Building::nextID = 0;
 /*Take in a vehicle*/
 bool Building::takeVehicle( Vehicle* ptrToCar, const RoadObjectClass* ptrToRoadObject ){
     if (vehicles_.size() < vehiclecapacity_){
+        for(auto person : ptrToCar->getPassengers()) {
+            this->TakePerson(person);
+        }
         vehicles_.push_back( ptrToCar );
         return true;
     }
