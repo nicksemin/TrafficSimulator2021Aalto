@@ -42,6 +42,8 @@ class RoadLineClass : public RoadObjectClass
 		return m_size;
 	}
 
+	std::size_t getNumberOfCars() const;
+
 
     protected:
 

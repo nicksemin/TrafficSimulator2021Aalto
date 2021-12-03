@@ -186,7 +186,7 @@ int main( int argc, char* argv[] )
 	/*-----------------------------------------------------------------------------
 	 * Building tests by Emma
 	 *-----------------------------------------------------------------------------
-	
+
 	BuildingExitCrossroad cross1{ 0, 0 };
 	BuildingExitCrossroad cross2{ 10, 0};
 
@@ -238,6 +238,54 @@ int main( int argc, char* argv[] )
 	RoadLineClass downRoad{ &down, &center };
 	RoadLineClass upRoad{ &center, &up };
 
+	std::cout << "leftRoad, cars: " << leftRoad.getNumberOfCars() << '\n';
+	std::cout << "rightRoad, cars: " << rightRoad.getNumberOfCars() << '\n';
+	std::cout << "downRoad, cars: " << downRoad.getNumberOfCars() << '\n';
+	std::vector<RoadLineClass*> route { &leftRoad, &upRoad };
+	Vehicle leftCar1{ 1 };
+	Vehicle leftCar2{ 1 };
+	Vehicle leftCar3{ 1 };
+	leftCar1.setRoute( route );
+	leftCar2.setRoute( route );
+	leftCar3.setRoute( route );
+	leftRoad.takeVehicle( &leftCar1, nullptr );
+	leftRoad.performTimeStep();
+	leftRoad.takeVehicle( &leftCar2, nullptr );
+	leftRoad.performTimeStep();
+	std::cout << "leftRoad, cars: " << leftRoad.getNumberOfCars() << '\n';
+	leftRoad.takeVehicle( &leftCar3, nullptr );
+
+	route[ 0 ] = &rightRoad;
+
+	Vehicle rightCar1{ 1 };
+	Vehicle rightCar2{ 1 };
+	Vehicle rightCar3{ 1 };
+	rightCar1.setRoute( route );
+	rightCar2.setRoute( route );
+	rightCar3.setRoute( route );
+	rightRoad.takeVehicle( &rightCar1, nullptr );
+	rightRoad.performTimeStep();
+	rightRoad.takeVehicle( &rightCar2, nullptr );
+	rightRoad.performTimeStep();
+	rightRoad.takeVehicle( &rightCar3, nullptr );
+
+	route[ 0 ] = &downRoad;
+
+	Vehicle downCar1{ 1 };
+	Vehicle downCar2{ 1 };
+	Vehicle downCar3{ 1 };
+	downCar1.setRoute( route );
+	downCar2.setRoute( route );
+	downCar3.setRoute( route );
+	downRoad.takeVehicle( &downCar1, nullptr );
+	downRoad.performTimeStep();
+	downRoad.takeVehicle( &downCar2, nullptr );
+	downRoad.performTimeStep();
+	downRoad.takeVehicle( &downCar3, nullptr );
+
+	std::cout << "leftRoad, cars: " << leftRoad.getNumberOfCars() << '\n';
+	std::cout << "rightRoad, cars: " << rightRoad.getNumberOfCars() << '\n';
+	std::cout << "downRoad, cars: " << downRoad.getNumberOfCars() << '\n';
     return 0;
 
 }

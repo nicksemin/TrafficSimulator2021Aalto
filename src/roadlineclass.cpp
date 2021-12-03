@@ -176,3 +176,15 @@ RoadObjectClass* Vehicle::FindNextRoad(CrossroadClass* currentCross)  {
     }
     return *it;
 }
+
+/* 
+ * ===  FUNCTION  ======================================================================
+ *         Name:  RoadLineClass::getNumberOfCars
+ *  Description:  Retruns the current number of cars on the road
+ * =====================================================================================
+ */
+	std::size_t
+RoadLineClass::getNumberOfCars () const
+{
+	return std::count_if( m_cells.begin(), m_cells.end(), []( Vehicle* ptr ) -> bool { return ptr; } );
+}		/* -----  end of function RoadLineClass::getNumberOfCars  ----- */
