@@ -6,21 +6,23 @@
 #include "Vehicle.hpp"
 #include "Person.hpp"
 
+#include <stdlib.h>
+
 class Simulation{
 
 public:
 
-    Simulation(CityClass* city, unsigned int npeople, unsigned int starttime, unsigned int endtime); //outputfile
+    Simulation(CityClass* city, unsigned int npeople, double endtime); //outputfile
 
     void Init();
 
     void Simulate();
 
 private:
+    std::vector<Person*> people_;
     CityClass* city_;
     unsigned int npeople_;
-    unsigned int starttime_;
-    unsigned int endtime_;
+    double endtime_;
 };
 
 
