@@ -226,7 +226,7 @@ int main( int argc, char* argv[] )
 	/*-----------------------------------------------------------------------------
 	 * UnregulatedCrossRoad tests, Alexey
 	 *-----------------------------------------------------------------------------*/
-	TrafficLightCrossroad center{ 0, 0 };
+	TrafficLightCrossroad center{ 0, 0, 2 };
 	UnregulatedCrossroad left{ -20, 0 };
 	UnregulatedCrossroad right{ 20, 0 };
 	UnregulatedCrossroad down{ 0, -20 };
@@ -286,8 +286,16 @@ int main( int argc, char* argv[] )
 	std::cout << "leftRoad, cars: " << leftRoad.getNumberOfCars() << '\n';
 	std::cout << "rightRoad, cars: " << rightRoad.getNumberOfCars() << '\n';
 	std::cout << "downRoad, cars: " << downRoad.getNumberOfCars() << '\n';
-    return 0;
 
+	std::vector<RoadObjectClass*> objects { &leftRoad, &rightRoad, &upRoad,
+		&downRoad, &center };
+	for ( int i{ 0 }; i < 15; ++i ){
+		for ( auto& element : objects ){
+			element->performTimeStep();
+		}
+	}
+
+    return 0;
 }
 
 
