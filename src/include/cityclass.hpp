@@ -23,7 +23,7 @@ class CityClass
 {
     public:
         CityClass(std::string fileName);
-        std::map<std::string,Building*> GetBuildings() const;
+        std::vector<std::pair<std::string,Building*>> GetBuildings() const;
 
     protected:
 
@@ -31,7 +31,7 @@ class CityClass
         std::string m_fileName;
 	std::map<std::string, CrossroadClass*> m_crossroads;
 	std::map<std::string, RoadLineClass*> m_roads;
-    std::map<std::string, Building*> m_buildings;
+    std::vector<std::pair<std::string,Building*>> m_buildings;
 };
 
 #endif // CITYCLASS_

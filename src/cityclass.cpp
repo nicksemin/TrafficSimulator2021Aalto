@@ -88,19 +88,19 @@ CityClass::CityClass(std::string fileName) : m_fileName{ fileName }
 		parameters >> buildingType >> objectName >> exitCrossroad >> capacity;
 		//depending on the type (Recreational, Residential...)
 		if (buildingType == "REC"){
-			m_buildings.insert(
+			m_buildings.push_back(
 					std::make_pair( objectName, new RecreationalBuilding{ RecreationalBuilding( m_crossroads[exitCrossroad], capacity ) } )
 			);
 		}else if (buildingType=="RES"){
-			m_buildings.insert(
+			m_buildings.push_back(
 					std::make_pair( objectName, new ResidentialBuilding{ ResidentialBuilding( m_crossroads[exitCrossroad], capacity ) } )
 					);
 		}else if (buildingType == "IND"){
-			m_buildings.insert(
+			m_buildings.push_back(
 					std::make_pair( objectName, new IndustrialBuilding{ IndustrialBuilding( m_crossroads[exitCrossroad], capacity ) } )
 					);
 		}else if (buildingType == "COM"){
-			m_buildings.insert(
+			m_buildings.push_back(
 					std::make_pair( objectName, new CommercialBuilding{ CommercialBuilding( m_crossroads[exitCrossroad], capacity ) } )
 					);
 		}
@@ -109,6 +109,6 @@ CityClass::CityClass(std::string fileName) : m_fileName{ fileName }
 	}
 }
 
-std::map<std::string,Building*> CityClass::GetBuildings() const{
+std::vector<std::pair<std::string,Building*>> CityClass::GetBuildings() const{
 	return m_buildings;
 }
