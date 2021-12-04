@@ -27,6 +27,7 @@ CityClass::CityClass(std::string fileName) : m_fileName{ fileName }
 	char crossRoadType{};
 	std::string objectName{};
 	std::stringstream parameters{};
+	double trafficLightTime{};
 	//get to the file section with crossroads
 	while ( fileLine != "CROSSROADS" && !input.eof() ) {
 		std::getline( input, fileLine );
@@ -38,7 +39,7 @@ CityClass::CityClass(std::string fileName) : m_fileName{ fileName }
 	//start constructing of the crossroad container
 	while ( fileLine != "ROADS" && !input.eof() ) {
 		parameters.str( fileLine );
-		parameters >> crossRoadType >> objectName >> x >> y;
+		parameters >> crossRoadType >> objectName >> x >> y >> trafficLightTime;
 		//depending on the type (Unregulated, building exit, etc...)
 		switch ( crossRoadType ){
 			case 'U':
@@ -51,12 +52,19 @@ CityClass::CityClass(std::string fileName) : m_fileName{ fileName }
 						std::make_pair( objectName, new BuildingExitCrossroad{ BuildingExitCrossroad( x, y ) } )
 						);
 				break;
+			case 'T':
+				m_crossroads.insert(
+						std::make_pair( objectName, new TrafficLightCrossroad{ TrafficLightCrossroad( x, y,
+						       ( trafficLightTime == 0 ? TrafficLightCrossroad::defaultTrafficLightTime : trafficLightTime )
+						       ) } ) );
+				break;
 			default:
 				m_crossroads.insert(
 						std::make_pair( objectName, new UnregulatedCrossroad{ UnregulatedCrossroad( x, y ) } )
 						);
 		}
 		parameters.clear();
+		trafficLightTime = 0;
 		std::getline( input, fileLine );
 	}
 	//import the roads

@@ -7,6 +7,7 @@
 
 const double TrafficLightCrossroad::tickTime{ 0.45 };
 const double TrafficLightCrossroad::angleDifference{ 0.69 };
+const double TrafficLightCrossroad::defaultTrafficLightTime{ 30.00 };
 
 TrafficLightCrossroad::TrafficLightCrossroad( int x, int y, double trafficLightTimeInSeconds ) : CrossroadClass( x, y ),
 	m_trafficLightTime{ static_cast<std::size_t>( trafficLightTimeInSeconds / tickTime ) }, m_lightCounter{ 0 }

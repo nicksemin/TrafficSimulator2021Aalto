@@ -14,12 +14,15 @@ struct TrafficLight{
 class TrafficLightCrossroad : public CrossroadClass
 {
     public:
-        TrafficLightCrossroad( int x, int y, double trafficLightTimeInSeconds = 30.00 );
+        TrafficLightCrossroad( int x, int y, double trafficLightTimeInSeconds = defaultTrafficLightTime );
 
 	//traffic light crossroad needs to count the time, so it overrides the
 	//superclass performTimeStep()
 	void performTimeStep() override;
 	void addEntryAngle ( const RoadObjectClass* ptrToEntryRoad, double angle ) override;
+
+	//the default traffic light time in seconds
+	static const double defaultTrafficLightTime;
 
     protected:
 

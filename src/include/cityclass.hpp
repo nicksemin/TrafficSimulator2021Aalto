@@ -13,6 +13,7 @@
 //local inlude
 #include "./include/buildingexitcrossroad.hpp"
 #include "./include/unregulatedcrossroad.hpp"
+#include "./include/trafficlightcrossroad.hpp"
 #include "./include/Vehicle.hpp"
 #include "./include/roadlineclass.hpp"
 #include "./include/Car.hpp"
