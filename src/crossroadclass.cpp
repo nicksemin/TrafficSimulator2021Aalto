@@ -3,9 +3,43 @@
 
 /*-----------------------------------------------------------------------------
  * For the description, see the include file
- * contact info - Alexey Serous 
+ * contact info - Alexey Serous
  *-----------------------------------------------------------------------------*/
 std::size_t CrossroadClass::numOfCrossroads{ 0 };
+
+
+/*
+ * =====================================================================================
+ *        Class:  NavigatorException
+ *  Description:  A special exception if the Navigator returns nullptr
+ * =====================================================================================
+ */
+class NavigatorException : public std::exception
+{
+	public:
+		/* ====================  LIFECYCLE     ======================================= */
+		NavigatorException () = default;                             /* constructor */
+
+		/* ====================  ACCESSORS     ======================================= */
+		virtual const char* what() const noexcept{
+			return "Error: the navigator has proposed null as the next route";
+		}
+
+		/* ====================  MUTATORS      ======================================= */
+
+		/* ====================  OPERATORS     ======================================= */
+
+	protected:
+		/* ====================  METHODS       ======================================= */
+
+		/* ====================  DATA MEMBERS  ======================================= */
+
+	private:
+		/* ====================  METHODS       ======================================= */
+
+		/* ====================  DATA MEMBERS  ======================================= */
+
+}; /* -----  end of class NavigatorException  ----- */
 
 CrossroadClass::CrossroadClass( int x, int y ) :
 	m_x{ x }, m_y{ y }
@@ -14,7 +48,7 @@ CrossroadClass::CrossroadClass( int x, int y ) :
     //ctor
 }
 
-/* 
+/*
  * ===  FUNCTION  ======================================================================
  *         Name:  takeVehicle
  *  Description:  takes a Vehicle* from an entry road, checks if there is space
@@ -34,10 +68,10 @@ CrossroadClass::takeVehicle ( Vehicle* ptrToCar, const RoadObjectClass* ptrToRoa
 	}
 }		/* -----  end of function takeVehicle  ----- */
 
-/* 
+/*
  * ===  FUNCTION  ======================================================================
  *         Name:  CrossroadClass::performTimeStep
- *  Description:  
+ *  Description: Throws the NavigatorException()
  * =====================================================================================
  */
 	void
@@ -48,13 +82,21 @@ CrossroadClass::performTimeStep ()
 	for ( const auto& element : m_entryRoads ){
 		//but only if there is a car standing
 		if ( element.second ) {
-			hasRightToGo[ element.first ] = checkRightToGo( element.first, element.second->FindNextRoad( this ) );
+			//the car must not have nullptr as its next destination
+			try{
+				if( !element.second->FindNextRoad( this ) ){
+					throw NavigatorException();
+				}
+			} catch ( std::exception& e ){
+				std::cout << e.what() << std::endl;
+			}
+				hasRightToGo[ element.first ] = checkRightToGo( element.first, element.second->FindNextRoad( this ) );
 		}
 	}
-	
+
 	//for every car that has the right to go
 	for ( auto& element : m_entryRoads ){
-		//if there is a car... 
+		//if there is a car...
 		if ( element.second ) {
 			//... and it is allowed to go + the exit road accepts it
 			if ( hasRightToGo[ element.first ] && element.second->FindNextRoad( this )->takeVehicle( element.second, this ) ) {
@@ -64,7 +106,7 @@ CrossroadClass::performTimeStep ()
 	}
 }		/* -----  end of function CrossroadClass::performTimeStep  ----- */
 
-/* 
+/*
  * ===  FUNCTION  ======================================================================
  *         Name:  CrossroadClass::addEntryRoad
  *  Description:  does what is specified by the name, returns true if succeeded
@@ -79,7 +121,7 @@ CrossroadClass::addEntryRoad ( const RoadObjectClass* ptrToEntryRoad )
 	return true;
 }		/* -----  end of function CrossroadClass::addEntryRoad  ----- */
 
-/* 
+/*
  * ===  FUNCTION  ======================================================================
  *         Name:  CrossroadClass::addExitRoad
  *  Description:  does what is described in the name
@@ -92,7 +134,7 @@ CrossroadClass::addExitRoad ( RoadObjectClass* ptrToExitRoad )
 	return true;
 }		/* -----  end of function CrossroadClass::addExitRoad  ----- */
 
-/* 
+/*
  * ===  FUNCTION  ======================================================================
  *         Name:  CrossroadClass::getX
  *  Description:  returns the coordinate
@@ -104,7 +146,7 @@ CrossroadClass::getX ()
 	return m_x;
 }		/* -----  end of function CrossroadClass::getX  ----- */
 
-/* 
+/*
  * ===  FUNCTION  ======================================================================
  *         Name:  CrossroadClass::getY
  *  Description:  returns the coordinate
@@ -127,7 +169,7 @@ bool CrossroadClass::operator==(CrossroadClass& a){
 	return isEqual;
 }
 
-/* 
+/*
  * ===  FUNCTION  ======================================================================
  *         Name:  CrossroadClass::addEntryAngle
  *  Description:  For the RoadLineClass, add the angle for a road
@@ -139,7 +181,7 @@ CrossroadClass::addEntryAngle ( const RoadObjectClass* ptrToEntryRoad, double an
 	m_entryAngles.insert( std::make_pair( ptrToEntryRoad, angle ) );
 }		/* -----  end of function CrossroadClass::addEntryAngle  ----- */
 
-/* 
+/*
  * ===  FUNCTION  ======================================================================
  *         Name:  CrossroadClass::addExitAngle
  *  Description:  For the RoadLineClass, add the angle for a road

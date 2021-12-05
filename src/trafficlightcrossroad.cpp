@@ -27,26 +27,33 @@ TrafficLightCrossroad::TrafficLightCrossroad( int x, int y, double trafficLightT
 	void
 TrafficLightCrossroad::performTimeStep()
 {
-	CrossroadClass::performTimeStep();
-	//when it is the time to switch the lights, do that for all traffic lights and
-	//reset the counter
-	if ( ++m_lightCounter > m_trafficLightTime ) {
-		//search for the only green light
-		auto it { std::find_if( m_trafficLights.begin(), m_trafficLights.end(), []( const TrafficLight& a ) -> bool{
-				return a.color;
-				} ) };
-		//if it is the last one, now the first one should be green
-		if ( it == m_trafficLights.end() - 1 ) {
-			m_trafficLights.at( 0 ).color = !m_trafficLights.at( 0 ).color;
+		CrossroadClass::performTimeStep();
+		/*-----------------------------------------------------------------------------
+		 *when it is the time to switch the lights, do that for all traffic lights and
+		 *reset the counter, however, sometimes there may be no traffic lights
+		 *due to a user input error
+		 *-----------------------------------------------------------------------------*/
+		if ( ++m_lightCounter > m_trafficLightTime && m_trafficLights.size() != 0 ) {
+			//search for the only green light
+			auto it { std::find_if( m_trafficLights.begin(), m_trafficLights.end(), []( const TrafficLight& a ) -> bool{
+					return a.color;
+					} ) };
+			//if it is the last one, or there are no green ligths, now the first one should be green
+			if ( m_trafficLights.at( m_trafficLights.size() - 1 ).color ) {
+				m_trafficLights.at( m_trafficLights.size() - 1 ).color = false;
+				m_trafficLights.at( 0 ).color = true;
+			}
+			//otherwise, the next one should be green
+			else if ( it == m_trafficLights.end() ){
+				m_trafficLights.at( 0 ).color = true;
+			}
+			else {
+				it->color = false;
+				( ++it )->color = true;
+			}
 		}
-		//otherwise, the next one should be green
-		else {
-			( it + 1 )->color = !( it + 1 )->color;
-		}
-		//and the traffic light itself becomes red
-		it->color = !it->color;
+
 		m_lightCounter = 0;
-	}
 }		/* -----  end of function TrafficLightCrossroad::performTimeStep()  ----- */
 
 /*

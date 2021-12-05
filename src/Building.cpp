@@ -45,7 +45,7 @@ bool Building::takeVehicle( Vehicle* ptrToCar, const RoadObjectClass* ptrToRoadO
 /*Remove a vehicle*/
 bool Building::RemoveVehicle (Vehicle* vehicle){
     auto it = std::find(vehicles_.begin(), vehicles_.end(), vehicle);
-    if (it != vehicles_.end()) { 
+    if (it != vehicles_.end()) {
     //send the vehicle to the crossroad and erase it only if the crossroad accepts it
 	if ( exitCrossRoad_->takeVehicle( *it, this ) ) {
 		vehicles_.erase(it);
@@ -131,7 +131,7 @@ void Person::performTimeStep(unsigned int tickTime){
     this->set_destination(tickTime);
 }
 
-/* 
+/*
  * ===  FUNCTION  ======================================================================
  *         Name:    performTimestep
  *  Description:    Implemented for each building type (subclass) separately, according to
