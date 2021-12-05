@@ -13,7 +13,7 @@ Simulation::Simulation(CityClass* city, unsigned int npeople, double endtime){ /
 */
 
 void Simulation::Init(){
-    std::vector<std::pair<std::string,Building*>>  allCityBuildings = city_ -> GetBuildings();
+    std::vector<std::pair<std::string,Building*>>  allCityBuildings = city_ -> GetRESBuildings();
 
     int peopleToSettle = npeople_;
     while (peopleToSettle > 0) { //This has to be redefined to set the Person's required fields (initial location, home, workplace, preferred shopping place etc.) accordingly
@@ -46,9 +46,9 @@ void Simulation::Simulate(){
         //     road->performTimeStep();
         // }
         //iterate through buildings
-        for (auto [name, building] : city_->GetBuildings()){
-            building->performTimeStep();
-        }
+        // for (auto [name, building] : city_->GetBuildings()){
+        //     building->performTimeStep();
+        // }
         //iterate through people
         for (auto person : people_){
             person->performTimeStep(tickindex);

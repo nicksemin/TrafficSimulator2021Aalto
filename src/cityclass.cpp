@@ -96,19 +96,19 @@ CityClass::CityClass(std::string fileName) : m_fileName{ fileName }
 		parameters >> buildingType >> objectName >> exitCrossroad >> capacity;
 		//depending on the type (Recreational, Residential...)
 		if (buildingType == "REC"){
-			m_buildings.push_back(
+			m_RECbuildings.push_back(
 					std::make_pair( objectName, new RecreationalBuilding{ RecreationalBuilding( m_crossroads[exitCrossroad], capacity ) } )
 			);
 		}else if (buildingType=="RES"){
-			m_buildings.push_back(
+			m_RESbuildings.push_back(
 					std::make_pair( objectName, new ResidentialBuilding{ ResidentialBuilding( m_crossroads[exitCrossroad], capacity ) } )
 					);
 		}else if (buildingType == "IND"){
-			m_buildings.push_back(
+			m_INDbuildings.push_back(
 					std::make_pair( objectName, new IndustrialBuilding{ IndustrialBuilding( m_crossroads[exitCrossroad], capacity ) } )
 					);
 		}else if (buildingType == "COM"){
-			m_buildings.push_back(
+			m_COMbuildings.push_back(
 					std::make_pair( objectName, new CommercialBuilding{ CommercialBuilding( m_crossroads[exitCrossroad], capacity ) } )
 					);
 		}
@@ -117,6 +117,15 @@ CityClass::CityClass(std::string fileName) : m_fileName{ fileName }
 	}
 }
 
-std::vector<std::pair<std::string,Building*>> CityClass::GetBuildings() const{
-	return m_buildings;
+std::vector<std::pair<std::string,Building*>> CityClass::GetRESBuildings() const{
+	return m_RESbuildings;
+}
+std::vector<std::pair<std::string,Building*>> CityClass::GetRECBuildings() const{
+	return m_RESbuildings;
+}
+std::vector<std::pair<std::string,Building*>> CityClass::GetINDBuildings() const{
+	return m_RESbuildings;
+}
+std::vector<std::pair<std::string,Building*>> CityClass::GetCOMBuildings() const{
+	return m_RESbuildings;
 }
