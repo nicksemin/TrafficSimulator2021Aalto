@@ -126,11 +126,11 @@ std::vector<std::pair<std::string,Building*>> CityClass::GetRESBuildings() const
 	return m_RESbuildings;
 }
 std::vector<std::pair<std::string,Building*>> CityClass::GetRECBuildings() const{
-	return m_RESbuildings;
+	return m_RECbuildings;
 }
 std::vector<std::pair<std::string,Building*>> CityClass::GetINDBuildings() const{
-	return m_RESbuildings;
+	return m_INDbuildings;
 }
 std::vector<std::pair<std::string,Building*>> CityClass::GetCOMBuildings() const{
-	return m_RESbuildings;
+	return m_COMbuildings;
 }
