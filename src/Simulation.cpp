@@ -86,7 +86,7 @@ void Simulation::Simulate(){
         
         
         // Get the amount of cars on each road
-        std::vector<size_t> newline(city_->GetRoads().size());
+        std::vector<size_t> newline;
         std::vector<std::pair<std::string,RoadLineClass*>> roads = city_->GetRoads();
         std::transform(roads.cbegin(), roads.cend(),std::back_inserter(newline),[](std::pair<std::string,RoadLineClass*> pair) {return pair.second->getNumberOfCars(); });
         
