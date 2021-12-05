@@ -2,8 +2,8 @@
 #include <random>
 
 
-Person::Person() {
-
+Person::Person(Building* home, Building* fav_recreational,Building* fav_commercial, Building* work):home_(home), fav_recreational_(fav_recreational), fav_commercial_(fav_commercial) {
+    current_place_ = home;
     id_ = ++nextID_;
 
     std::random_device rd;

@@ -13,18 +13,33 @@ Simulation::Simulation(CityClass* city, unsigned int npeople, double endtime){ /
 */
 
 void Simulation::Init(){
-    std::vector<std::pair<std::string,Building*>>  allCityBuildings = city_ -> GetRESBuildings();
+    std::vector<std::pair<std::string,Building*>>  residentBuildings = city_ -> GetRESBuildings();
+    std::vector<std::pair<std::string,Building*>>  recreationalBuildings = city_ -> GetRECBuildings();
+    std::vector<std::pair<std::string,Building*>>  commercialBuildings = city_ -> GetCOMBuildings();
+    std::vector<std::pair<std::string,Building*>>  industrialBuildings = city_ -> GetINDBuildings();
 
     int peopleToSettle = npeople_;
-    while (peopleToSettle > 0) { //This has to be redefined to set the Person's required fields (initial location, home, workplace, preferred shopping place etc.) accordingly
-        int randomBuildingIndex = rand() % allCityBuildings.size();
+    while (peopleToSettle > 0) {
+
+        //TODO: THINK OF SCENARIO WHEN MAXIMUM BUILDING'S CAPACITY IS REACHED
+        int randomRESBuildingIndex = rand() % residentBuildings.size();
+        int randomRECBuildingIndex = rand() % recreationalBuildings.size();
+        int randomINDBuildingIndex = rand() % industrialBuildings.size();
+        int randomComBuildingIndex = rand() % commercialBuildings.size();
+
         int carSize =  rand() % 5 + 1;
-        bool fitting = allCityBuildings[randomBuildingIndex].second->takeVehicle(new Car(carSize), nullptr); 
-        Person* newperson = new Person();
-        if (fitting)  allCityBuildings[randomBuildingIndex].second->TakePerson(newperson); {
-            peopleToSettle --;
+        bool fitting = residentBuildings[randomRESBuildingIndex].second->takeVehicle(new Car(carSize), nullptr); 
+        if (fitting) {
+            Building* home = residentBuildings[randomRESBuildingIndex].second;
+            Building* recreational = recreationalBuildings[randomRECBuildingIndex].second;
+            Building* commercial = commercialBuildings[randomINDBuildingIndex].second;
+            Building* work = industrialBuildings[randomComBuildingIndex].second;
+            Person* newperson = new Person(home, recreational, commercial, work);
+            residentBuildings[randomRESBuildingIndex].second->TakePerson(newperson); 
             people_.push_back(newperson);
-        }
+            }
+            peopleToSettle --;
+        
     }
 }
 

@@ -37,7 +37,7 @@ private:
 
 public:
 
-    Person();
+    Person(Building* home = nullptr, Building* fav_recreational = nullptr,Building* fav_commercial = nullptr, Building* work = nullptr);
 
     unsigned int get_id() const;
 
