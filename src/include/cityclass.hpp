@@ -24,6 +24,8 @@ class CityClass
 {
     public:
         CityClass(std::string fileName);
+        std::map<std::string, CrossroadClass*> GetCrossroads() const;
+        std::vector<std::pair<std::string,RoadLineClass*>> GetRoads() const;
         std::vector<std::pair<std::string,Building*>> GetRECBuildings() const;
         std::vector<std::pair<std::string,Building*>> GetRESBuildings() const;
         std::vector<std::pair<std::string,Building*>> GetINDBuildings() const;
@@ -35,7 +37,7 @@ class CityClass
     private:
     std::string m_fileName;
 	std::map<std::string, CrossroadClass*> m_crossroads;
-	std::map<std::string, RoadLineClass*> m_roads;
+	std::vector<std::pair<std::string, RoadLineClass*>> m_roads;
     std::vector<std::pair<std::string,Building*>> m_RECbuildings;
     std::vector<std::pair<std::string,Building*>> m_RESbuildings;
     std::vector<std::pair<std::string,Building*>> m_INDbuildings;

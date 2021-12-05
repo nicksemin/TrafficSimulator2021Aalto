@@ -75,7 +75,7 @@ CityClass::CityClass(std::string fileName) : m_fileName{ fileName }
 	while ( fileLine != "BUILDINGS" && !input.eof() ) {
 		parameters.str( fileLine );
 		parameters >> objectName >> start >> end >> hasTriangle;
-		m_roads.insert(
+		m_roads.push_back(
 				std::make_pair( objectName, new RoadLineClass{ RoadLineClass( m_crossroads.at( start ), m_crossroads.at( end ),
 						( hasTriangle == "HASTRIANGLE" ? true : false ) ) } )
 			      );
@@ -116,7 +116,12 @@ CityClass::CityClass(std::string fileName) : m_fileName{ fileName }
 		std::getline( input, fileLine );
 	}
 }
-
+std::map<std::string,CrossroadClass*> CityClass::GetCrossroads() const{
+	return m_crossroads;
+}
+std::vector<std::pair<std::string,RoadLineClass*>> CityClass::GetRoads() const{
+	return m_roads;
+}
 std::vector<std::pair<std::string,Building*>> CityClass::GetRESBuildings() const{
 	return m_RESbuildings;
 }
