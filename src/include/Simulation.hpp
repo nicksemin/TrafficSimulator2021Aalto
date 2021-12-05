@@ -12,7 +12,7 @@ class Simulation{
 
 public:
 
-    Simulation(CityClass* city, unsigned int npeople, double endtime); //outputfile
+    Simulation(CityClass* city, unsigned int npeople, double endtime, std::string outputfile); //outputfile
 
     void Init();
 
@@ -23,6 +23,7 @@ private:
     CityClass* city_;
     unsigned int npeople_;
     double endtime_;
+    std::string outputfile_;
 };
 
 

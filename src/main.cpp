@@ -37,6 +37,7 @@
 #include "./include/Car.hpp"
 #include "./include/Navigator.hpp"
 #include "./include/Building.hpp"
+#include "./include/Simulation.hpp"
 
 static int tickTime;
 
@@ -218,82 +219,85 @@ int main( int argc, char* argv[] )
 	 * CityClass tests, Alexey (and Emma)
 	 *-----------------------------------------------------------------------------*/
 
-    /*std::string filename{ "../input_file/samplecity.txt" };
+    std::string filename{ "input_file/samplecity.txt" };
     CityClass testCity { filename };
-    for (auto const& building : testCity.GetBuildings()){
+    for (auto const& building : testCity.GetRESBuildings()){
         std::cout<< building.first<<std::endl;
-    }*/
+    }
+	Simulation testSimulation{&testCity,2,1,"output_file/output.txt"};
+	testSimulation.Init();
+	testSimulation.Simulate();
 	/*-----------------------------------------------------------------------------
 	 * UnregulatedCrossRoad tests, Alexey
 	 *-----------------------------------------------------------------------------*/
-	TrafficLightCrossroad center{ 0, 0, 2 };
-	UnregulatedCrossroad left{ -20, 0 };
-	UnregulatedCrossroad right{ 20, 0 };
-	UnregulatedCrossroad down{ 0, -20 };
-	UnregulatedCrossroad up{ 0, 120 };
+	// TrafficLightCrossroad center{ 0, 0, 2 };
+	// UnregulatedCrossroad left{ -20, 0 };
+	// UnregulatedCrossroad right{ 20, 0 };
+	// UnregulatedCrossroad down{ 0, -20 };
+	// UnregulatedCrossroad up{ 0, 120 };
 
 
-	RoadLineClass leftRoad{ &left, &center };
-	RoadLineClass rightRoad{ &right, &center };
-	RoadLineClass downRoad{ &down, &center };
-	RoadLineClass upRoad{ &center, &up };
+	// RoadLineClass leftRoad{ &left, &center };
+	// RoadLineClass rightRoad{ &right, &center };
+	// RoadLineClass downRoad{ &down, &center };
+	// RoadLineClass upRoad{ &center, &up };
 
-	std::cout << "leftRoad, cars: " << leftRoad.getNumberOfCars() << '\n';
-	std::cout << "rightRoad, cars: " << rightRoad.getNumberOfCars() << '\n';
-	std::cout << "downRoad, cars: " << downRoad.getNumberOfCars() << '\n';
-	std::vector<RoadLineClass*> route { &leftRoad, &upRoad };
-	Vehicle leftCar1{ 1 };
-	Vehicle leftCar2{ 1 };
-	Vehicle leftCar3{ 1 };
-	leftCar1.setRoute( route );
-	leftCar2.setRoute( route );
-	leftCar3.setRoute( route );
-	leftRoad.takeVehicle( &leftCar1, nullptr );
-	leftRoad.performTimeStep();
-	leftRoad.takeVehicle( &leftCar2, nullptr );
-	leftRoad.performTimeStep();
-	std::cout << "leftRoad, cars: " << leftRoad.getNumberOfCars() << '\n';
-	leftRoad.takeVehicle( &leftCar3, nullptr );
+	// std::cout << "leftRoad, cars: " << leftRoad.getNumberOfCars() << '\n';
+	// std::cout << "rightRoad, cars: " << rightRoad.getNumberOfCars() << '\n';
+	// std::cout << "downRoad, cars: " << downRoad.getNumberOfCars() << '\n';
+	// std::vector<RoadLineClass*> route { &leftRoad, &upRoad };
+	// Vehicle leftCar1{ 1 };
+	// Vehicle leftCar2{ 1 };
+	// Vehicle leftCar3{ 1 };
+	// leftCar1.setRoute( route );
+	// leftCar2.setRoute( route );
+	// leftCar3.setRoute( route );
+	// leftRoad.takeVehicle( &leftCar1, nullptr );
+	// leftRoad.performTimeStep();
+	// leftRoad.takeVehicle( &leftCar2, nullptr );
+	// leftRoad.performTimeStep();
+	// std::cout << "leftRoad, cars: " << leftRoad.getNumberOfCars() << '\n';
+	// leftRoad.takeVehicle( &leftCar3, nullptr );
 
-	route[ 0 ] = &rightRoad;
+	// route[ 0 ] = &rightRoad;
 
-	Vehicle rightCar1{ 1 };
-	Vehicle rightCar2{ 1 };
-	Vehicle rightCar3{ 1 };
-	rightCar1.setRoute( route );
-	rightCar2.setRoute( route );
-	rightCar3.setRoute( route );
-	rightRoad.takeVehicle( &rightCar1, nullptr );
-	rightRoad.performTimeStep();
-	rightRoad.takeVehicle( &rightCar2, nullptr );
-	rightRoad.performTimeStep();
-	rightRoad.takeVehicle( &rightCar3, nullptr );
+	// Vehicle rightCar1{ 1 };
+	// Vehicle rightCar2{ 1 };
+	// Vehicle rightCar3{ 1 };
+	// rightCar1.setRoute( route );
+	// rightCar2.setRoute( route );
+	// rightCar3.setRoute( route );
+	// rightRoad.takeVehicle( &rightCar1, nullptr );
+	// rightRoad.performTimeStep();
+	// rightRoad.takeVehicle( &rightCar2, nullptr );
+	// rightRoad.performTimeStep();
+	// rightRoad.takeVehicle( &rightCar3, nullptr );
 
-	route[ 0 ] = &downRoad;
+	// route[ 0 ] = &downRoad;
 
-	Vehicle downCar1{ 1 };
-	Vehicle downCar2{ 1 };
-	Vehicle downCar3{ 1 };
-	downCar1.setRoute( route );
-	downCar2.setRoute( route );
-	downCar3.setRoute( route );
-	downRoad.takeVehicle( &downCar1, nullptr );
-	downRoad.performTimeStep();
-	downRoad.takeVehicle( &downCar2, nullptr );
-	downRoad.performTimeStep();
-	downRoad.takeVehicle( &downCar3, nullptr );
+	// Vehicle downCar1{ 1 };
+	// Vehicle downCar2{ 1 };
+	// Vehicle downCar3{ 1 };
+	// downCar1.setRoute( route );
+	// downCar2.setRoute( route );
+	// downCar3.setRoute( route );
+	// downRoad.takeVehicle( &downCar1, nullptr );
+	// downRoad.performTimeStep();
+	// downRoad.takeVehicle( &downCar2, nullptr );
+	// downRoad.performTimeStep();
+	// downRoad.takeVehicle( &downCar3, nullptr );
 
-	std::cout << "leftRoad, cars: " << leftRoad.getNumberOfCars() << '\n';
-	std::cout << "rightRoad, cars: " << rightRoad.getNumberOfCars() << '\n';
-	std::cout << "downRoad, cars: " << downRoad.getNumberOfCars() << '\n';
+	// std::cout << "leftRoad, cars: " << leftRoad.getNumberOfCars() << '\n';
+	// std::cout << "rightRoad, cars: " << rightRoad.getNumberOfCars() << '\n';
+	// std::cout << "downRoad, cars: " << downRoad.getNumberOfCars() << '\n';
 
-	std::vector<RoadObjectClass*> objects { &leftRoad, &rightRoad, &upRoad,
-		&downRoad, &center };
-	for ( int i{ 0 }; i < 15; ++i ){
-		for ( auto& element : objects ){
-			element->performTimeStep();
-		}
-	}
+	// std::vector<RoadObjectClass*> objects { &leftRoad, &rightRoad, &upRoad,
+	// 	&downRoad, &center };
+	// for ( int i{ 0 }; i < 15; ++i ){
+	// 	for ( auto& element : objects ){
+	// 		element->performTimeStep();
+	// 	}
+	// }
 
     return 0;
 }
