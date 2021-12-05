@@ -2,7 +2,7 @@
 #include <random>
 
 
-Person::Person(Building* home, Building* fav_recreational,Building* fav_commercial, Building* work):home_(home), fav_recreational_(fav_recreational), fav_commercial_(fav_commercial) {
+Person::Person(Navigator* n, Building* home, Building* fav_recreational,Building* fav_commercial, Building* work):navigator_(n), home_(home), fav_recreational_(fav_recreational), fav_commercial_(fav_commercial) {
     current_place_ = home;
     id_ = ++nextID_;
 
@@ -33,6 +33,10 @@ void Person::set_current_place(Building* b){
 Building* Person::get_destination() const{
     return destination_;
 }
+
+  Navigator* Person::getNavigator() {
+      return navigator_;
+  }
 
 double Person::get_money() const{
     return money_;

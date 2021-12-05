@@ -7,12 +7,17 @@
 #include "roadlineclass.cpp"
 #include "roadobjectclass.cpp"
 #include "Building.cpp"
+#include "Navigator.cpp"
 
+std::vector<RoadLineClass*> roads;
+std::vector<CrossroadClass*> crossroads;
+
+Navigator* n = new Navigator(roads, crossroads);
 
 TEST(person_test, Constructor){
-    Person guy1;
-    Person guy2;
-    Person guy3;
+    Person guy1(n);
+    Person guy2(n);
+    Person guy3(n);
     EXPECT_EQ(guy1.get_id(), 1);
     EXPECT_EQ(guy2.get_id(), 2);
     EXPECT_EQ(guy3.get_id(), 3);
@@ -20,7 +25,7 @@ TEST(person_test, Constructor){
 
 
 TEST(person_test, Money) {
-Person guy;
+Person guy(n);
     EXPECT_EQ(guy.get_money(), 500);
     guy.remove_money(500);
     EXPECT_EQ(guy.get_money(), 0);
@@ -30,13 +35,13 @@ Person guy;
 }
 
 TEST(person_test, RandomGenerator){
-    Person guy;
+    Person guy(n);
     EXPECT_NE(guy.get_time_coming(), 0);
     EXPECT_NE(guy.get_time_leaving(), 0);
 }
 
 TEST(person_test, happines){
-    Person guy;
+    Person guy(n);
     EXPECT_EQ(guy.get_happiness(), 1000);
     guy.increase_happiness(1000);
     EXPECT_EQ(guy.get_happiness(), 2000);
@@ -45,7 +50,7 @@ TEST(person_test, happines){
     EXPECT_EQ(guy.is_happy(), false);
 }
 TEST(person_test, foodAndHunger){
-    Person guy;
+    Person guy(n);
     EXPECT_EQ(guy.get_hunger(), 1500);
     EXPECT_EQ(guy.get_food(), 100);
     guy.add_food(300);
@@ -56,7 +61,7 @@ TEST(person_test, foodAndHunger){
 }
 
 TEST(person_test, buildingsPersons){
-    Person guy;
+    Person guy(n);
     //RecreationalBuilding* building1 = new RecreationalBuilding(nullptr, 1);
    // guy.set_current_place(building1);
     EXPECT_NE(guy.get_current_place(), nullptr);
