@@ -9,6 +9,10 @@ leftRoad left center
 rightRoad right center
 downRoad down center HASTRIANGLE
 upRoad center up
+leftRoad1 center left
+rightRoad2 center right
+downRoad3 center down HASTRIANGLE
+upRoad4 up center
 BUILDINGS
 REC gym left 10
 RES home right 10

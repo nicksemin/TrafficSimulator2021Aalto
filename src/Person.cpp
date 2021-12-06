@@ -2,7 +2,7 @@
 #include <random>
 
 
-Person::Person(Navigator* n, Building* home, Building* fav_recreational,Building* fav_commercial, Building* work):navigator_(n), home_(home), fav_recreational_(fav_recreational), fav_commercial_(fav_commercial) {
+Person::Person(Navigator* n, Building* home, Building* fav_recreational,Building* fav_commercial, Building* work):navigator_(n), home_(home), fav_recreational_(fav_recreational), fav_commercial_(fav_commercial), work_(work) {
     current_place_ = home;
     id_ = ++nextID_;
 
