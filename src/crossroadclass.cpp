@@ -7,40 +7,6 @@
  *-----------------------------------------------------------------------------*/
 std::size_t CrossroadClass::numOfCrossroads{ 0 };
 
-
-/*
- * =====================================================================================
- *        Class:  NavigatorException
- *  Description:  A special exception if the Navigator returns nullptr
- * =====================================================================================
- */
-class NavigatorException : public std::exception
-{
-	public:
-		/* ====================  LIFECYCLE     ======================================= */
-		NavigatorException () = default;                             /* constructor */
-
-		/* ====================  ACCESSORS     ======================================= */
-		virtual const char* what() const noexcept{
-			return "Error: the navigator has proposed null as the next route";
-		}
-
-		/* ====================  MUTATORS      ======================================= */
-
-		/* ====================  OPERATORS     ======================================= */
-
-	protected:
-		/* ====================  METHODS       ======================================= */
-
-		/* ====================  DATA MEMBERS  ======================================= */
-
-	private:
-		/* ====================  METHODS       ======================================= */
-
-		/* ====================  DATA MEMBERS  ======================================= */
-
-}; /* -----  end of class NavigatorException  ----- */
-
 CrossroadClass::CrossroadClass( int x, int y ) :
 	m_x{ x }, m_y{ y }
 {
@@ -83,12 +49,8 @@ CrossroadClass::performTimeStep ()
 		//but only if there is a car standing
 		if ( element.second ) {
 			//the car must not have nullptr as its next destination
-			try{
-				if( !element.second->FindNextRoad( this ) ){
-					throw NavigatorException();
-				}
-			} catch ( std::exception& e ){
-				std::cout << e.what() << std::endl;
+			if( !element.second->FindNextRoad( this ) ){
+				throw NavigatorException( this );
 			}
 				hasRightToGo[ element.first ] = checkRightToGo( element.first, element.second->FindNextRoad( this ) );
 		}

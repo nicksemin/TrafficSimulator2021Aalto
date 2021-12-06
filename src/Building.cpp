@@ -71,12 +71,15 @@ bool Building::RemovePerson(Person* person){
         Navigator* n = person->getNavigator();
 
         Building* start = person->get_current_place();
-        Building* end = person->get_destination();
 
+        Building* end = person->get_destination();
+        if ( !start || !end ) {
+            throw BuildingRemovePersonException( this, person );
+        }
         CrossroadClass* startCr = start -> GetExit();
 
         CrossroadClass* endCr = end -> GetExit();
-        
+
 
         std::vector<RoadLineClass*> route = n->MakeRoute(*startCr, *endCr);
 

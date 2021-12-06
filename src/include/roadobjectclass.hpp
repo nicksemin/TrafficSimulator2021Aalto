@@ -1,6 +1,7 @@
 #ifndef ROADOBJECTCLASS_H
 #define ROADOBJECTCLASS_H
 
+#include "exceptions.hpp"
 #include "Vehicle.hpp"
 #include <iostream>
 
