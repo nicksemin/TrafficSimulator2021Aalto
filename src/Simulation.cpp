@@ -49,19 +49,24 @@ void Simulation::Init(){
         int randomRESBuildingIndex = rand() % residentBuildings.size();
         int randomRECBuildingIndex = rand() % recreationalBuildings.size();
         int randomINDBuildingIndex = rand() % industrialBuildings.size();
-        int randomComBuildingIndex = rand() % commercialBuildings.size();
+        int randomCOMBuildingIndex = rand() % commercialBuildings.size();
 
         int carSize =  rand() % 5 + 1;
         bool fitting = residentBuildings[randomRESBuildingIndex].second->takeVehicle(new Car(carSize), nullptr);
         if (fitting) {
             Building* home = residentBuildings[randomRESBuildingIndex].second;
             Building* recreational = recreationalBuildings[randomRECBuildingIndex].second;
+//<<<<<<< HEAD
             Building* commercial = commercialBuildings[randomINDBuildingIndex].second;
             Building* work = industrialBuildings[randomComBuildingIndex].second;
 //<<<<<<< HEAD
             Person* newperson = new Person(navigator, home, recreational, commercial, work);
             residentBuildings[randomRESBuildingIndex].second->TakePerson(newperson); 
 /*=======
+=======
+            Building* commercial = commercialBuildings[randomCOMBuildingIndex].second;
+            Building* work = industrialBuildings[randomINDBuildingIndex].second;
+>>>>>>> 67de68d (Fixed random indices of building types in Simulation::Init() and changed Person's set_destination (in Building.cpp) to not use nullptrs)
             Person* newperson = new Person(home, recreational, commercial, work);
             residentBuildings[randomRESBuildingIndex].second->TakePerson(newperson);
 >>>>>>> 285df3f (Fixed the traffic light crossroad, added an exception for the Navigator in crossroadclass.cpp)*/
