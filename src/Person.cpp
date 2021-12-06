@@ -30,6 +30,10 @@ void Person::set_current_place(Building* b){
     current_place_ = b;
 }
 
+void Person::reset_destination(){
+    destination_ = nullptr;
+}
+
 Building* Person::get_destination() const{
     return destination_;
 }

@@ -58,6 +58,8 @@ public:
 
     Building* get_destination() const;
 
+    void reset_destination();
+
     Navigator* getNavigator();
 
     bool is_hungry() const;

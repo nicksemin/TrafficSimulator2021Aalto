@@ -58,6 +58,8 @@ bool Building::RemoveVehicle (Vehicle* vehicle){
 // /*Take in a person*/
 void Building::TakePerson(Person* person){
     people_.push_back(person);
+    person->set_current_place(this);
+    person->reset_destination();
  }
 
 // /*Remove a person*/
