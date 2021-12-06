@@ -57,6 +57,7 @@ void Simulation::Init(){
             Building* home = residentBuildings[randomRESBuildingIndex].second;
             Building* recreational = recreationalBuildings[randomRECBuildingIndex].second;
 //<<<<<<< HEAD
+//<<<<<<< HEAD
             Building* commercial = commercialBuildings[randomINDBuildingIndex].second;
             Building* work = industrialBuildings[randomComBuildingIndex].second;
 //<<<<<<< HEAD
@@ -70,6 +71,12 @@ void Simulation::Init(){
             Person* newperson = new Person(home, recreational, commercial, work);
             residentBuildings[randomRESBuildingIndex].second->TakePerson(newperson);
 >>>>>>> 285df3f (Fixed the traffic light crossroad, added an exception for the Navigator in crossroadclass.cpp)*/
+/*=======
+            Building* commercial = commercialBuildings[randomCOMBuildingIndex].second;
+            Building* work = industrialBuildings[randomINDBuildingIndex].second;
+            Person* newperson = new Person(home, recreational, commercial, work);
+            residentBuildings[randomRESBuildingIndex].second->TakePerson(newperson);
+>>>>>>> 67de68d691a5a25aecfb9349f55eed27f3b565a4*/
             people_.push_back(newperson);
             }
             peopleToSettle --;
