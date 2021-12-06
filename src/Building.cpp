@@ -104,7 +104,7 @@ std::vector<Vehicle*> Building::GetVehicles() const{
 
 bool Person::set_destination(unsigned int tickTime){
     if (tickTime % 192000 == time_leaving_ || !(this->has_money())){
-        destination_ = nullptr; //CHANGE LATER TO IndustrialBuilding
+        destination_ = work_; //CHANGE LATER TO IndustrialBuilding
         current_place_->RemovePerson(this);
         return true;
     }
@@ -114,12 +114,12 @@ bool Person::set_destination(unsigned int tickTime){
         return true;
     }
     else if (!(this->is_happy())){
-        destination_ = nullptr; //CHANGE LATER TO RecreationalBuilding
+        destination_ = fav_recreational_; //CHANGE LATER TO RecreationalBuilding
         current_place_->RemovePerson(this);
         return true;
     }
     else if(this->is_hungry() && this->get_food() == 0){
-        destination_ = nullptr; //CHANGE LATER TO CommercialBuilding
+        destination_ = fav_commercial_; //CHANGE LATER TO CommercialBuilding
         current_place_->RemovePerson(this);
         return true;
     }
