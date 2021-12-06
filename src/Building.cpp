@@ -65,7 +65,23 @@ void Building::TakePerson(Person* person){
 bool Building::RemovePerson(Person* person){
     auto it = std::find(people_.begin(), people_.end(), person);
     if (it != people_.end()) {
+
+        Navigator* n = person->getNavigator();
+
+        Building* start = person->get_current_place();
+        Building* end = person->get_destination();
+
+        CrossroadClass* startCr = start -> GetExit();
+
+        CrossroadClass* endCr = end -> GetExit();
+        
+
+        std::vector<RoadLineClass*> route = n->MakeRoute(*startCr, *endCr);
+
+
+
         vehicles_[0]->takePassenger(person);
+        vehicles_[0]->setRoute(route);
         vehicles_[0]->setDestination(person->get_destination());
         people_.erase(it);
         this->RemoveVehicle(vehicles_[0]);

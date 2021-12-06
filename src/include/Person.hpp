@@ -8,6 +8,8 @@
  * =====================================================================================
  */
 #include <string>
+
+#include <./include/Navigator.hpp>
 class Vehicle;
 class Building;
 
@@ -20,6 +22,7 @@ private:
     Building* work_;
     Building* current_place_;
     Building* destination_;
+    Navigator* navigator_;
 
     //Vehicle* current_car_;
 
@@ -37,7 +40,7 @@ private:
 
 public:
 
-    Person(Building* home = nullptr, Building* fav_recreational = nullptr,Building* fav_commercial = nullptr, Building* work = nullptr);
+    Person(Navigator* n, Building* home = nullptr, Building* fav_recreational = nullptr,Building* fav_commercial = nullptr, Building* work = nullptr);
 
     unsigned int get_id() const;
 
@@ -54,6 +57,8 @@ public:
     int get_hunger() const;
 
     Building* get_destination() const;
+
+    Navigator* getNavigator();
 
     bool is_hungry() const;
 

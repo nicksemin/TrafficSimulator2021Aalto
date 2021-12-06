@@ -13,6 +13,23 @@ Simulation::Simulation(CityClass* city, unsigned int npeople, double endtime){ /
 */
 
 void Simulation::Init(){
+
+    std::vector<std::pair<std::string,RoadLineClass*>> roadMap = city_->GetRoads();
+
+    std::map<std::string,CrossroadClass*> crossroadClassMap = city_->GetCrossroads();
+
+    std::vector<RoadLineClass*> roads;
+    for(std::vector<std::pair<std::string,RoadLineClass*>>::iterator it = roadMap.begin(); it != roadMap.end(); ++it) {
+    roads.push_back(it->second);
+    } 
+
+    std::vector<CrossroadClass*> crossRoads;
+    for(std::map<std::string,CrossroadClass*>::iterator it = crossroadClassMap.begin(); it != crossroadClassMap.end(); ++it) {
+    crossRoads.push_back(it->second);
+    } 
+
+    Navigator* navigator= new Navigator(roads, crossRoads);
+
     std::vector<std::pair<std::string,Building*>>  residentBuildings = city_ -> GetRESBuildings();
     std::vector<std::pair<std::string,Building*>>  recreationalBuildings = city_ -> GetRECBuildings();
     std::vector<std::pair<std::string,Building*>>  commercialBuildings = city_ -> GetCOMBuildings();
@@ -34,7 +51,7 @@ void Simulation::Init(){
             Building* recreational = recreationalBuildings[randomRECBuildingIndex].second;
             Building* commercial = commercialBuildings[randomINDBuildingIndex].second;
             Building* work = industrialBuildings[randomComBuildingIndex].second;
-            Person* newperson = new Person(home, recreational, commercial, work);
+            Person* newperson = new Person(navigator, home, recreational, commercial, work);
             residentBuildings[randomRESBuildingIndex].second->TakePerson(newperson); 
             people_.push_back(newperson);
             }
