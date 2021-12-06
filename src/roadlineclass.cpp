@@ -39,7 +39,7 @@ RoadLineClass::RoadLineClass ( CrossroadClass* start, CrossroadClass* end, bool 
 	//make the cell vector to have required number of elements
 	m_cells.resize( size );
 
-	/* 
+	/*
 	 * ===  FUNCTION  ======================================================================
 	 *         Name:  defineAngle
 	 *  Description:  a lambda to define the angle between two crossroads based on dx and dy
@@ -120,6 +120,7 @@ RoadLineClass::isEnoughSpace ( std::size_t index, std::size_t size )
 	bool
 RoadLineClass::takeVehicle ( Vehicle* ptrToCar, const RoadObjectClass* ptrToRoadObject )
 {
+    std::cout << "RoadLineClass::takeVehicle: I am used\n";
 	//if there is enough space, occupy all the required cells with the car
 	if ( isEnoughSpace( 0, ptrToCar->GetSize() ) ) {
 		for ( int i{ 0 }; i < ptrToCar->GetSize(); ++i ){
@@ -177,7 +178,7 @@ RoadObjectClass* Vehicle::FindNextRoad(CrossroadClass* currentCross)  {
     return *it;
 }
 
-/* 
+/*
  * ===  FUNCTION  ======================================================================
  *         Name:  RoadLineClass::getNumberOfCars
  *  Description:  Retruns the current number of cars on the road

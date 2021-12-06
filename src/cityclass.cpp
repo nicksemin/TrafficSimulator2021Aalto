@@ -116,7 +116,7 @@ CityClass::CityClass(std::string fileName) : m_fileName{ fileName }
 		std::getline( input, fileLine );
 	}
 }
-std::map<std::string,CrossroadClass*> CityClass::GetCrossroads() const{
+std::map<std::string,CrossroadClass*>& CityClass::GetCrossroads(){
 	return m_crossroads;
 }
 std::vector<std::pair<std::string,RoadLineClass*>> CityClass::GetRoads() const{

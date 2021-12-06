@@ -45,7 +45,7 @@ bool Building::takeVehicle( Vehicle* ptrToCar, const RoadObjectClass* ptrToRoadO
 /*Remove a vehicle*/
 bool Building::RemoveVehicle (Vehicle* vehicle){
     auto it = std::find(vehicles_.begin(), vehicles_.end(), vehicle);
-    if (it != vehicles_.end()) { 
+    if (it != vehicles_.end()) {
     //send the vehicle to the crossroad and erase it only if the crossroad accepts it
 	if ( exitCrossRoad_->takeVehicle( *it, this ) ) {
 		vehicles_.erase(it);
@@ -58,6 +58,8 @@ bool Building::RemoveVehicle (Vehicle* vehicle){
 // /*Take in a person*/
 void Building::TakePerson(Person* person){
     people_.push_back(person);
+    person->set_current_place(this);
+    person->reset_destination();
  }
 
 // /*Remove a person*/
@@ -69,12 +71,15 @@ bool Building::RemovePerson(Person* person){
         Navigator* n = person->getNavigator();
 
         Building* start = person->get_current_place();
-        Building* end = person->get_destination();
 
+        Building* end = person->get_destination();
+        if ( !start || !end ) {
+            throw BuildingRemovePersonException( this, person );
+        }
         CrossroadClass* startCr = start -> GetExit();
 
         CrossroadClass* endCr = end -> GetExit();
-        
+
 
         std::vector<RoadLineClass*> route = n->MakeRoute(*startCr, *endCr);
 
@@ -120,7 +125,7 @@ std::vector<Vehicle*> Building::GetVehicles() const{
 
 bool Person::set_destination(unsigned int tickTime){
     if (tickTime % 192000 == time_leaving_ || !(this->has_money())){
-        destination_ = nullptr; //CHANGE LATER TO IndustrialBuilding
+        destination_ = work_; //CHANGE LATER TO IndustrialBuilding
         current_place_->RemovePerson(this);
         return true;
     }
@@ -130,12 +135,12 @@ bool Person::set_destination(unsigned int tickTime){
         return true;
     }
     else if (!(this->is_happy())){
-        destination_ = nullptr; //CHANGE LATER TO RecreationalBuilding
+        destination_ = fav_recreational_; //CHANGE LATER TO RecreationalBuilding
         current_place_->RemovePerson(this);
         return true;
     }
     else if(this->is_hungry() && this->get_food() == 0){
-        destination_ = nullptr; //CHANGE LATER TO CommercialBuilding
+        destination_ = fav_commercial_; //CHANGE LATER TO CommercialBuilding
         current_place_->RemovePerson(this);
         return true;
     }
@@ -147,7 +152,7 @@ void Person::performTimeStep(unsigned int tickTime){
     this->set_destination(tickTime);
 }
 
-/* 
+/*
  * ===  FUNCTION  ======================================================================
  *         Name:    performTimestep
  *  Description:    Implemented for each building type (subclass) separately, according to

@@ -1,7 +1,9 @@
 #ifndef ROADOBJECTCLASS_H
 #define ROADOBJECTCLASS_H
 
+#include "exceptions.hpp"
 #include "Vehicle.hpp"
+#include <iostream>
 
 const double PI{ 3.14 };
 /*
@@ -15,6 +17,7 @@ const double PI{ 3.14 };
 class RoadObjectClass
 {
 	public:
+
 		/* ====================  LIFECYCLE     ======================================= */
 		RoadObjectClass ( bool hasTriangle = false );                             /* constructor */
 
