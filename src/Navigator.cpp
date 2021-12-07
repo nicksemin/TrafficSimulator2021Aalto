@@ -6,7 +6,6 @@
 #include <limits>
 #include <iostream>
 
-
 Navigator::Navigator(std::vector<RoadLineClass*> roads, std::vector<CrossroadClass*> crossroads):roads_(roads), crossroads_(crossroads){ }
 
 struct Distance{
@@ -26,10 +25,7 @@ for (std::vector<Distance>::iterator it = distances.begin(); it!= distances.end(
 }
 
 std::vector<std::pair<Distance, int>> FindAdjacentNodes(Distance currentDistance, std::vector<Distance> distances,  std::vector<RoadLineClass*> roads){
-
     std::vector<std::pair<Distance, int>> result;
-
-
      for (std::vector<RoadLineClass*>::iterator it = roads.begin(); it!= roads.end();){
          RoadLineClass* r = *it;
          size_t s = r->GetSize();
@@ -92,45 +88,37 @@ std::vector<RoadLineClass*> Navigator::MakeRoute(CrossroadClass& start, Crossroa
             it++;
     }
 
-
      int count = distances.size();
+     for ( std::vector<Distance>::iterator it = distances.begin(); it!= distances.end();){
+        Distance d = *it;
+        it++;
+    }
 
-
-    while (count != 0) {
+    for ( std::vector<Distance>::iterator it = distances.begin(); it!= distances.end();){ 
         Distance current = findMinDistance(distances);
         spt.push_back(current);
 
         //1. find adjacent nodes: search in map roads that start with current crossroad, then collect crossroads where those roads end
         //2. find their distance in distances. if it's bigger than size of the road connecting current crossroad and adjustent node, update it and parent
-
+   
         std::vector<std::pair<Distance, int>> adjustent_nodes = FindAdjacentNodes(current, distances, roads_); // adjacent Distance struct, distance to it from the current node
-        for (std::vector<std::pair<Distance, int>>::iterator it4 = adjustent_nodes.begin(); it4!= adjustent_nodes.end();){
 
-        std::pair<Distance, int> r = *it4;
-        it4++;
-    }
-        for ( std::vector<std::pair<Distance, int>>::iterator it1 = adjustent_nodes.begin(); it1!= adjustent_nodes.end();){
-           int distanceViaCurrentNode = current.distance + it1->second;
-           if (it1->first.distance > distanceViaCurrentNode){
-               auto it2 = find_if(distances.begin(), distances.end(), [=] (const Distance& d) {return d.crossroad == current.crossroad;});
-               auto index = std::distance(distances.begin(), it2);
-               Distance newD = {it1->first.crossroad, distanceViaCurrentNode, current.crossroad};
-               distances[index] =newD;
+        for ( std::vector<std::pair<Distance, int>>::iterator it = adjustent_nodes.begin(); it!= adjustent_nodes.end();){
+           int distanceViaCurrentNode = current.distance + it->second;
+           if (it->first.distance >= distanceViaCurrentNode){
+                for ( std::vector<Distance>::iterator it2 = distances.begin(); it2!= distances.end();){
+                    Distance d = *it2;
+                    if (d.crossroad == it->first.crossroad) *it2 = {it->first.crossroad, distanceViaCurrentNode, current.crossroad};
+                    it2++;
+                }
            }
-
-           it1++;
+           it++;
         }
-        count--;
+        std::vector<Distance>::iterator di = find_if(distances.begin(), distances.end(), [=] (const Distance& d) {return d.crossroad == current.crossroad;});
+        distances.erase(di);
     }
 
-    Distance d2 = spt[2];
-
-    Distance d0 = spt[0];
-
-    for ( std::vector<Distance>::iterator it = spt.begin(); it!= spt.end();){
-        Distance d = *it;
-        it++;
-    }
+    std::cout  << "spt size" << spt.size() << std::endl;
 
     std::vector<Distance>::iterator it = std::find_if(spt.begin(), spt.end(), [&finish] (const Distance d) {
     if (!d.crossroad ){
@@ -139,25 +127,24 @@ std::vector<RoadLineClass*> Navigator::MakeRoute(CrossroadClass& start, Crossroa
     return *d.crossroad == finish;
     });
     Distance currentDist= (*it);
+    /*
+    std::cout << "printlng shortest path tree:" << std::endl;
+    for ( std::vector<Distance>::iterator it = spt.begin(); it!= spt.end();){
+        Distance d = *it;
+        std::cout << "Crossroad:                " << *(d.crossroad) <<std::endl;
+        it++;
+    }
+    */
 
-    std::cout << "calculating path.." << std::endl;
+    std::cout << "calculating path from " <<start << " to " << finish << std::endl;
 
     std::vector<RoadLineClass*> result;
 
     while (currentDist.crossroad != &start){
-        std::vector<RoadLineClass*>::iterator r = std::find_if(roads_.begin(), roads_.end(), [=](const RoadLineClass* r) {return r->GetStart() == currentDist.parent;});
+        std::vector<RoadLineClass*>::iterator r = std::find_if(roads_.begin(), roads_.end(), [=](const RoadLineClass* r) {return r->GetStart() == currentDist.parent && r->GetEnd() == currentDist.crossroad;});
         result.push_back(*r);
         std::vector<Distance>::iterator d_it = std::find_if(spt.begin(), spt.end(), [=] (const Distance d) {return d.crossroad == currentDist.parent;});
         currentDist = *d_it;
-    }
-
-    std::cout << "printlng shortest path tree:" << std::endl;
-    for ( std::vector<Distance>::iterator it = spt.begin(); it!= spt.end();){
-        Distance d = *it;
-        std::cout << "Crossroad: " << *(d.crossroad) <<std::endl;
-        std::cout << "Distance: " << (d.distance) <<std::endl;
-
-        it++;
     }
 
      std::cout << "PATH:" << std::endl;
