@@ -61,8 +61,8 @@ void Simulation::Init(){
         if (fitting) {
             Building* home = residentBuildings[randomRESBuildingIndex].second;
             Building* recreational = recreationalBuildings[randomRECBuildingIndex].second;
-            Building* commercial = commercialBuildings[randomINDBuildingIndex].second;
-            Building* work = industrialBuildings[randomCOMBuildingIndex].second;
+            Building* commercial = commercialBuildings[randomCOMBuildingIndex].second;
+            Building* work = industrialBuildings[randomINDBuildingIndex].second;
             Person* newperson = new Person(navigator, home, recreational, commercial, work);
             residentBuildings[randomRESBuildingIndex].second->TakePerson(newperson); 
 
