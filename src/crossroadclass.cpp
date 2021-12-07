@@ -56,13 +56,26 @@ CrossroadClass::performTimeStep ()
 		}
 	}
 
+	//sometimes, no cars are allowed to go because they all have an obstacle from the right
+	//in this case the first one tries
+	auto it{ std::find_if( hasRightToGo.begin(), hasRightToGo.end(), []( auto& a ) -> bool
+			{
+			return a.second;
+			} ) };
+	if ( it == hasRightToGo.end() ) {
+		hasRightToGo.begin()->second = true;
+	}
+
 	//for every car that has the right to go
 	for ( auto& element : m_entryRoads ){
 		//if there is a car...
 		if ( element.second ) {
-			//... and it is allowed to go + the exit road accepts it
-			if ( hasRightToGo[ element.first ] && element.second->FindNextRoad( this )->takeVehicle( element.second, this ) ) {
-				element.second = nullptr;
+			//... and it is allowed to go
+			if ( hasRightToGo[ element.first ] ) {
+				 //and if the exit road accepts it
+				 if ( element.second->FindNextRoad( this )->takeVehicle( element.second, this ) ){
+					element.second = nullptr;
+				 }
 			}
 		}
 	}
