@@ -2,6 +2,7 @@
 #define EXCEPTIONS_HPP
 
 #include <exception>
+#include <string>
 
 class RoadObjectClass;
 class Person;
@@ -15,12 +16,22 @@ class Person;
 class NullPtrException : public std::exception
 {
     public:
+	    NullPtrException( std::string message, const RoadObjectClass* ptr = nullptr ) :
+		    m_customMessage{ message }, m_errorObject{ ptr }
+	    {
+	    }
+
+	    std::string getCustomMessage(){
+		    return m_customMessage;
+	    }
 	virtual const char* what() const noexcept {
 		return "Error! A nullptr was accessed!";
 	}
     protected:
 
     private:
+	std::string m_customMessage;
+	const RoadObjectClass* m_errorObject;
 };
 
 /*-----------------------------------------------------------------------------
@@ -60,7 +71,7 @@ class BuildingRemovePersonException : public std::exception
 	}
 
 	virtual const char* what() const noexcept {
-		return "The building tried to access nullptr when removing a person (person's current location or destination was nullptr)";
+		return "The building tried to access nullptr when removing a person (person's current location, destination or their crossroads was nullptr)";
 	}
 
 	const RoadObjectClass* getErrorBuilding(){

@@ -162,5 +162,8 @@ void Simulation::Simulate(){
 	catch ( BuildingRemovePersonException& e ){
 		std::cout << e.what() << std::endl;
 	}
+	catch ( NullPtrException& e ){
+		std::cout << e.what() << '\n' << e.getCustomMessage() << std::endl;
+	}
 
 }

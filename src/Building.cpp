@@ -79,7 +79,9 @@ bool Building::RemovePerson(Person* person){
         CrossroadClass* startCr = start -> GetExit();
 
         CrossroadClass* endCr = end -> GetExit();
-
+        if ( !startCr || !endCr ) {
+            throw BuildingRemovePersonException( this, person );
+        }
 
         std::vector<RoadLineClass*> route = n->MakeRoute(*startCr, *endCr);
 
