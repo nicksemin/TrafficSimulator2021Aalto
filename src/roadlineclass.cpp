@@ -98,6 +98,9 @@ RoadLineClass::RoadLineClass ( CrossroadClass* start, CrossroadClass* end, bool 
 	bool
 RoadLineClass::isEnoughSpace ( std::size_t index, std::size_t size )
 {
+	if ( size > m_cells.size() ) {
+		throw UserInputException( "A car with the size bigger than the one of the road tries to enter the road" );
+	}
 	bool valid{ true };
 
 	for ( std::size_t i{ index }; i < size; ++i ){

@@ -35,6 +35,29 @@ class NullPtrException : public std::exception
 };
 
 /*-----------------------------------------------------------------------------
+ * A user input Exception
+ *-----------------------------------------------------------------------------*/
+class UserInputException : public std::exception
+{
+    public:
+	    UserInputException( std::string message ) :
+		    m_customMessage{ message }
+	    {
+	    }
+
+	virtual const char* what() const noexcept {
+		return "Error! ";
+	}
+	    std::string getCustomMessage(){
+		    return m_customMessage;
+	    }
+    protected:
+
+    private:
+	std::string m_customMessage;
+};
+
+/*-----------------------------------------------------------------------------
  * An exception if the Navigator returns nullptr as the next road or destination
  *-----------------------------------------------------------------------------*/
 class NavigatorException : public std::exception

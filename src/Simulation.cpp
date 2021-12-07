@@ -9,7 +9,7 @@
 
 /*-----------------------------------------------------------------------------
  * Alexey's edit: added exceptions, so that it is possible to figure out
- * where the error happened 
+ * where the error happened
  *-----------------------------------------------------------------------------*/
 
 Simulation::Simulation(CityClass* city, unsigned int npeople, double endtime,std::string outputfile){ //outputfile
@@ -33,12 +33,12 @@ void Simulation::Init(){
     std::vector<RoadLineClass*> roads;
     for(std::vector<std::pair<std::string,RoadLineClass*>>::iterator it = roadMap.begin(); it != roadMap.end(); ++it) {
     roads.push_back(it->second);
-    } 
+    }
 
     std::vector<CrossroadClass*> crossRoads;
     for(std::map<std::string,CrossroadClass*>::iterator it = crossroadClassMap.begin(); it != crossroadClassMap.end(); ++it) {
     crossRoads.push_back(it->second);
-    } 
+    }
 
     Navigator* navigator= new Navigator(roads, crossRoads);
 
@@ -64,7 +64,7 @@ void Simulation::Init(){
             Building* commercial = commercialBuildings[randomCOMBuildingIndex].second;
             Building* work = industrialBuildings[randomINDBuildingIndex].second;
             Person* newperson = new Person(navigator, home, recreational, commercial, work);
-            residentBuildings[randomRESBuildingIndex].second->TakePerson(newperson); 
+            residentBuildings[randomRESBuildingIndex].second->TakePerson(newperson);
 
             people_.push_back(newperson);
             }
@@ -164,6 +164,9 @@ void Simulation::Simulate(){
 	}
 	catch ( NullPtrException& e ){
 		std::cout << e.what() << '\n' << e.getCustomMessage() << std::endl;
+	}
+	catch ( UserInputException& e ){
+		std::cout << e.what() << e.getCustomMessage() << std::endl;
 	}
 
 }
