@@ -41,8 +41,8 @@ class CrossroadClass : public RoadObjectClass
 	void addExitAngle ( RoadObjectClass* ptrToExitRoad, double angle );
 
 	//used only in a building exit crossroad, added here so that a road can set a value
-	void setOnlyEntryRoad( const RoadObjectClass* ptrToEntry ){
-		m_onlyEntryRoad = ptrToEntry;
+	void setRealEntryRoad( RoadObjectClass* ptrToEntry ){
+		m_realEntryRoads.push_back( ptrToEntry );
 	}
 	//get coordinates
 	int getX();
@@ -71,7 +71,7 @@ class CrossroadClass : public RoadObjectClass
 	std::map<const RoadObjectClass*, double> m_exitAngles;
 
 	//used only in a building exit crossroad, added here so that a road can set a value
-	const RoadObjectClass* m_onlyEntryRoad;
+	std::vector<RoadObjectClass*> m_realEntryRoads;
 
     private:
 

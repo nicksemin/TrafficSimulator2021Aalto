@@ -26,7 +26,7 @@ RoadLineClass::RoadLineClass ( CrossroadClass* start, CrossroadClass* end, bool 
 	start->addExitRoad( this );
 	end->addEntryRoad( this );
 	//add the end road being the only entry road for a building exit cross-road
-	end->setOnlyEntryRoad( this );
+	end->setRealEntryRoad( this );
 
 	//define the size and crossroad angles
 	double dx{ static_cast<double>( end->getX() - start->getX() ) };
