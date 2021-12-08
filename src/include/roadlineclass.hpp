@@ -24,7 +24,7 @@
 class RoadLineClass : public RoadObjectClass
 {
     public:
-        RoadLineClass( CrossroadClass* start, CrossroadClass* end, bool hasTriangle = false );
+        RoadLineClass( CrossroadClass* start, CrossroadClass* end, bool hasTriangle = false, std::size_t speedLimit = 40 );
 
 	bool takeVehicle( Vehicle* ptrToCar, const RoadObjectClass* ptrToRoadObject ) override;
 
@@ -59,6 +59,7 @@ class RoadLineClass : public RoadObjectClass
 
 	//car size
 	static std::size_t cellSize;
+	std::size_t m_speedLimit;
 };
 
 #endif // ROADLINECLASS_H

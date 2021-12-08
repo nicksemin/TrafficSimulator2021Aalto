@@ -15,6 +15,26 @@
  */
 CityClass::CityClass(std::string fileName) : m_fileName{ fileName }
 {
+
+	/* 
+	 * ===  FUNCTION  ======================================================================
+	 *         Name:  lookupCrossroad
+	 *  Description:  a lambda that takes a string and checks if there
+	 *  is a key value with the desired string in crossroads
+	 * =====================================================================================
+	 */
+	auto
+		lookupCrossroad
+		{
+			[ this ]( std::string a ) -> bool
+			{
+				auto it{ std::find_if( m_crossroads.begin(), m_crossroads.end(), [ a ]( auto& element ) -> bool{
+						return element.first == a;
+						} ) };
+				return it != m_crossroads.end();
+			}
+		};		/* -----  end of function lookupCrossroad  ----- */
+
 	std::ifstream input{ fileName };
 	if ( !input ) {
 		std::cerr << "Error! The file " << fileName << " cannot be accessed\n";
@@ -35,12 +55,17 @@ CityClass::CityClass(std::string fileName) : m_fileName{ fileName }
 
 	//import the first crossroad
 	std::getline( input, fileLine );
-
+	if ( input.eof() ) {
+		throw UserInputException( "Error, the input file does not contain \"CROSSROADS\" section!" );
+	}
 	//start constructing of the crossroad container
 	while ( fileLine != "ROADS" && !input.eof() ) {
 		parameters.str( fileLine );
 		parameters >> crossRoadType >> objectName >> x >> y >> trafficLightTime;
 		//depending on the type (Unregulated, building exit, etc...)
+		if ( lookupCrossroad( objectName ) ) {
+			throw UserInputException( "Error! A dublicated crossroad name in the input file." );
+		}
 		switch ( crossRoadType ){
 			case 'U':
 				m_crossroads.insert(
@@ -59,31 +84,103 @@ CityClass::CityClass(std::string fileName) : m_fileName{ fileName }
 						       ) } ) );
 				break;
 			default:
-				m_crossroads.insert(
-						std::make_pair( objectName, new UnregulatedCrossroad{ UnregulatedCrossroad( x, y ) } )
-						);
+				throw UserInputException( "Error! An incorrect cross road type was specified in the input file!" );
 		}
 		parameters.clear();
 		trafficLightTime = 0;
 		std::getline( input, fileLine );
 	}
+	if ( input.eof() ) {
+		throw UserInputException( "Error, the input file does not contain \"ROADS\" section!" );
+	}
 	//import the roads
 	std::string start{};
 	std::string end{};
-	std::string hasTriangle{};
+	std::string parameter1{};
+	std::string parameter2{};
 	std::getline( input, fileLine );
+	std::stringstream convert{};
+	std::size_t maxSpeed{ 0 };
+	bool hasTriangle{ false };
+
+	/* 
+	 * ===  FUNCTION  ======================================================================
+	 *         Name:  isNumber
+	 *  Description:  takes a string and validates whether it is a number (true)
+	 *  or does it contain letters (false)
+	 * =====================================================================================
+	 */
+	auto
+		isNumber
+		{ []( std::string a ) -> bool
+			{
+				bool returnValue{ a.size() > 0 };
+				for( auto element : a ){
+					switch( element ){
+						case '0':
+						case '1':
+						case '2':
+						case '3':
+						case '4':
+						case '5':
+						case '6':
+						case '7':
+						case '8':
+						case '9':
+							break;
+						default: returnValue = false;
+					}
+				}
+				return returnValue;
+			}
+		};		/* -----  end of function isNumber  ----- */
+
 	while ( fileLine != "BUILDINGS" && !input.eof() ) {
 		parameters.str( fileLine );
-		parameters >> objectName >> start >> end >> hasTriangle;
+		parameters >> objectName >> start >> end >> parameter1 >> parameter2;
+		if ( !lookupCrossroad( start ) || !lookupCrossroad( end ) ) {
+			throw UserInputException( "Error! A road was specified to have a non-existing crossroad as start or end." );
+		}
+		if ( parameter1 == "HASTRIANGLE" || parameter2 == "HASTRIANGLE" ) {
+			hasTriangle = true;
+		}
+		else {
+			hasTriangle = false;
+		}
+		if ( isNumber( parameter1 ) ) {
+			convert << parameter1;
+			convert >> maxSpeed;
+		}
+		if ( isNumber( parameter2 ) ) {
+			convert << parameter2;
+			convert >> maxSpeed;
+		}
 		m_roads.push_back(
 				std::make_pair( objectName, new RoadLineClass{ RoadLineClass( m_crossroads.at( start ), m_crossroads.at( end ),
-						( hasTriangle == "HASTRIANGLE" ? true : false ) ) } )
+						hasTriangle, maxSpeed ) } )
 			      );
+
+		/*-----------------------------------------------------------------------------
+		 * insert one more road for the reverse direction 
+		 *-----------------------------------------------------------------------------*/
+		objectName += "_reverse";
+		m_roads.push_back(
+				std::make_pair( objectName, new RoadLineClass{ RoadLineClass( m_crossroads.at( end ), m_crossroads.at( start ),
+						hasTriangle, maxSpeed ) } )
+			      );
+
 		std::getline( input, fileLine );
 		parameters.clear();
-		hasTriangle = "";
+		convert.clear();
+		parameter1 = "";
+		parameter2 = "";
+		hasTriangle = false;
+		maxSpeed = 40;
 	}
 
+	if ( input.eof() ) {
+		throw UserInputException( "Error, the input file does not contain \"BUILDINGS\" section!" );
+	}
 
 	std::getline( input, fileLine );
 
@@ -94,6 +191,9 @@ CityClass::CityClass(std::string fileName) : m_fileName{ fileName }
 	while ( fileLine != "NEXT_SETTING_NAME" && !input.eof() ) {
 		parameters.str( fileLine );
 		parameters >> buildingType >> objectName >> exitCrossroad >> capacity;
+		if ( !lookupCrossroad( exitCrossroad ) ) {
+			throw UserInputException( "Error! A building was specified to have a non-existing crossroad as an exit crossroad." );
+		}
 		//depending on the type (Recreational, Residential...)
 		if (buildingType == "REC"){
 			m_RECbuildings.push_back(
