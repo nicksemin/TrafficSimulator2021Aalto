@@ -224,7 +224,7 @@ int main( int argc, char* argv[] )
     for (auto const& building : testCity.GetRESBuildings()){
         std::cout<< building.first<<std::endl;
     }
-	Simulation testSimulation{&testCity,2,9,"output_file/output.txt"};
+	Simulation testSimulation{&testCity,2,15,"../output_file/output.txt"};
 	testSimulation.Init();
 	testSimulation.Simulate();
 	/*-----------------------------------------------------------------------------
