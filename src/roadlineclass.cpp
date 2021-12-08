@@ -123,7 +123,6 @@ RoadLineClass::isEnoughSpace ( std::size_t index, std::size_t size )
 	bool
 RoadLineClass::takeVehicle ( Vehicle* ptrToCar, const RoadObjectClass* ptrToRoadObject )
 {
-    std::cout << "RoadLineClass::takeVehicle: I am used\n";
 	//if there is enough space, occupy all the required cells with the car
 	if ( isEnoughSpace( 0, ptrToCar->GetSize() ) ) {
 		for ( int i{ 0 }; i < ptrToCar->GetSize(); ++i ){
