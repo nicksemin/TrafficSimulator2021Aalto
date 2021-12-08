@@ -1,20 +1,31 @@
 CROSSROADS
-T center 0 0
-B left -20 0 10
-B right 20 0
-B down 0 -20
-B up 0 120
+T centerLight 0 0
+B left -200 0 
+T rightLight 500 0 60
+B many_houses 0 -2000
+B one_house 100 -1500
+U street_road 0 1500
+B working_facilities 3000 0
+B shops 500 500
 ROADS
-leftRoad left center
-rightRoad right center
-downRoad down center HASTRIANGLE
-upRoad center up
-leftRoad1 center left
-rightRoad2 center right
-downRoad3 center down HASTRIANGLE
-upRoad4 up center
+fromHomesToOneHome many_houses street_road
+fromTurnToOneHome street_road one_house 90 HASTRIANGLE
+fromTurnToCenter street_road centerLight 120
+fromGymToCenter left centerLight 40
+fromCenterToRightLight centerLight rightLight 80
+fromRightLightToShops rightLight shops
+fromRightLightToWork rightLight working_facilities 80
 BUILDINGS
-REC gym left 10
-RES home right 10
-IND factory down 10 
-COM supermarket up 10
+REC gym left 10000
+RES home1 many_houses 10000
+RES home2 many_houses 10000
+RES home3 many_houses 10000
+RES home4 one_house 10000
+IND factory working_facilities 10000 
+IND office working_facilities 10000 
+IND laboratory working_facilities 10000
+IND hospital working_facilities 10000
+COM supermarket shops 10000
+COM small_shop shops 10000
+COM huge_supermarket shops 10000
+COM huge_supermarket shops 10000

@@ -19,9 +19,11 @@ std::size_t RoadLineClass::cellSize{ 5 };
  *  system and adds the value to the adjacent crossroads
  * =====================================================================================
  */
-RoadLineClass::RoadLineClass ( CrossroadClass* start, CrossroadClass* end, bool hasTriangle ) :
+RoadLineClass::RoadLineClass ( CrossroadClass* start, CrossroadClass* end, bool hasTriangle, std::size_t speedLimit ) :
 	RoadObjectClass( hasTriangle ), m_start{ start }, m_end{ end }
 {
+	//the speed limit is given in km/h, but our value is in "ticks", one tick - 40km/h
+	m_speedLimit = ( speedLimit < 40 ? 1 : speedLimit / 40 );
 	//add the road to start and end crossroads
 	start->addExitRoad( this );
 	end->addEntryRoad( this );
@@ -139,35 +141,38 @@ RoadLineClass::takeVehicle ( Vehicle* ptrToCar, const RoadObjectClass* ptrToRoad
  * ===  FUNCTION  ======================================================================
  *         Name:  RoadLineClass::performTimeStep
  *  Description:  Starting from the end, moves all cars one cell up
- *  To be modified later after the crossroad class is defined
+ *  After the speed limit has been implemented, do everithing several times
  * =====================================================================================
  */
 	void
 RoadLineClass::performTimeStep ()
 {
-	//if the last cell is occupied, try to send the car to a crossroad:
-	if ( m_cells.at( m_cells.size() - 1 ) != nullptr ) {
-		//if the road has a cross road, try to push a car:
-		//if succeeded:
-		if ( m_end->takeVehicle( m_cells.at( m_cells.size() - 1 ), this ) ){
-			//delete all the cells that the end car occupies:
-			int ii{ m_cells.at( m_cells.size() - 1 )->GetSize() };
-			for ( std::size_t i{ 0 }; i < ii; ++i ){
-				m_cells.at( m_cells.size() - 1 - i ) = nullptr;
+	//depending on the speed limit
+	for( std::size_t tick{ 0 }; tick < m_speedLimit; ++tick ){
+		//if the last cell is occupied, try to send the car to a crossroad:
+		if ( m_cells.at( m_cells.size() - 1 ) != nullptr ) {
+			//if the road has a cross road, try to push a car:
+			//if succeeded:
+			if ( m_end->takeVehicle( m_cells.at( m_cells.size() - 1 ), this ) ){
+				//delete all the cells that the end car occupies:
+				int ii{ m_cells.at( m_cells.size() - 1 )->GetSize() };
+				for ( std::size_t i{ 0 }; i < ii; ++i ){
+					m_cells.at( m_cells.size() - 1 - i ) = nullptr;
+				}
 			}
 		}
-	}
 
-	//finally, starting from the last but one position, push all the cars forward
-	//the loop is constructed to forbid unidentified behavior
-	std::size_t i { m_cells.size() };
-	while ( i > 1 ) {
-		//if the next cell is empty, put there a car from the previous cell
-		if ( m_cells.at( i - 1 ) == nullptr ) {
-			m_cells.at( i - 1 ) = m_cells.at( i - 2 );
-			m_cells.at( i - 2 ) = nullptr;
+		//finally, starting from the last but one position, push all the cars forward
+		//the loop is constructed to forbid unidentified behavior
+		std::size_t i { m_cells.size() };
+		while ( i > 1 ) {
+			//if the next cell is empty, put there a car from the previous cell
+			if ( m_cells.at( i - 1 ) == nullptr ) {
+				m_cells.at( i - 1 ) = m_cells.at( i - 2 );
+				m_cells.at( i - 2 ) = nullptr;
+			}
+			--i;
 		}
-		--i;
 	}
 }		/* -----  end of function RoadLineClass::performTimeStep  ----- */
 
