@@ -56,7 +56,7 @@ void Simulation::Init(){
         int randomINDBuildingIndex = rand() % industrialBuildings.size();
         int randomCOMBuildingIndex = rand() % commercialBuildings.size();
 
-        int carSize =  rand() % 5 + 1;
+        int carSize =  1; // rand() % 5 + 1; CARS WILL HAVE SIZE OF ONE ROAD SLOT (5 m) FOR NOW
         bool fitting = residentBuildings[randomRESBuildingIndex].second->takeVehicle(new Car(carSize), nullptr);
         if (fitting) {
             Building* home = residentBuildings[randomRESBuildingIndex].second;
