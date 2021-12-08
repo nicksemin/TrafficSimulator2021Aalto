@@ -35,6 +35,7 @@ bool Building::takeVehicle( Vehicle* ptrToCar, const RoadObjectClass* ptrToRoadO
     if (vehicles_.size() < vehiclecapacity_){
         for(auto person : ptrToCar->getPassengers()) {
             this->TakePerson(person);
+            ptrToCar->removePassenger(person);
         }
         vehicles_.push_back( ptrToCar );
         return true;
@@ -65,9 +66,8 @@ void Building::TakePerson(Person* person){
 // /*Remove a person*/
 
 bool Building::RemovePerson(Person* person){
-    auto it = std::find(people_.begin(), people_.end(), person);
+    auto it = std::find(this->people_.begin(), this->people_.end(), person);
     if (it != people_.end()) {
-
         Navigator* n = person->getNavigator();
 
         Building* start = person->get_current_place();
@@ -126,7 +126,7 @@ std::vector<Vehicle*> Building::GetVehicles() const{
  }
 
 bool Person::set_destination(unsigned int tickTime){
-    if (current_place_ != nullptr && current_place_ != work_ && tickTime % 192000 == time_leaving_ || !(this->has_money())){
+    if (current_place_ != nullptr && current_place_ != work_ && (tickTime % 192000 == time_leaving_ || !(this->has_money()))){
         destination_ = work_; 
         current_place_->RemovePerson(this);
         return true;
