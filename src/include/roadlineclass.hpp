@@ -30,11 +30,11 @@ class RoadLineClass : public RoadObjectClass
 
 	void performTimeStep() override;
 
-	const CrossroadClass* GetStart() const {
+	CrossroadClass* GetStart() const {
 		return m_start;
 	}
 
-	const CrossroadClass* GetEnd() const {
+	CrossroadClass* GetEnd() const {
 		return m_end;
 	}
 
