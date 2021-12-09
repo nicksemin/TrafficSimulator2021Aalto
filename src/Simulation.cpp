@@ -244,7 +244,7 @@ void Simulation::Simulate(){
 			}
 		}
 		std::cout.precision(7);
-		std::cout<<"||	"<< it;
+		std::cout<<std::fixed<<"||	"<< it;
 		std::fill_n(std::ostream_iterator<std::string>(std::cout), 14, " ");
 		std::cout<<(it/maxcapacity)*100<<std::endl;
 
