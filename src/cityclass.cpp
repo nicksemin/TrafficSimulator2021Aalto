@@ -16,7 +16,7 @@
 CityClass::CityClass(std::string fileName) : m_fileName{ fileName }
 {
 
-	/* 
+	/*
 	 * ===  FUNCTION  ======================================================================
 	 *         Name:  lookupCrossroad
 	 *  Description:  a lambda that takes a string and checks if there
@@ -76,6 +76,7 @@ CityClass::CityClass(std::string fileName) : m_fileName{ fileName }
 				m_crossroads.insert(
 						std::make_pair( objectName, new BuildingExitCrossroad{ BuildingExitCrossroad( x, y ) } )
 						);
+				m_buildingExitCrossroadsNames.push_back( objectName );
 				break;
 			case 'T':
 				m_crossroads.insert(
@@ -103,7 +104,7 @@ CityClass::CityClass(std::string fileName) : m_fileName{ fileName }
 	std::size_t maxSpeed{ 0 };
 	bool hasTriangle{ false };
 
-	/* 
+	/*
 	 * ===  FUNCTION  ======================================================================
 	 *         Name:  isNumber
 	 *  Description:  takes a string and validates whether it is a number (true)
@@ -161,7 +162,7 @@ CityClass::CityClass(std::string fileName) : m_fileName{ fileName }
 			      );
 
 		/*-----------------------------------------------------------------------------
-		 * insert one more road for the reverse direction 
+		 * insert one more road for the reverse direction
 		 *-----------------------------------------------------------------------------*/
 		objectName += "_reverse";
 		m_roads.push_back(
@@ -191,7 +192,8 @@ CityClass::CityClass(std::string fileName) : m_fileName{ fileName }
 	while ( fileLine != "NEXT_SETTING_NAME" && !input.eof() ) {
 		parameters.str( fileLine );
 		parameters >> buildingType >> objectName >> exitCrossroad >> capacity;
-		if ( !lookupCrossroad( exitCrossroad ) ) {
+		if ( std::find( m_buildingExitCrossroadsNames.begin(), m_buildingExitCrossroadsNames.end(), exitCrossroad ) ==
+		  m_buildingExitCrossroadsNames.end() ) {
 			throw UserInputException( "Error! A building was specified to have a non-existing crossroad as an exit crossroad." );
 		}
 		//depending on the type (Recreational, Residential...)
@@ -211,6 +213,8 @@ CityClass::CityClass(std::string fileName) : m_fileName{ fileName }
 			m_COMbuildings.push_back(
 					std::make_pair( objectName, new CommercialBuilding{ CommercialBuilding( m_crossroads[exitCrossroad], capacity ) } )
 					);
+		}else{
+		throw UserInputException("Error! An incorrect building type specified in the input file");
 		}
 		parameters.clear();
 		std::getline( input, fileLine );
@@ -219,18 +223,61 @@ CityClass::CityClass(std::string fileName) : m_fileName{ fileName }
 std::map<std::string,CrossroadClass*>& CityClass::GetCrossroads(){
 	return m_crossroads;
 }
-std::vector<std::pair<std::string,RoadLineClass*>> CityClass::GetRoads() const{
+std::vector<std::pair<std::string,RoadLineClass*>>& CityClass::GetRoads(){
 	return m_roads;
 }
-std::vector<std::pair<std::string,Building*>> CityClass::GetRESBuildings() const{
+std::vector<std::pair<std::string,Building*>>& CityClass::GetRESBuildings(){
 	return m_RESbuildings;
 }
-std::vector<std::pair<std::string,Building*>> CityClass::GetRECBuildings() const{
+std::vector<std::pair<std::string,Building*>>& CityClass::GetRECBuildings(){
 	return m_RECbuildings;
 }
-std::vector<std::pair<std::string,Building*>> CityClass::GetINDBuildings() const{
+std::vector<std::pair<std::string,Building*>>& CityClass::GetINDBuildings(){
 	return m_INDbuildings;
 }
-std::vector<std::pair<std::string,Building*>> CityClass::GetCOMBuildings() const{
+std::vector<std::pair<std::string,Building*>>& CityClass::GetCOMBuildings(){
 	return m_COMbuildings;
 }
+
+/*
+ * ===  FUNCTION  ======================================================================
+ *         Name:  CityClass::~CityClass
+ *  Description:  The destructor
+ * =====================================================================================
+ */
+CityClass::~CityClass ()
+{
+    std::cout << "Destructor called\n";
+	//delete all the crossroads
+	for( auto& element : m_crossroads ){
+		delete element.second;
+		element.second = nullptr;
+	}
+
+	//delete all the roads
+	for( auto& element : m_roads ){
+		delete element.second;
+		element.second = nullptr;
+	}
+
+	//delete all the buildings
+	for( auto& element : m_RECbuildings ){
+		delete element.second;
+		element.second = nullptr;
+	}
+
+	for( auto& element : m_RESbuildings ){
+		delete element.second;
+		element.second = nullptr;
+	}
+
+	for( auto& element : m_INDbuildings ){
+		delete element.second;
+		element.second = nullptr;
+	}
+
+	for( auto& element : m_COMbuildings ){
+		delete element.second;
+		element.second = nullptr;
+	}
+}		/* -----  end of function CityClass::~CityClass  ----- */
