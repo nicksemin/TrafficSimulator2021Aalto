@@ -180,12 +180,12 @@ void Simulation::Simulate(){
 			/*-----------------------------------------------------------------------------
 			* Alexey's test
 			*-----------------------------------------------------------------------------*/
-			for ( const auto& element : city_->GetRoads() ){
-				if ( element.second->getNumberOfCars() != 0 ){
-					std::cout << "The road " << element.first << " has " << element.second->getNumberOfCars() << " cars at tick "
-						<< tickindex << std::endl;
-				}
-			}
+			// for ( const auto& element : city_->GetRoads() ){
+			// 	if ( element.second->getNumberOfCars() != 0 ){
+			// 		std::cout << "The road " << element.first << " has " << element.second->getNumberOfCars() << " cars at tick "
+			// 			<< tickindex << std::endl;
+			// 	}
+			// }
 
 		}
 		outfile.close();

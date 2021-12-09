@@ -3,160 +3,148 @@
 #include <algorithm>
 #include <vector>
 #include <tuple>
-#include <limits>
-#include <iostream>
+#include <limits>   
+#include <iostream>   
+#include <math.h>
+#include <functional>
+#include <queue>
 
 Navigator::Navigator(std::vector<RoadLineClass*> roads, std::vector<CrossroadClass*> crossroads):roads_(roads), crossroads_(crossroads){ }
 
-struct Distance{
-        CrossroadClass* crossroad;
-        int distance;
-        CrossroadClass* parent;
-    };
 
-Distance findMinDistance(std::vector<Distance> distances){
-     Distance min = distances.front();
-
-for (std::vector<Distance>::iterator it = distances.begin(); it!= distances.end();){
-        if (it -> distance < min.distance) min = *it;
-        it++;
-    }
-    return min;
-}
-
-std::vector<std::pair<Distance, int>> FindAdjacentNodes(Distance currentDistance, std::vector<Distance> distances,  std::vector<RoadLineClass*> roads){
-    std::vector<std::pair<Distance, int>> result;
-     for (std::vector<RoadLineClass*>::iterator it = roads.begin(); it!= roads.end();){
-         RoadLineClass* r = *it;
-         size_t s = r->GetSize();
-         if (r->GetStart() == currentDistance.crossroad){
-             std::vector<Distance>::iterator d = find_if(distances.begin(), distances.end(),[&r] (const Distance& d) {return d.crossroad == r->GetEnd();} );
-             Distance dd = *d;
-             std::pair<Distance, int> pair = std::make_pair(*d, r->GetSize());
-             result.push_back(pair);
-         }
-         it++;
-      }
-      return result;
-}
-
-std::vector<RoadLineClass*> Navigator::MakeRoute(CrossroadClass& start, CrossroadClass& finish) {
-    //TODO: Implement pathfinding based on Dijkstra algorithm
-    /*
-     node = crossroads, roads = links
-     map is a graph: std::vector<RoadLineClass*> map, every RoadLineClass has start and end crossroads
-     from every crossroad it's possible to get to a road for which this crossroad is start crossroad
-     start
-
-    adjacent crossroad to source crossroad s: end crossroads of roads, for which s is start crossroad
-
-
-    The implementation plan:
-    I. Create Shortest Path Tree
-
-    1) create spt vector = empty
-
-    2) Initialize distance variables to all crossroads, set to infinite
-        possible structure: std::tuple<&CrossroadClass, int (distance), &CrossroadClass(parent)> tpl;
-        distance to sourse is 0 so it's picked first
-
-    3) while sptSet doesn't have all crossroads:
-         from pickup a crossroad with minimum distance which is not in sptSet
-         include it to sptSet
-         Update distances to adjustant crossroads:
-            iterate through crossroads c:
-                if distance s -c is less than current distance value, update it with road size and itself as a parent
-
-    II. Find a path: in sptSet, find destination, and go up by parent
-    */
-
-    std::vector<Distance> spt; //shortest path tree
-
-    std::vector<Distance> distances;
-
-   int infinity = std::numeric_limits<int>::max();
-
-    for (std::vector<CrossroadClass*>::iterator it = crossroads_.begin(); it!= crossroads_.end();){
-            if (**it == start) {
-                Distance dist = {*it, 0, nullptr};
-                distances.push_back(dist);
-            }
-            else {
-            Distance dist = {*it, infinity, nullptr};
-            distances.push_back(dist);
-            }
-            it++;
-    }
-
-     int count = distances.size();
-     for ( std::vector<Distance>::iterator it = distances.begin(); it!= distances.end();){
-        Distance d = *it;
-        it++;
-    }
-
-    for ( std::vector<Distance>::iterator it = distances.begin(); it!= distances.end();){ 
-        Distance current = findMinDistance(distances);
-        spt.push_back(current);
-
-        //1. find adjacent nodes: search in map roads that start with current crossroad, then collect crossroads where those roads end
-        //2. find their distance in distances. if it's bigger than size of the road connecting current crossroad and adjustent node, update it and parent
-   
-        std::vector<std::pair<Distance, int>> adjustent_nodes = FindAdjacentNodes(current, distances, roads_); // adjacent Distance struct, distance to it from the current node
-
-        for ( std::vector<std::pair<Distance, int>>::iterator it = adjustent_nodes.begin(); it!= adjustent_nodes.end();){
-           int distanceViaCurrentNode = current.distance + it->second;
-           if (it->first.distance >= distanceViaCurrentNode){
-                for ( std::vector<Distance>::iterator it2 = distances.begin(); it2!= distances.end();){
-                    Distance d = *it2;
-                    if (d.crossroad == it->first.crossroad) *it2 = {it->first.crossroad, distanceViaCurrentNode, current.crossroad};
-                    it2++;
-                }
-           }
-           it++;
+// # A PRIVATE HELPER FUNCTION: Find the possible successors of given state, that is, the allowed (on-route) locations 
+// # that are one step away from given location.
+// # Return the location with corresponding direction
+std::vector<std::pair<CrossroadClass*,RoadLineClass*>> Navigator::successors(CrossroadClass* crossroad){
+    std::vector<std::pair<CrossroadClass*,RoadLineClass*>> result;
+    for (auto road : roads_){
+        if(road->GetStart()==crossroad){
+            result.push_back(std::make_pair(road->GetEnd(),road));
+            // // find the corresponding backward road
+            // CrossroadClass* end = road->GetEnd();
+            // for (auto backroad : roads_){
+            //     if(backroad->GetStart()==end && backroad->GetEnd()==crossroad){
+            //         result.push_back(std::make_pair(end,backroad));
+            //     }
+            // }
+            
         }
-        std::vector<Distance>::iterator di = find_if(distances.begin(), distances.end(), [=] (const Distance& d) {return d.crossroad == current.crossroad;});
-        distances.erase(di);
+    
     }
-
-    std::cout  << "spt size" << spt.size() << std::endl;
-
-    std::vector<Distance>::iterator it = std::find_if(spt.begin(), spt.end(), [&finish] (const Distance d) {
-    if (!d.crossroad ){
-    throw NullPtrException( "Navigator.cpp, line 135" );
-    }
-    return *d.crossroad == finish;
-    });
-    Distance currentDist= (*it);
-    /*
-    std::cout << "printlng shortest path tree:" << std::endl;
-    for ( std::vector<Distance>::iterator it = spt.begin(); it!= spt.end();){
-        Distance d = *it;
-        std::cout << "Crossroad:                " << *(d.crossroad) <<std::endl;
-        it++;
-    }
-    */
-
-    std::cout << "calculating path from " <<start << " to " << finish << std::endl;
-
-    std::vector<RoadLineClass*> result;
-
-    while (currentDist.crossroad != &start){
-        std::vector<RoadLineClass*>::iterator r = std::find_if(roads_.begin(), roads_.end(), [=](const RoadLineClass* r) {return r->GetStart() == currentDist.parent && r->GetEnd() == currentDist.crossroad;});
-        result.push_back(*r);
-        std::vector<Distance>::iterator d_it = std::find_if(spt.begin(), spt.end(), [=] (const Distance d) {return d.crossroad == currentDist.parent;});
-        currentDist = *d_it;
-    }
-
-     std::cout << "PATH:" << std::endl;
-
-      for ( std::vector<RoadLineClass*>::iterator it = result.begin(); it!= result.end();){
-        RoadLineClass* r= *it;
-        std::cout << "----ROAD START------" << std::endl;
-        std::cout << "Start crossroad:" << *((*r).GetStart()) << std::endl;
-        std::cout << "End crossroad:" << *((*r).GetEnd()) << std::endl;
-        std::cout << "----ROAD END------" << std::endl;
-        it++;
-    }
-
     return result;
+}
+
+
+std::vector<RoadLineClass*> Navigator::MakeRoute(CrossroadClass* start, CrossroadClass* finish) {    
+    std::cout<<"Calling makeroute for navigator to go from: "<<start<< " to " <<finish <<std::endl;
+
+    std::vector<RoadLineClass*> actions;
+
+    if(start==finish){
+        std::cout<<"start is equal to finish"<<std::endl;
+        return actions;
+    }
+    // # A dictionary to keep up with predecessors of each expanded state and the action that 
+    // # took us there
+    std::map<CrossroadClass*,std::pair<RoadLineClass*,CrossroadClass*>> predecessors;
+    //predecessors = {} # dict(tuple(x,y) --> tuple(action,predecessors))
+
+    // # A dictionary to keep up with the length of the shortest route found to given location 
+    // # (so far)
+    std::map<CrossroadClass*,double> pathlength;
+    
+
+    // # A priority queue to guide the search. Priority of each entry (search node) is the 
+    // # estimated distance to a goal state as returned by est_dist
+    //auto cmp = [](CrossroadClass* crossroad) { return 1/(pathlength[crossroad] + sqrt(1.0*pow((crossroad->getX()-finish->getX()),2)+1.0*pow((crossroad->getY()-finish->getY()),2))); };
+    //auto cmp = [](int left, int right) { return (left ^ 1) < (right ^ 1); };
+    std::priority_queue<std::pair<double,CrossroadClass*>> Q;
+
+    // # Variables to keep up with the best path to goal state found
+    double bestpath_length = std::numeric_limits<double>::max();
+    //bestpath_end = None # the location (x,y) in the finishing area
+
+
+// ##################################### Begin search #####################################
+
+    // # Put start state in queue
+    Q.push(std::make_pair(0.0,start));
+
+    // # and in pathlength- and predecessors-dictionaries
+    pathlength[start] = 0.0;
+    predecessors[start] = std::make_pair(nullptr,nullptr);
+
+    // # While the queue is non-empty do:
+    while (not Q.empty()){
+        // std::cout<<"In while loop, queue length: "<<Q.size()<<std::endl;
+        // # Take out the search node with the highest priority = lowest estimated distance
+        std::pair<double,CrossroadClass*> currpair = Q.top();
+        Q.pop();
+        // std::cout<<"Here1"<<std::endl;
+        CrossroadClass* curr = currpair.second;
+        double est_dist = currpair.first;//pathlength[curr] + sqrt(1.0*pow((curr->getX()-finish->getX()),2)+1.0*pow((curr->getY()-finish->getY()),2));
+        // std::cout<<"Here2"<<std::endl;
+        // # Only if the estimated distance (lower bound) is shorter than the current best 
+        // # path to goal state do:
+        if (est_dist < bestpath_length){
+            // std::cout<<"Here3"<<std::endl;
+            // std::cout<<"Entering for-loop, successors length: "<<successors(curr).size()<<std::endl;
+            // # go through all the possible successor-locations
+            for (auto [succ,act] : successors(curr)){
+                // std::cout<<"In for loop, successors length: "<<successors(curr).size()<<std::endl;
+                // # if the location has not yet been expanded, or this new path is shorter 
+                // # than the one found previously
+                bool first = (not pathlength.count(succ));
+                bool second = ((pathlength[curr]+ act->GetSize()*5) < pathlength[succ]); //times 5 to mach with the coordinates
+                // std::cout<<"This is the combination: "<< (first || second) <<std::endl;
+                if ((first || second)){
+                    //# update pathlength and predecessors
+                    pathlength[succ]=pathlength[curr]+act->GetSize()*5; //times 5 to mach with the coordinates
+                    // std::cout<<"This is the curr: "<<curr<<std::endl;
+                    predecessors[succ] = std::make_pair(act,curr);
+                    // # if the location is not a goal location, add it in queue    
+                    if (not (succ==finish)){
+                        Q.push(std::make_pair((1/(pathlength[succ] + sqrt(1.0*pow((succ->getX()-finish->getX()),2)+1.0*pow((succ->getY()-finish->getY()),2)))),succ));
+                    }
+                    // # and if it is a goal location, see if it's better than the previous 
+                    // # best and update when needed
+                    else if (pathlength[succ]<bestpath_length){
+                        bestpath_length = pathlength[succ];
+                    }
+                }
+            }
+        }
+    }
+    // std::cout<<"Exited while"<<std::endl;
+    // # Recursively follow the predecessors to reconstruct the solution
+    
+
+    // # Start from the goal
+    CrossroadClass* currstate = finish;
+    
+    // # Move backwards until reaching start-state
+    while (currstate != start && currstate != nullptr){
+        // std::cout<<"In backward while with currstate: "<<currstate<<std::endl;
+        //std::cout<<"In backward while loop"<<std::endl;
+        std::pair<RoadLineClass*,CrossroadClass*> predecessor = predecessors[currstate];
+        // # collect actions
+        actions.insert(actions.begin(),predecessor.first);
+        currstate = predecessor.second;
+        if (currstate==nullptr){
+            //std::cout<<"currstate is nullptr"<<std::endl;
+            //break;
+        }
+    }
+    //std::cout<<"Exited backward while"<<std::endl;
+    // std::cout << "PATH:" << std::endl;
+
+    // for (RoadLineClass* action : actions){
+    //     std::cout << "----ROAD START------" << std::endl;
+    //     std::cout << "Start crossroad:" << action->GetStart() << std::endl;
+    //     std::cout << "End crossroad:" << action->GetEnd()<< std::endl;
+    //     //std::cout << "Road:" << action<< std::endl;
+    //     std::cout << "----ROAD END------" << std::endl;
+    // }
+    //actions.erase(actions.begin());
+    return actions;
 }

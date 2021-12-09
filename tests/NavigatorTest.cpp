@@ -28,7 +28,7 @@ std::vector<CrossroadClass*> crossroads = {&firstCross, &secondCross, &thirdCros
 
 TEST(navigator_test, Constructor){
     Navigator n =   Navigator(map, crossroads);
-    std::vector<RoadLineClass*> route = n.MakeRoute(firstCross, fifthCross);
+    std::vector<RoadLineClass*> route = n.MakeRoute(&firstCross, &fifthCross);
     //EXPECT_EQ(route, map); //todo: fix comparison of vector of
 
     EXPECT_TRUE(true); 

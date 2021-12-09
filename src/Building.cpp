@@ -83,7 +83,7 @@ bool Building::RemovePerson(Person* person){
             throw BuildingRemovePersonException( this, person );
         }
 
-        std::vector<RoadLineClass*> route = n->MakeRoute(*startCr, *endCr);
+        std::vector<RoadLineClass*> route = n->MakeRoute(startCr, endCr);
 
 
 
