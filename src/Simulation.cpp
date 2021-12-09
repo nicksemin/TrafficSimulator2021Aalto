@@ -1,5 +1,13 @@
 #include "./include/Simulation.hpp"
 
+#include <iterator>
+#include <iostream>
+#include <fstream>  
+#include <cmath>
+
+#include<bits/stdc++.h>
+
+
 /*-----------------------------------------------------------------------------
  * Alexey's tests. Commented std::cout At tick, ticks fine, not needed now
  * because it occupies other info output by the console.
@@ -12,11 +20,12 @@
  * where the error happened
  *-----------------------------------------------------------------------------*/
 
-Simulation::Simulation(CityClass* city, unsigned int npeople, double endtime,std::string outputfile){ //outputfile
+Simulation::Simulation(CityClass* city, unsigned int npeople, double endtime,std::string outputfile,std::string RoadToAnalyze){ //outputfile
     city_ = city;
     npeople_ = npeople;
     endtime_ = endtime;
     outputfile_ = outputfile;
+	RoadToAnalyze_ = RoadToAnalyze;
 }
 
 
@@ -74,79 +83,114 @@ void Simulation::Init(){
 }
 
 void Simulation::Simulate(){
-    unsigned int tickindex = 0;
+	unsigned int ticksInHour = 8000;
+	unsigned int maxticks = ticksInHour*endtime_; // 8000 ticks in an hour
     double tick = 0.45; // seconds
-    double time = 0.0; // in seconds
-    double endseconds = endtime_*60.0*60.0;
+    //double time = 0.0; // in seconds
+    //double endseconds = endtime_*60.0*60.0;
 
-    // at each tick of an hour, sum the amount of cards on each road into this, then average and clear hourly.
-    std::vector<double> outputline (city_->GetRoads().size(), 0.0);
+	// Open outputfile MAYBE DO SOME MORE EXCEPTIONHANDLING HERE
+	std::ofstream outfile;
+    outfile.open (outputfile_);
+	if (outfile.fail()){
+    	std::cout << "Failed to open outputfile. Please check the path.\n";
+	}
+
+	// Get all roads of the city
+	std::vector<std::pair<std::string,RoadLineClass*>> roads = city_->GetRoads();
+
+	// Find the index to RoadToAnalyze
+	auto analyze_index = find_if(roads.begin(), roads.end(),[=] (std::pair<std::string,RoadLineClass*> pair){return pair.first == RoadToAnalyze_;}) -roads.begin();
+	// Initialize a vector for saving histogram values
+	std::vector<double> histogram;
+
+	// Copy roadnames on the first line of output
+	outfile<<"Time"<<",";
+	std::vector<std::string> firstline;
+	std::transform(roads.cbegin(), roads.cend(),std::back_inserter(firstline),[](std::pair<std::string,RoadLineClass*> pair) {return pair.first; });
+	std::copy(firstline.begin(), firstline.end(), std::ostream_iterator<std::string>(outfile, ","));
+	outfile << std::endl;
+
+	// At each tick, get the amount of cars on all roads into this
+	std::vector<size_t> newline;
+
+    // At each tick of an hour, sum the amount of cards on each road into this, then average and clear hourly.
+    std::vector<double> outputline (roads.size(), 0.0);
 
 
     try{
-	    while (time <= endseconds) {
-		//iterate through crossroads
-		for (auto [name, crossroad] : city_->GetCrossroads()){
-		    crossroad->performTimeStep();
-		}
-		//iterate through roads
-		for (auto [name, road] : city_->GetRoads()){
-		    road->performTimeStep();
-		}
-		//iterate through RESbuildings
-		for (auto [name, building] : city_->GetRESBuildings()){
-		    building->performTimeStep();
-		}
-		//iterate through RECbuildings
-		for (auto [name, building] : city_->GetRECBuildings()){
-		    building->performTimeStep();
-		}
-		//iterate through INDbuildings
-		for (auto [name, building] : city_->GetINDBuildings()){
-		    building->performTimeStep();
-		}
-		//iterate through COMbuildings
-		for (auto [name, building] : city_->GetCOMBuildings()){
-		    building->performTimeStep();
-		}
-		//iterate through people
-		for (auto person : people_){
-		    person->performTimeStep(tickindex);
-		}
-
-
-		// Get the amount of cars on each road
-		std::vector<size_t> newline;
-		std::vector<std::pair<std::string,RoadLineClass*>> roads = city_->GetRoads();
-		std::transform(roads.cbegin(), roads.cend(),std::back_inserter(newline),[](std::pair<std::string,RoadLineClass*> pair) {return pair.second->getNumberOfCars(); });
-
-		/*-----------------------------------------------------------------------------
-		 * Alexey's test
-		 *-----------------------------------------------------------------------------*/
-		for ( const auto& element : city_->GetRoads() ){
-			if ( element.second->getNumberOfCars() != 0 ){
-				std::cout << "The road " << element.first << " has " << element.second->getNumberOfCars() << " cars at tick "
-					<< tickindex << std::endl;
+	    for (unsigned int tickindex = 0; tickindex < maxticks; ++tickindex){
+			//iterate through crossroads
+			for (auto [name, crossroad] : city_->GetCrossroads()){
+				crossroad->performTimeStep();
 			}
+			//iterate through roads
+			for (auto [name, road] : city_->GetRoads()){
+				road->performTimeStep();
+			}
+			//iterate through RESbuildings
+			for (auto [name, building] : city_->GetRESBuildings()){
+				building->performTimeStep();
+			}
+			//iterate through RECbuildings
+			for (auto [name, building] : city_->GetRECBuildings()){
+				building->performTimeStep();
+			}
+			//iterate through INDbuildings
+			for (auto [name, building] : city_->GetINDBuildings()){
+				building->performTimeStep();
+			}
+			//iterate through COMbuildings
+			for (auto [name, building] : city_->GetCOMBuildings()){
+				building->performTimeStep();
+			}
+			//iterate through people
+			for (auto person : people_){
+				person->performTimeStep(tickindex);
+			}
+
+
+			// Get the amount of cars on each road
+			std::transform(roads.cbegin(), roads.cend(),std::back_inserter(newline),[](std::pair<std::string,RoadLineClass*> pair) {return pair.second->getNumberOfCars(); });
+
+			
+			// Add up to the hourly sum
+			std::transform (outputline.begin(), outputline.end(), newline.begin(), outputline.begin(), std::plus<double>());
+			newline.clear();
+
+			// hourly averagin
+			if(tickindex % (ticksInHour-1) == 0){ //8000 ticks in an hour
+				/*WRITE OUTPUTFILE*/
+				// absolute time (beginning hour)
+				unsigned int hour = tickindex/8000;
+				// write the time
+				outfile << hour <<",";
+				// average the amount of cars
+				std::transform (outputline.begin(), outputline.end(),outputline.begin(), [ticksInHour](double &c){ return c/ticksInHour; });
+				// copy to outputfile
+				std::copy(outputline.begin(), outputline.end()-1, std::ostream_iterator<double>(outfile, ","));
+				// copy the last one without a comma and then end line
+				outfile << outputline.back() <<std::endl;
+
+				/*SAVE DETAILS OF RoadToAnalyze SEPARATELY*/
+				histogram.push_back(outputline[analyze_index]);
+
+				// then clear outputline to start a new hour
+				std::fill(outputline.begin(), outputline.end(), 0.0);
+			}
+
+			//std::cout<<"At tickindex "<<tickindex<<std::endl;
+			/*-----------------------------------------------------------------------------
+			* Alexey's test
+			*-----------------------------------------------------------------------------*/
+			for ( const auto& element : city_->GetRoads() ){
+				if ( element.second->getNumberOfCars() != 0 ){
+					std::cout << "The road " << element.first << " has " << element.second->getNumberOfCars() << " cars at tick "
+						<< tickindex << std::endl;
+				}
+			}
+
 		}
-
-		// Add up to the hourly sum
-		std::transform (outputline.begin(), outputline.end(), newline.begin(), outputline.begin(), std::plus<double>());
-		newline.clear();
-
-		// hourly averagin
-		if(tickindex % 8000-1 == 0){ //8000 ticks in an hour
-		    //TO DO: average (divide outputline by 8000) and write output
-
-		    // then clear the outputvector
-		    //std::fill(outputline.begin(), outputline.end(), 0.0);
-		}
-
-		//std::cout<<"At tickindex "<<tickindex<<std::endl;
-
-		time += tick;
-		tickindex += 1;
-	    }
     }
 	catch ( NavigatorException& e ){
 		//find the crossroad that caused an error
@@ -168,5 +212,42 @@ void Simulation::Simulate(){
 	catch ( UserInputException& e ){
 		std::cout << e.what() << e.getCustomMessage() << std::endl;
 	}
+	
 
+
+	/* ################### MAKE AND PRINT HISTOGRAM #########################################*/
+
+	double maxvalue = *std::max_element(histogram.begin(), histogram.end());
+	double maxcapacity = (double) roads[analyze_index].second->GetSize();
+	int maxcapacity_scaled = std::floor((maxcapacity/maxvalue)*10);
+
+	int hour = 0;
+	std::cout<< "#################################################################"<<std::endl;
+	std::cout<< "A histogram of the amount of cars on "<<RoadToAnalyze_<<std::endl;
+	std::cout<< "#################################################################"<<std::endl;
+	std::cout<<"Time                	Avg. amount of cars  '%' of max capacity"<<std::endl;
+
+	for (auto it : histogram){
+		int printhour = hour%24;
+		if(printhour<10){
+			std::cout<<"0"<<printhour<<":00"<<" ||";
+		}else{
+			std::cout<<printhour<<":00"<<" ||";
+		}
+		int outofmax = (int) std::floor((it/maxvalue)*10);
+		for (int i = 0; i<10; i++){
+			if(outofmax>i){
+				std::cout<<"*";
+			}else{
+				std::cout<<"-";
+			}
+		}
+		std::cout<<"||	"<< std::fixed << std::setprecision(6)\
+		<<it<<"              "<< std::fixed << std::setprecision(6)\
+		<<it/maxcapacity*100<<std::endl;
+
+		hour++;
+	}
+	/* ################### END OF HISTOGRAM PRINTING ##########################################*/
+	outfile.close();
 }

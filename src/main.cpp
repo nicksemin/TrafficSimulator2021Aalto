@@ -48,13 +48,13 @@ int main( int argc, char* argv[] )
 	 * CityClass tests, Alexey (and Emma)
 	 *-----------------------------------------------------------------------------*/
 
-    std::string filename{ "../input_file/samplecity.txt" };
+    std::string filename{ "input_file/samplecity.txt" };
     try{
         CityClass testCity { filename };
         for (auto const& building : testCity.GetRESBuildings()){
             std::cout<< building.first<<std::endl;
         }
-        Simulation testSimulation{&testCity,2000,24,"../output_file/output.txt"};
+        Simulation testSimulation{&testCity,2000,24,"output_file/output.csv","fromHomesToOneHome"};
         testSimulation.Init();
         testSimulation.Simulate();
     }
