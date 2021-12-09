@@ -1,11 +1,2 @@
-Time,fromHomesToOneHome,fromHomesToOneHome_reverse,fromTurnToOneHome,fromTurnToOneHome_reverse,fromTurnToCenter,fromTurnToCenter_reverse,fromGymToCenter,fromGymToCenter_reverse,fromCenterToRightLight,fromCenterToRightLight_reverse,fromRightLightToShops,fromRightLightToShops_reverse,fromRightLightToWork,fromRightLightToWork_reverse,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-0,5.5695,0.087375,0.037375,0.715625,0.968125,0.02475,0.102375,0.248625,0.592625,0.315625,0,0,2.90125,1.64987
-1,5.6615,0.53425,0,0.854125,1.08613,0.086625,0.156,0.30225,0.718125,0.401,0,0,3.7015,2.0365
-2,6.13762,0.73075,0.112125,0.52325,1.043,0.14025,0.16575,0.3705,0.674625,0.496125,0,0,3.41913,2.494
-3,3.81588,0.744625,0.07475,0.710125,0.788875,0.119625,0.12675,0.258375,0.54425,0.37325,0,0,2.77162,1.914
-4,5.50875,1.22325,0.26975,0.557125,0.961,0.27225,0.170625,0.287625,0.61525,0.423,0,0,3.11313,2.17338
-5,5.45425,0.87375,0.216125,0.50025,0.932,0.185625,0.199875,0.24375,0.666375,0.34925,0,0,3.377,1.84987
-6,5.502,0.981875,0.149,0.754625,1.04888,0.205625,0.121875,0.212375,0.628625,0.330625,0,0,3.17263,1.68625
-7,6.28675,2.24788,0.2995,1.15288,1.25287,0.40075,0.160875,0.245875,0.743875,0.422625,0,0,3.78613,2.04625
-8,6.95312,1.24075,0.336375,0.76075,1.2375,0.301875,0.180375,0.2925,0.775875,0.45325,0,0,4.01225,2.28525
+Time,1,1_reverse,2,2_reverse,3,3_reverse,4,4_reverse,5,5_reverse,6,6_reverse,7,7_reverse,8,8_reverse,9,9_reverse,10,10_reverse,11,11_reverse,12,12_reverse,13,13_reverse,14,14_reverse,15,15_reverse,16,16_reverse,17,17_reverse,18,18_reverse,19,19_reverse,20,20_reverse,21,21_reverse,22,22_reverse,23,23_reverse,24,24_reverse,25,25_reverse,26,26_reverse,27,27_reverse,28,28_reverse,29,29_reverse,30,30_reverse,31,31_reverse,32,32_reverse,33,33_reverse,34,34_reverse,35,35_reverse,36,36_reverse,37,37_reverse,38,38_reverse,39,39_reverse,40,40_reverse,41,41_reverse,42,42_reverse,43,43_reverse,44,44_reverse,45,45_reverse,46,46_reverse,47,47_reverse,48,48_reverse,49,49_reverse,50,50_reverse,51,51_reverse,52,52_reverse,53,53_reverse,54,54_reverse,55,55_reverse,56,56_reverse,57,57_reverse,58,58_reverse,59,59_reverse,60,60_reverse,61,61_reverse,62,62_reverse,63,63_reverse,64,64_reverse,65,65_reverse,66,66_reverse,67,67_reverse,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
