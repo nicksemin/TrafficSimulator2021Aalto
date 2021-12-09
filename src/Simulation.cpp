@@ -4,7 +4,6 @@
 #include <iostream>
 #include <fstream>  
 #include <cmath>
-#include<bits/stdc++.h>
 #include <utility>
 
 
@@ -244,9 +243,10 @@ void Simulation::Simulate(){
 				std::cout<<"-";
 			}
 		}
-		std::cout<<"||	"<< std::fixed << std::setprecision(6)<<it;
+		std::cout.precision(7);
+		std::cout<<"||	"<< it;
 		std::fill_n(std::ostream_iterator<std::string>(std::cout), 14, " ");
-		std::cout<< std::fixed << std::setprecision(6)<<(it/maxcapacity)*100<<std::endl;
+		std::cout<<(it/maxcapacity)*100<<std::endl;
 
 		hour++;
 	}
