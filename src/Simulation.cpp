@@ -4,8 +4,8 @@
 #include <iostream>
 #include <fstream>  
 #include <cmath>
-
 #include<bits/stdc++.h>
+#include <utility>
 
 
 /*-----------------------------------------------------------------------------
@@ -83,11 +83,9 @@ void Simulation::Init(){
 }
 
 void Simulation::Simulate(){
-	unsigned int ticksInHour = 8000;
-	unsigned int maxticks = ticksInHour*endtime_; // 8000 ticks in an hour
-    double tick = 0.45; // seconds
-    //double time = 0.0; // in seconds
-    //double endseconds = endtime_*60.0*60.0;
+	unsigned int ticksInHour = 8000; // 8000 ticks in an hour
+	unsigned int maxticks = ticksInHour*endtime_; 
+    // double tick = 0.45; // seconds NOT NEEDED
 
 	// Open outputfile MAYBE DO SOME MORE EXCEPTIONHANDLING HERE
 	std::ofstream outfile;
@@ -159,7 +157,7 @@ void Simulation::Simulate(){
 			newline.clear();
 
 			// hourly averagin
-			if(tickindex % (ticksInHour-1) == 0){ //8000 ticks in an hour
+			if(tickindex % (ticksInHour-1) == 0 && tickindex != 0){ //8000 ticks in an hour
 				/*WRITE OUTPUTFILE*/
 				// absolute time (beginning hour)
 				unsigned int hour = tickindex/8000;
@@ -191,6 +189,7 @@ void Simulation::Simulate(){
 			}
 
 		}
+		outfile.close();
     }
 	catch ( NavigatorException& e ){
 		//find the crossroad that caused an error
@@ -212,42 +211,47 @@ void Simulation::Simulate(){
 	catch ( UserInputException& e ){
 		std::cout << e.what() << e.getCustomMessage() << std::endl;
 	}
-	
 
 
 	/* ################### MAKE AND PRINT HISTOGRAM #########################################*/
 
+	int histogramsize = 20;
 	double maxvalue = *std::max_element(histogram.begin(), histogram.end());
 	double maxcapacity = (double) roads[analyze_index].second->GetSize();
-	int maxcapacity_scaled = std::floor((maxcapacity/maxvalue)*10);
+	//int maxcapacity_scaled = std::round((maxcapacity/maxvalue)*histogramsize);
+
+	std::fill_n(std::ostream_iterator<std::string>(std::cout), histogramsize+54, "#");
+	std::cout<<std::endl<<"A histogram of the relative amount of cars on "<<RoadToAnalyze_<<std::endl;
+	std::fill_n(std::ostream_iterator<std::string>(std::cout), histogramsize+54, "#");
+	std::cout<<std::endl<<"Time";
+	std::fill_n(std::ostream_iterator<std::string>(std::cout), histogramsize+8, " ");
+	std::cout<<"Avg. amount of cars  '%' of max capacity"<<std::endl;
 
 	int hour = 0;
-	std::cout<< "#################################################################"<<std::endl;
-	std::cout<< "A histogram of the amount of cars on "<<RoadToAnalyze_<<std::endl;
-	std::cout<< "#################################################################"<<std::endl;
-	std::cout<<"Time                	Avg. amount of cars  '%' of max capacity"<<std::endl;
-
 	for (auto it : histogram){
+
 		int printhour = hour%24;
 		if(printhour<10){
 			std::cout<<"0"<<printhour<<":00"<<" ||";
 		}else{
 			std::cout<<printhour<<":00"<<" ||";
 		}
-		int outofmax = (int) std::floor((it/maxvalue)*10);
-		for (int i = 0; i<10; i++){
+		int outofmax = (int) std::round((it/maxvalue)*histogramsize);
+		for (int i = 0; i<histogramsize; i++){
 			if(outofmax>i){
 				std::cout<<"*";
 			}else{
 				std::cout<<"-";
 			}
 		}
-		std::cout<<"||	"<< std::fixed << std::setprecision(6)\
-		<<it<<"              "<< std::fixed << std::setprecision(6)\
-		<<it/maxcapacity*100<<std::endl;
+		std::cout<<"||	"<< std::fixed << std::setprecision(6)<<it;
+		std::fill_n(std::ostream_iterator<std::string>(std::cout), 14, " ");
+		std::cout<< std::fixed << std::setprecision(6)<<(it/maxcapacity)*100<<std::endl;
 
 		hour++;
 	}
+	std::fill_n(std::ostream_iterator<std::string>(std::cout), histogramsize+54, "#");
+	std::cout<<std::endl;
 	/* ################### END OF HISTOGRAM PRINTING ##########################################*/
-	outfile.close();
+
 }
