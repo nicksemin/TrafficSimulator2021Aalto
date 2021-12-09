@@ -48,7 +48,7 @@ int main( int argc, char* argv[] )
 	 * CityClass tests, Alexey (and Emma)
 	 *-----------------------------------------------------------------------------*/
 
-    std::string filename{ "input_file/samplecity.txt" };
+    std::string filename{ "/Users/nicksemin/Programming/traffic-simulator-1/input_file/samplecity.txt" };
     try{
         CityClass testCity { filename };
         // for (auto const& building : testCity.GetRESBuildings()){
