@@ -82,7 +82,7 @@ void Simulation::Init(){
 }
 
 void Simulation::Simulate(){
-	unsigned int ticksInHour = 8000; // 8000 ticks in an hour
+	double ticksInHour = 8000; // 8000 ticks in an hour
 	unsigned int maxticks = ticksInHour*endtime_; 
     // double tick = 0.45; // seconds NOT NEEDED
 
@@ -98,8 +98,13 @@ void Simulation::Simulate(){
 
 	// Find the index to RoadToAnalyze
 	auto analyze_index = find_if(roads.begin(), roads.end(),[=] (std::pair<std::string,RoadLineClass*> pair){return pair.first == RoadToAnalyze_;}) -roads.begin();
-	// Initialize a vector for saving histogram values
-	std::vector<double> histogram;
+	// Get the maximum capacity of road to analyze
+	double maxcapacity = 1.0*roads[analyze_index].second->GetSize();
+	// Initialize a vectors for saving histogram values (average amount of cars + number of possible jamticks)
+	std::vector<double> histogram1;
+	std::vector<int> histogram2;
+	int hourlyjamticks = 0;
+
 
 	// Copy roadnames on the first line of output
 	outfile<<"Time"<<",";
@@ -109,7 +114,7 @@ void Simulation::Simulate(){
 	outfile << std::endl;
 
 	// At each tick, get the amount of cars on all roads into this
-	std::vector<size_t> newline;
+	std::vector<double> newline;
 
     // At each tick of an hour, sum the amount of cards on each road into this, then average and clear hourly.
     std::vector<double> outputline (roads.size(), 0.0);
@@ -148,15 +153,19 @@ void Simulation::Simulate(){
 
 
 			// Get the amount of cars on each road
-			std::transform(roads.cbegin(), roads.cend(),std::back_inserter(newline),[](std::pair<std::string,RoadLineClass*> pair) {return pair.second->getNumberOfCars(); });
-
+			std::transform(roads.cbegin(), roads.cend(),std::back_inserter(newline),[](std::pair<std::string,RoadLineClass*> pair) {return (double) pair.second->getNumberOfCars(); });
+			
+			// Detect possible jam ticks
+			if(newline[analyze_index]>=maxcapacity-1){
+				hourlyjamticks +=1;
+			}
 			
 			// Add up to the hourly sum
 			std::transform (outputline.begin(), outputline.end(), newline.begin(), outputline.begin(), std::plus<double>());
 			newline.clear();
 
 			// hourly averagin
-			if(tickindex % (ticksInHour-1) == 0 && tickindex != 0){ //8000 ticks in an hour
+			if(tickindex % ((int) ticksInHour-1) == 0 && tickindex != 0){ //8000 ticks in an hour
 				/*WRITE OUTPUTFILE*/
 				// absolute time (beginning hour)
 				unsigned int hour = tickindex/8000;
@@ -170,10 +179,12 @@ void Simulation::Simulate(){
 				outfile << outputline.back() <<std::endl;
 
 				/*SAVE DETAILS OF RoadToAnalyze SEPARATELY*/
-				histogram.push_back(outputline[analyze_index]);
+				histogram1.push_back(outputline[analyze_index]);
+				histogram2.push_back(hourlyjamticks);
 
-				// then clear outputline to start a new hour
+				// then clear outputline and jamticks to start a new hour
 				std::fill(outputline.begin(), outputline.end(), 0.0);
+				hourlyjamticks = 0;
 			}
 
 			//std::cout<<"At tickindex "<<tickindex<<std::endl;
@@ -215,19 +226,18 @@ void Simulation::Simulate(){
 	/* ################### MAKE AND PRINT HISTOGRAM #########################################*/
 
 	int histogramsize = 20;
-	double maxvalue = *std::max_element(histogram.begin(), histogram.end());
-	double maxcapacity = (double) roads[analyze_index].second->GetSize();
+	double maxvalue = *std::max_element(histogram1.begin(), histogram1.end());
+	//double maxcapacity_double = (double) roads[analyze_index].second->GetSize();
 	//int maxcapacity_scaled = std::round((maxcapacity/maxvalue)*histogramsize);
 
-	std::fill_n(std::ostream_iterator<std::string>(std::cout), histogramsize+54, "#");
+	std::fill_n(std::ostream_iterator<std::string>(std::cout), histogramsize+80, "#");
 	std::cout<<std::endl<<"A histogram of the relative amount of cars on "<<RoadToAnalyze_<<std::endl;
-	std::fill_n(std::ostream_iterator<std::string>(std::cout), histogramsize+54, "#");
+	std::fill_n(std::ostream_iterator<std::string>(std::cout), histogramsize+80, "#");
 	std::cout<<std::endl<<"Time";
 	std::fill_n(std::ostream_iterator<std::string>(std::cout), histogramsize+8, " ");
-	std::cout<<"Avg. amount of cars  '%' of max capacity"<<std::endl;
+	std::cout<<"Avg. amount of cars  '%' of max capacity  Possible jamticks detected"<<std::endl;
 
-	int hour = 0;
-	for (auto it : histogram){
+	for (int hour = 0; hour<endtime_;hour++){
 
 		int printhour = hour%24;
 		if(printhour<10){
@@ -235,7 +245,7 @@ void Simulation::Simulate(){
 		}else{
 			std::cout<<printhour<<":00"<<" ||";
 		}
-		int outofmax = (int) std::round((it/maxvalue)*histogramsize);
+		int outofmax = (int) std::round((histogram1[hour]/maxvalue)*histogramsize);
 		for (int i = 0; i<histogramsize; i++){
 			if(outofmax>i){
 				std::cout<<"*";
@@ -244,13 +254,13 @@ void Simulation::Simulate(){
 			}
 		}
 		std::cout.precision(7);
-		std::cout<<std::fixed<<"||	"<< it;
+		std::cout<<std::fixed<<"||	"<< histogram1[hour];
 		std::fill_n(std::ostream_iterator<std::string>(std::cout), 14, " ");
-		std::cout<<(it/maxcapacity)*100<<std::endl;
-
-		hour++;
+		std::cout<<(((histogram1[hour])/maxcapacity)*100.0);
+		std::fill_n(std::ostream_iterator<std::string>(std::cout), 14, " ");
+		std::cout<<histogram2[hour]<<std::endl;
 	}
-	std::fill_n(std::ostream_iterator<std::string>(std::cout), histogramsize+54, "#");
+	std::fill_n(std::ostream_iterator<std::string>(std::cout), histogramsize+80, "#");
 	std::cout<<std::endl;
 	/* ################### END OF HISTOGRAM PRINTING ##########################################*/
 
