@@ -19,24 +19,23 @@ Q_OBJECT
 public:
     explicit MainWindow(QWidget *parent = nullptr);
     int testValue;
-    std::vector<std::pair<int, int>> crossRoads;
+    std::vector<std::pair<int, int>> crossRoads_;
+    std::vector<std::pair<std::pair<int, int>,std::pair<int, int>>> roads_;
     ~MainWindow() override;
 
     void drawCity();
 
 public slots:
-  //  void addCrossRoads(int, int);
-
     void getCross(std::vector<std::pair<int, int>>);
+    void getRoads(std::vector<std::pair<std::pair<int, int>,std::pair<int, int>>>);
 
 private:
     Ui::MainWindow *ui;
 
     QGraphicsScene *scene;
     QGraphicsRectItem *rectangle;
-    QGraphicsRectItem *line;
-   // QVector<std::pair<int,int>> crossroads_;
-    QVector<std::pair<int,int>> roads_;
+    QGraphicsEllipseItem *ellipse;
+    QGraphicsLineItem *line;
 /*protected:
     void paintEvent(QPaintEvent *e) override;*/
 };

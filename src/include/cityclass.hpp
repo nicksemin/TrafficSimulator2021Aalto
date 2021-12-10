@@ -23,7 +23,6 @@
 
 class CityClass : public QObject
 {
-
     Q_OBJECT
 
     public:
@@ -36,11 +35,13 @@ class CityClass : public QObject
         std::vector<std::pair<std::string,Building*>>& GetINDBuildings();
         std::vector<std::pair<std::string,Building*>>& GetCOMBuildings();
         std::vector<std::pair<int, int>> crossroadsCoordinates_;
+        std::vector<std::pair<std::pair<int, int>,std::pair<int, int>>> roadsCoordinates_;
         void sendCoords();
 
 signals:
 
-    void send(std::vector<std::pair<int, int>>);
+    void sendX(std::vector<std::pair<int, int>>);
+    void sendR( std::vector<std::pair<std::pair<int, int>,std::pair<int, int>>>);
 
 
 

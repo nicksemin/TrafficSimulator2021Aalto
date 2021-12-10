@@ -14,7 +14,11 @@
  * =====================================================================================
  */
 void CityClass::sendCoords() {
-    emit send(crossroadsCoordinates_);
+    emit sendX(crossroadsCoordinates_);
+    for (auto i:m_roads){
+        roadsCoordinates_.emplace_back(std::make_pair(std::make_pair(i.second->GetStart()->getX(), i.second->GetStart()->getY()), std::make_pair(i.second->GetEnd()->getX(), i.second->GetStart()->getY())));
+    }
+    emit sendR(roadsCoordinates_);
 }
 CityClass::CityClass(std::string fileName) : m_fileName{ fileName }
 {
@@ -81,7 +85,7 @@ CityClass::CityClass(std::string fileName) : m_fileName{ fileName }
 						std::make_pair( objectName, new BuildingExitCrossroad{ BuildingExitCrossroad( x, y ) } )
 						);
 				m_buildingExitCrossroadsNames.push_back( objectName );
-                crossroadsCoordinates_.emplace_back(x, y);
+               // crossroadsCoordinates_.emplace_back(x, y);
 				break;
 			case 'T':
 				m_crossroads.insert(

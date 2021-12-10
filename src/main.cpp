@@ -62,10 +62,12 @@ int main( int argc, char* argv[] )
         MainWindow w;
         testSimulation.Init();
         testSimulation.Simulate();
-        QObject::connect(&testCity, );
+        QObject::connect(&testCity, &CityClass::sendX, &w, &MainWindow::getCross);
+        QObject::connect(&testCity, &CityClass::sendR, &w, &MainWindow::getRoads);
         testCity.sendCoords();
+        w.drawCity();
         w.show();
-        a.exec();
+        QApplication::exec();
     }
     catch( UserInputException& e ){
         std::cout << e.what() << e.getCustomMessage() << std::endl;
