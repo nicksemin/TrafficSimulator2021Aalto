@@ -59,9 +59,13 @@ void MainWindow::drawCity() {
         */
        // QGraphicsRectItem *rect = scene->addRect(X, Y, 40, 50);
     //}
-    for (size_t i = 0; i<10; i++){
-        QGraphicsRectItem *rect = scene->addRect(3+i, 4+i, 30, 40);
+    for (auto i: crossRoads){
+        QGraphicsRectItem *rect = scene->addRect(i.first, i.second, 30, 40);
     }
+}
+
+void MainWindow::getCross(std::vector<std::pair<int, int>> fromCity) {
+    crossRoads = fromCity;
 }
 /*void MainWindow::paintEvent(QPaintEvent *e) {
     QPainter painter(this);

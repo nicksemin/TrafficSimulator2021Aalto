@@ -35,18 +35,14 @@ class CityClass : public QObject
         std::vector<std::pair<std::string,Building*>>& GetRESBuildings();
         std::vector<std::pair<std::string,Building*>>& GetINDBuildings();
         std::vector<std::pair<std::string,Building*>>& GetCOMBuildings();
-      //  std::v
-
-    void insertCrossroads(char, const std::string &, int, int, double);
+        std::vector<std::pair<int, int>> crossroadsCoordinates_;
+        void sendCoords();
 
 signals:
 
+    void send(std::vector<std::pair<int, int>>);
 
-    void sendValue(int);
 
-    void sendX(int);
-
-    void sendY(int);
 
 
 protected:
@@ -60,7 +56,6 @@ protected:
 	std::vector<std::pair<std::string,Building*>> m_RESbuildings;
 	std::vector<std::pair<std::string,Building*>> m_INDbuildings;
 	std::vector<std::pair<std::string,Building*>> m_COMbuildings;
-    std::vector<std::pair<int, int>> crossroadsCoordinates_;
 };
 
 #endif // CITYCLASS_

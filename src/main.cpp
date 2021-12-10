@@ -52,22 +52,26 @@ int main( int argc, char* argv[] )
 
     std::string filename{ "/Users/nicksemin/Programming/traffic-simulator-1/input_file/samplecity.txt" };
     try{
+
         CityClass testCity { filename };
         // for (auto const& building : testCity.GetRESBuildings()){
         //     std::cout<< building.first<<std::endl;
         // }
         Simulation testSimulation{&testCity,2160,24,"output_file/output.csv","1"};
+        QApplication a(argc, argv);
+        MainWindow w;
         testSimulation.Init();
         testSimulation.Simulate();
+        QObject::connect(&testCity, );
+        testCity.sendCoords();
+        w.show();
+        a.exec();
     }
     catch( UserInputException& e ){
         std::cout << e.what() << e.getCustomMessage() << std::endl;
     }
 
-    QApplication a(argc, argv);
-    MainWindow w;
-    w.show();
-    return a.exec();
+    return 0;
 
 }
 

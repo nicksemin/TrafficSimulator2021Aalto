@@ -19,10 +19,7 @@ Q_OBJECT
 public:
     explicit MainWindow(QWidget *parent = nullptr);
     int testValue;
-    int X;
-    int Y;
-    std::vector<int> crossX_;
-    std::vector<int> crossY_;
+    std::vector<std::pair<int, int>> crossRoads;
     ~MainWindow() override;
 
     void drawCity();
@@ -30,11 +27,7 @@ public:
 public slots:
   //  void addCrossRoads(int, int);
 
-    void getCrossX(int);
-
-    void getCrossY(int);
-
-    void getValue(int);
+    void getCross(std::vector<std::pair<int, int>>);
 
 private:
     Ui::MainWindow *ui;

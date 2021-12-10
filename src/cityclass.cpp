@@ -13,6 +13,9 @@
  *  3) Imports somethings else, please start from here
  * =====================================================================================
  */
+void CityClass::sendCoords() {
+    emit send(crossroadsCoordinates_);
+}
 CityClass::CityClass(std::string fileName) : m_fileName{ fileName }
 {
 
@@ -71,18 +74,21 @@ CityClass::CityClass(std::string fileName) : m_fileName{ fileName }
 				m_crossroads.insert(
 						std::make_pair( objectName, new UnregulatedCrossroad{ UnregulatedCrossroad( x, y ) } )
 						);
+                crossroadsCoordinates_.emplace_back(x, y);
 				break;
 			case 'B':
 				m_crossroads.insert(
 						std::make_pair( objectName, new BuildingExitCrossroad{ BuildingExitCrossroad( x, y ) } )
 						);
 				m_buildingExitCrossroadsNames.push_back( objectName );
+                crossroadsCoordinates_.emplace_back(x, y);
 				break;
 			case 'T':
 				m_crossroads.insert(
 						std::make_pair( objectName, new TrafficLightCrossroad{ TrafficLightCrossroad( x, y,
 						       ( trafficLightTime == 0 ? TrafficLightCrossroad::defaultTrafficLightTime : trafficLightTime )
 						       ) } ) );
+                crossroadsCoordinates_.emplace_back(x, y);
 				break;
 			default:
 				throw UserInputException( "Error! An incorrect cross road type was specified in the input file!" );
@@ -91,6 +97,7 @@ CityClass::CityClass(std::string fileName) : m_fileName{ fileName }
 		trafficLightTime = 0;
 		std::getline( input, fileLine );
 	}
+
 	if ( input.eof() ) {
 		throw UserInputException( "Error, the input file does not contain \"ROADS\" section!" );
 	}
@@ -282,4 +289,4 @@ CityClass::~CityClass ()
 	}
 }		/* -----  end of function CityClass::~CityClass  ----- */
 
-#include "cityclass.moc"
+#include "moc_cityclass.cpp"
