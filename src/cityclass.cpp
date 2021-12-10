@@ -281,3 +281,5 @@ CityClass::~CityClass ()
 		element.second = nullptr;
 	}
 }		/* -----  end of function CityClass::~CityClass  ----- */
+
+#include "cityclass.moc"

@@ -19,9 +19,13 @@
 #include "./include/Car.hpp"
 #include "./include/Navigator.hpp"
 #include "./include/Building.hpp"
+#include <QObject>
 
-class CityClass
+class CityClass : public QObject
 {
+
+    Q_OBJECT
+
     public:
         CityClass(std::string fileName);
 	~CityClass();
@@ -31,9 +35,21 @@ class CityClass
         std::vector<std::pair<std::string,Building*>>& GetRESBuildings();
         std::vector<std::pair<std::string,Building*>>& GetINDBuildings();
         std::vector<std::pair<std::string,Building*>>& GetCOMBuildings();
+      //  std::v
+
+    void insertCrossroads(char, const std::string &, int, int, double);
+
+signals:
 
 
-    protected:
+    void sendValue(int);
+
+    void sendX(int);
+
+    void sendY(int);
+
+
+protected:
 
     private:
 	std::string m_fileName;
@@ -44,6 +60,7 @@ class CityClass
 	std::vector<std::pair<std::string,Building*>> m_RESbuildings;
 	std::vector<std::pair<std::string,Building*>> m_INDbuildings;
 	std::vector<std::pair<std::string,Building*>> m_COMbuildings;
+    std::vector<std::pair<int, int>> crossroadsCoordinates_;
 };
 
 #endif // CITYCLASS_

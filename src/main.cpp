@@ -38,6 +38,8 @@
 #include "./include/Navigator.hpp"
 #include "./include/Building.hpp"
 #include "./include/Simulation.hpp"
+#include <QApplication>
+#include <mainwindow.h>
 
 static int tickTime;
 
@@ -62,7 +64,11 @@ int main( int argc, char* argv[] )
         std::cout << e.what() << e.getCustomMessage() << std::endl;
     }
 
-    return 0;
+    QApplication a(argc, argv);
+    MainWindow w;
+    w.show();
+    return a.exec();
+
 }
 
 
