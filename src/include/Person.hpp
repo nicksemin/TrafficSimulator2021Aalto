@@ -82,7 +82,7 @@ public:
 
     void decrease_happiness(int);
 
-    bool set_destination(unsigned int);
+    void set_destination(unsigned int);
 
     void set_current_place(Building*); //USE WHEN PLACING INSIDE A BUILDING
 
