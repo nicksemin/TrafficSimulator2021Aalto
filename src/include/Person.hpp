@@ -78,6 +78,8 @@ public:
 
     void increase_happiness(int);
 
+    void increase_hunger(int);
+
     void decrease_happiness(int);
 
     bool set_destination(unsigned int);

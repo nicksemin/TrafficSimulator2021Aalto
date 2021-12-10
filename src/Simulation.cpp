@@ -75,8 +75,8 @@ void Simulation::Init(){
             residentBuildings[randomRESBuildingIndex].second->TakePerson(newperson);
 
             people_.push_back(newperson);
-            }
-            peopleToSettle --;
+        }
+        peopleToSettle --;
 
     }
 }
@@ -253,11 +253,11 @@ void Simulation::Simulate(){
 				std::cout<<"-";
 			}
 		}
-		std::cout.precision(7);
-		std::cout<<std::fixed<<"||	"<< histogram1[hour];
-		std::fill_n(std::ostream_iterator<std::string>(std::cout), 14, " ");
+		std::cout.precision(4);
+		std::cout<<std::scientific<<"||	"<< histogram1[hour];
+		std::fill_n(std::ostream_iterator<std::string>(std::cout), 11, " ");
 		std::cout<<(((histogram1[hour])/maxcapacity)*100.0);
-		std::fill_n(std::ostream_iterator<std::string>(std::cout), 14, " ");
+		std::fill_n(std::ostream_iterator<std::string>(std::cout), 11, " ");
 		std::cout<<histogram2[hour]<<std::endl;
 	}
 	std::fill_n(std::ostream_iterator<std::string>(std::cout), histogramsize+80, "#");
