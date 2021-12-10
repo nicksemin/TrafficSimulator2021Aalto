@@ -125,29 +125,47 @@ std::vector<Vehicle*> Building::GetVehicles() const{
     return people_;
  }
 
-bool Person::set_destination(unsigned int tickTime){
-    if (current_place_ != nullptr && current_place_ != work_ && (tickTime % 192000 == time_leaving_ || !(this->has_money()))){
+void Person::set_destination(unsigned int tickTime){
+    
+    if(current_place_ == nullptr){ // Means a person is on the road, can't change their mind
+        return;
+    }
+    if(tickTime % 192000 == time_leaving_){ // ELSE if they are in any other building, but it's their time to go to work, they will do it no matter what
         destination_ = work_; 
         current_place_->RemovePerson(this);
-        return true;
+        return;
     }
-    else if (current_place_ != nullptr && current_place_ != home_ && tickTime % 192000 == time_coming_ ){
-        destination_ = home_;
-        current_place_->RemovePerson(this);
-        return true;
+    if((tickTime % 192000 == time_coming_) || (current_place_ != work_) ){ // if they are not at work or it's their time to leave work, they may go according to their needs.
+        if(this->is_hungry() && (this->get_food() <= 0 && this->get_money()>5)){ // => if they are hungry, have no food but have enough money, they WILL go shopping
+            // check if they are already there and set only if needed
+            if(current_place_ != fav_commercial_){
+                destination_ = fav_commercial_; 
+                current_place_->RemovePerson(this);
+                return;
+            }else{ // IF they are, they just stay
+                return;
+            }
+        }
+        if( !(this->is_happy()) && this->get_money()>10){ // => else, if they are unhappy, and have enough of money, they WILL go to recreational
+            // check if they are already there and set only if needed
+            if(current_place_ != fav_recreational_){
+                destination_ = fav_recreational_; 
+                current_place_->RemovePerson(this);
+                return;
+            }else{ // IF they are, they just stay
+                return;
+            }
+        }
+        if(current_place_ != home_){  // => and finally, if they have no needs to be filled and are not yet at home, they just go home, or stay home
+            destination_ = home_;
+            current_place_->RemovePerson(this);
+            return;
+        }else{ // IF they are, they just stay
+            return;
+        }
     }
-    else if (current_place_ != nullptr && current_place_ != fav_recreational_ && !(this->is_happy())){
-        destination_ = fav_recreational_; 
-        current_place_->RemovePerson(this);
-        return true;
-    }
-    else if(current_place_ != nullptr && current_place_ != fav_commercial_ && this->is_hungry() && this->get_food() == 0){
-        destination_ = fav_commercial_; 
-        current_place_->RemovePerson(this);
-        return true;
-    }
-    else
-        return false;
+    // if we come here, it means they are at work, and their time to leave has not come, so they will stay at work
+    return;
 }
 
 void Person::performTimeStep(unsigned int tickTime){
@@ -174,6 +192,7 @@ void ResidentialBuilding::performTimeStep(){
      for(auto person : people_) {
          person->increase_happiness(10);
          person->eat_food(1);
+         person->increase_hunger(1);
      }
 }
 
@@ -187,8 +206,8 @@ void IndustrialBuilding::performTimeStep(){
 
 void CommercialBuilding::performTimeStep(){
      for(auto person : people_) {
-         person->add_food(5);
-         person->remove_money(5);
-         person->increase_hunger(1);
+        person->add_food(5);
+        person->remove_money(5);
+        person->increase_hunger(1);
      }
 }

@@ -3,7 +3,7 @@
 
 
 Person::Person(Navigator* n, Building* home, Building* fav_recreational,Building* fav_commercial, Building* work):navigator_(n), home_(home), fav_recreational_(fav_recreational), fav_commercial_(fav_commercial), work_(work) {
-    current_place_ = home;
+    current_place_ = home_;
     id_ = ++nextID_;
 
     std::random_device rd;
@@ -82,7 +82,7 @@ bool Person::has_money() const{
 }
 
 void Person::eat_food(int food){
-    if (is_hungry()) {
+    if (is_hungry()&&food_>0) {
         food_ -= food;
         hunger_ += food;
     }
