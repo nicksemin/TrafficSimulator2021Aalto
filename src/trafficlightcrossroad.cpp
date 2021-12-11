@@ -35,6 +35,7 @@ TrafficLightCrossroad::performTimeStep()
 		 *-----------------------------------------------------------------------------*/
 		if ( ++m_lightCounter > m_trafficLightTime && m_trafficLights.size() != 0 ) {
 			//search for the only green light
+			std::cout << "Switching lights\n";
 			auto it { std::find_if( m_trafficLights.begin(), m_trafficLights.end(), []( const TrafficLight& a ) -> bool{
 					return a.color;
 					} ) };
@@ -51,9 +52,8 @@ TrafficLightCrossroad::performTimeStep()
 				it->color = false;
 				( ++it )->color = true;
 			}
+			m_lightCounter = 0;
 		}
-
-		m_lightCounter = 0;
 }		/* -----  end of function TrafficLightCrossroad::performTimeStep()  ----- */
 
 /*
@@ -115,5 +115,10 @@ TrafficLightCrossroad::addEntryAngle ( const RoadObjectClass* ptrToEntryRoad, do
 	bool
 TrafficLightCrossroad::checkRightToGo ( const RoadObjectClass* ptrToEntry, RoadObjectClass* ptrToExit )
 {
+    /*
+    if (!m_lightsOfRoads.at( ptrToEntry )->color){
+        std::cout << "Traffic light forbids to go\n";
+    }
+    */
 	return m_lightsOfRoads.at( ptrToEntry )->color;
 }		/* -----  end of function TrafficLightCrossroad::checkRightToGo  ----- */

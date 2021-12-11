@@ -47,22 +47,45 @@ int main( int argc, char* argv[] )
 	/*-----------------------------------------------------------------------------
 	 * CityClass tests, Alexey (and Emma)
 	 *-----------------------------------------------------------------------------*/
+    //std::string filename{ "../input_file/samplecity.txt" };
+	std::string fileName{};
+	std::string outputFile{};
+	std::string road{};
+	unsigned int population{};
+	double time{};
+	if ( argc == 6 ) {
+		std::stringstream convert{};
+		fileName = argv[ 1 ];
+		convert << argv[ 2 ] << ' ' << argv[ 3 ];
+		convert >> population >> time;
+		outputFile = argv[ 4 ];
+		road = argv[ 5 ];
+		std::cout << "The input data was passed by parameters:\n" << fileName << ';' <<
+			population << ';' << time << ';' << outputFile << ';' << road <<'\n';
 
-    std::string filename{ "../input_file/samplecity.txt" };
-    try{
-        CityClass testCity { filename };
-        // for (auto const& building : testCity.GetRESBuildings()){
-        //     std::cout<< building.first<<std::endl;
-        // }
-        Simulation testSimulation{&testCity,5000,24,"../output_file/output.csv","1"};
-        testSimulation.Init();
-        testSimulation.Simulate();
-    }
-    catch( UserInputException& e ){
-        std::cout << e.what() << e.getCustomMessage() << std::endl;
-    }
-
-    return 0;
+	}
+	else {
+		std::cout << "Please input the filename that contains the information about a city\n";
+		std::cin >> fileName;
+		std::cout << "Please input the desired population\n";
+		std::cin >> population;
+		std::cout << "Please input the desired simulation time in hours\n";
+		std::cin >> time;
+		std::cout << "Please input the desired output file\n";
+		std::cin >> outputFile;
+		std::cout << "Please input the desired road name for output\n";
+		std::cin >> road;
+	}
+	try{
+		CityClass testCity { fileName };
+		Simulation testSimulation{&testCity, population, time, outputFile, road};
+		testSimulation.Init();
+		testSimulation.Simulate();
+	}
+	catch( UserInputException& e ){
+		std::cout << e.what() << e.getCustomMessage() << std::endl;
+	}
+	return 0;
 }
 
 
