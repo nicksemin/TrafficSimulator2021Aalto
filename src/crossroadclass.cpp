@@ -75,6 +75,8 @@ CrossroadClass::performTimeStep ()
 				 //and if the exit road accepts it
 				 if ( element.second->FindNextRoad( this )->takeVehicle( element.second, this ) ){
 					element.second = nullptr;
+				 } else {
+				 //std::cout << "Cannot go\n";
 				 }
 			}
 		}

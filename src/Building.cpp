@@ -52,6 +52,9 @@ bool Building::RemoveVehicle (Vehicle* vehicle){
 		vehicles_.erase(it);
 		++BuildingExitCrossroad::carsLeftHome;
 		return true;
+	} else {
+	//std::cout << "Cannot go\n";
+	return false;
 	}
     }
     return false;
