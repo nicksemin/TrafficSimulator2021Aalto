@@ -54,8 +54,8 @@ set_property(SOURCE ${SOURCES} PROPERTY SKIP_AUTOUIC ON)
 include_directories(src/include)
 add_executable(interface
         interface/mainwindow.ui
-        interface/mainwindow.cpp
-        interface/mainwindow.h
+        interface/simulationView.cpp
+        interface/simulationView.h
         ${SOURCES}
         )
 

@@ -2,8 +2,8 @@
 // Created by Nick Semin on 04.12.2021.
 //
 
-#ifndef TRAFFIC_SIMULATOR_MAINWINDOW_H
-#define TRAFFIC_SIMULATOR_MAINWINDOW_H
+#ifndef TRAFFIC_SIMULATOR_SIMULATIONVIEW_H
+#define TRAFFIC_SIMULATOR_SIMULATIONVIEW_H
 
 #include <QMainWindow>
 #include <QGraphicsScene>
@@ -41,4 +41,4 @@ private:
 };
 
 
-#endif //TRAFFIC_SIMULATOR_MAINWINDOW_H
+#endif //TRAFFIC_SIMULATOR_SIMULATIONVIEW_H

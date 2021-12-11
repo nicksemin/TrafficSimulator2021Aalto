@@ -39,7 +39,7 @@
 #include "./include/Building.hpp"
 #include "./include/Simulation.hpp"
 #include <QApplication>
-#include <mainwindow.h>
+#include <simulationView.h>
 
 static int tickTime;
 
