@@ -50,6 +50,7 @@ bool Building::RemoveVehicle (Vehicle* vehicle){
     //send the vehicle to the crossroad and erase it only if the crossroad accepts it
 	if ( exitCrossRoad_->takeVehicle( *it, this ) ) {
 		vehicles_.erase(it);
+		++BuildingExitCrossroad::carsLeftHome;
 		return true;
 	}
     }
@@ -126,12 +127,12 @@ std::vector<Vehicle*> Building::GetVehicles() const{
  }
 
 void Person::set_destination(unsigned int tickTime){
-    
+
     if(current_place_ == nullptr){ // Means a person is on the road, can't change their mind
         return;
     }
     if(tickTime % 192000 == time_leaving_){ // ELSE if they are in any other building, but it's their time to go to work, they will do it no matter what
-        destination_ = work_; 
+        destination_ = work_;
         current_place_->RemovePerson(this);
         return;
     }
@@ -139,7 +140,7 @@ void Person::set_destination(unsigned int tickTime){
         if(this->is_hungry() && (this->get_food() <= 0 && this->get_money()>5)){ // => if they are hungry, have no food but have enough money, they WILL go shopping
             // check if they are already there and set only if needed
             if(current_place_ != fav_commercial_){
-                destination_ = fav_commercial_; 
+                destination_ = fav_commercial_;
                 current_place_->RemovePerson(this);
                 return;
             }else{ // IF they are, they just stay
@@ -149,7 +150,7 @@ void Person::set_destination(unsigned int tickTime){
         if( !(this->is_happy()) && this->get_money()>10){ // => else, if they are unhappy, and have enough of money, they WILL go to recreational
             // check if they are already there and set only if needed
             if(current_place_ != fav_recreational_){
-                destination_ = fav_recreational_; 
+                destination_ = fav_recreational_;
                 current_place_->RemovePerson(this);
                 return;
             }else{ // IF they are, they just stay

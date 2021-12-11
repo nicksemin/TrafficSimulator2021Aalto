@@ -122,5 +122,6 @@ TrafficLightCrossroad::checkRightToGo ( const RoadObjectClass* ptrToEntry, RoadO
     }
     */
 	return m_lightsOfRoads.at( ptrToEntry )->color;
+	//return false;
 
 }		/* -----  end of function TrafficLightCrossroad::checkRightToGo  ----- */

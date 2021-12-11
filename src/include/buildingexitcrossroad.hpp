@@ -16,6 +16,7 @@ class BuildingExitCrossroad : public CrossroadClass
 {
     public:
         BuildingExitCrossroad( int x, int y );
+        static unsigned int carsLeftHome;
 
     protected:
 

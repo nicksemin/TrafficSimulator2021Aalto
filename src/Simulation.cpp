@@ -2,7 +2,7 @@
 
 #include <iterator>
 #include <iostream>
-#include <fstream>  
+#include <fstream>
 #include <cmath>
 #include <utility>
 
@@ -83,7 +83,7 @@ void Simulation::Init(){
 
 void Simulation::Simulate(){
 	double ticksInHour = 8000; // 8000 ticks in an hour
-	unsigned int maxticks = ticksInHour*endtime_; 
+	unsigned int maxticks = ticksInHour*endtime_;
     // double tick = 0.45; // seconds NOT NEEDED
 
 	// Open outputfile MAYBE DO SOME MORE EXCEPTIONHANDLING HERE
@@ -154,12 +154,12 @@ void Simulation::Simulate(){
 
 			// Get the amount of cars on each road
 			std::transform(roads.cbegin(), roads.cend(),std::back_inserter(newline),[](std::pair<std::string,RoadLineClass*> pair) {return (double) pair.second->getNumberOfCars(); });
-			
+
 			// Detect possible jam ticks
 			if(newline[analyze_index]>=maxcapacity-1){
 				hourlyjamticks +=1;
 			}
-			
+
 			// Add up to the hourly sum
 			std::transform (outputline.begin(), outputline.end(), newline.begin(), outputline.begin(), std::plus<double>());
 			newline.clear();
@@ -263,5 +263,7 @@ void Simulation::Simulate(){
 	std::fill_n(std::ostream_iterator<std::string>(std::cout), histogramsize+80, "#");
 	std::cout<<std::endl;
 	/* ################### END OF HISTOGRAM PRINTING ##########################################*/
+
+	std::cout << "The number of cars that entered the roads from buildings: " << BuildingExitCrossroad::carsLeftHome << '\n';
 
 }

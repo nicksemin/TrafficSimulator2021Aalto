@@ -1,8 +1,9 @@
 #include "./include/buildingexitcrossroad.hpp"
 
 /*-----------------------------------------------------------------------------
- * For the description see the header file 
+ * For the description see the header file
  *-----------------------------------------------------------------------------*/
+unsigned int BuildingExitCrossroad::carsLeftHome{ 0 };
 
 BuildingExitCrossroad::BuildingExitCrossroad( int x, int y ) :
 	CrossroadClass( x, y )
@@ -10,7 +11,7 @@ BuildingExitCrossroad::BuildingExitCrossroad( int x, int y ) :
     //ctor
 }
 
-/* 
+/*
  * ===  FUNCTION  ======================================================================
  *         Name:  BuildingExitCrossroad::checkRightToGo
  *  Description:  The entry roads have the priority, cars coming out of buildings have
