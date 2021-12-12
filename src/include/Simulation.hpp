@@ -8,13 +8,14 @@
 
 #include <stdlib.h>
 
-class Simulation{
-
+class Simulation {
 public:
 
     Simulation(CityClass* city, unsigned int npeople, double endtime, std::string outputfile, std::string RoadToAnalyze); //outputfile
 
     void Init();
+
+    int progressStatus;
 
     void Simulate();
 

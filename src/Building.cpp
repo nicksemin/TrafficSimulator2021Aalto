@@ -198,6 +198,7 @@ void ResidentialBuilding::performTimeStep(){
      for(auto person : people_) {
          person->increase_happiness(10);
          person->eat_food(1);
+         person->increase_hunger(1);
      }
 }
 
@@ -205,6 +206,7 @@ void IndustrialBuilding::performTimeStep(){
     for(auto person : people_) {
          person->decrease_happiness(15);
          person->add_money(30);
+         person->increase_hunger(1);
      }
 }
 

@@ -38,6 +38,8 @@
 #include "./include/Navigator.hpp"
 #include "./include/Building.hpp"
 #include "./include/Simulation.hpp"
+#include <QApplication>
+#include <simulationview.h>
 
 static int tickTime;
 
