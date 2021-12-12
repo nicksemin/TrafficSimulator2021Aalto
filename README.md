@@ -1,7 +1,9 @@
-# Project Name (replace here!)
+# Traffic simulator - Group 1
 
-This is the template for the projects. Please copy the project description here. 
-You can use Markdown language to render it as formatted **HTML** file.
+TThe aim of this software project was to build a system that can simulate city traffic throughout a day. The software has a modular structure where each and every class is supposed to be able to function separately and their interaction is what produces the simulation output.
+The software is structured so that it is possible for the end user to provide various infrastructural input and then simulate city traffic with varying population sizes and timescales. By default, the initial parameters are set so that it best serves simulations of one day (24 h), and the default starttime is set to 00:00 at midnight.
+The output of the software is a csv file containing the average hourly traffic details of all input roads. In addition, the user can specify a specific road to analyze. For this road the hourly averages are outputted as a relative histogram and possible traffic jams are detected separately.
+
 
 # Group
 - Member 1 Nikita Tarutin
@@ -19,10 +21,20 @@ See readme.md files in each folder.
 Prerequisites:
 Installed Cmake tool: https://cmake.org/install/
 Installed g++ compiler
-Run the following commands from the project's root directory:
-1) `Cmake .`
-2) `Make`
-3) `./simulation`
+
+The simplest way to access the functionalities of the software is the basic command line interface. The software can be built with cmake simply by running the following commands in the project folder (traffic-simulator-1).
+1) mkdir build
+2) cd build
+3) cmake ../
+4) cmake –build ./
+
+
+Then running .\simulation will start the program and make it ask for user input. The recommended way is to straightforwardly type i.e.
+
+./simulation input_file/samplecity.txt 8000 25 output_file/output.csv 58
+
+which will run a 24 h simulation with 8000 residents on the sample city, with a more specific analysis on a heavily trafficked road number 58.
+
 
 #Working with git and the codebase
 1) Create new branch for the feature you are working it 
