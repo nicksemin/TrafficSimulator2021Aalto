@@ -9,8 +9,8 @@ large dependencies, such as QT.
 
 # List of External Libs
 
-1. [Project1](https://someproject.com/download)
-2. [Project2](https://anotherproject.com/download)
+1. Google test. Included with CMake
+2. Qt. (https://www.qt.io/download)
 
 
 > If you are using already compiled library, place it in this folder, and set the linker options appropriately.
