@@ -91,4 +91,20 @@ gtest_discover_tests(vehicle_test)
 
 file(GLOB SOURCES "src/*.cpp")
 
-add_executable(simulation ${SOURCES})
+include_directories(interface)
+#set(CMAKE_PREFIX_PATH "/Users/nicksemin/Qt/5.15.2")
+find_package(QT NAMES Qt6 Qt5 COMPONENTS Widgets REQUIRED)
+find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Widgets REQUIRED)
+set(CMAKE_AUTOMOC ON)
+set(CMAKE_AUTORCC ON)
+set(CMAKE_AUTOUIC ON)
+set_property(SOURCE ${SOURCES} PROPERTY SKIP_AUTOUIC ON)
+include_directories(src/include)
+
+add_executable(simulation
+        interface/simulationView.ui
+        interface/simulationView.cpp
+        interface/simulationView.h
+
+        ${SOURCES})
+target_link_libraries(simulation Qt5::Widgets Qt5::Core)
