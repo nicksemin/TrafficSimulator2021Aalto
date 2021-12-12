@@ -247,7 +247,6 @@ std::vector<std::pair<std::string,Building*>>& CityClass::GetCOMBuildings(){
  */
 CityClass::~CityClass ()
 {
-    std::cout << "Destructor called\n";
 	//delete all the crossroads
 	for( auto& element : m_crossroads ){
 		delete element.second;

@@ -18,6 +18,14 @@ class BuildingExitCrossroad : public CrossroadClass
         BuildingExitCrossroad( int x, int y );
         static unsigned int carsLeftHome;
 
+	/*-----------------------------------------------------------------------------
+	 * Copy constructors to be forbidden 
+	 *-----------------------------------------------------------------------------*/
+	BuildingExitCrossroad( const BuildingExitCrossroad& a ) = delete;
+
+	~BuildingExitCrossroad() override = default; //destructor
+
+	BuildingExitCrossroad& operator = ( const BuildingExitCrossroad& a ) = delete;
     protected:
 
     private:

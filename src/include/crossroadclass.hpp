@@ -28,6 +28,13 @@ class CrossroadClass : public RoadObjectClass
     public:
         CrossroadClass( int x, int y );
 
+	/*-----------------------------------------------------------------------------
+	 * Copy constructors to be forbidden 
+	 *-----------------------------------------------------------------------------*/
+	CrossroadClass( const CrossroadClass& a ) = delete;
+
+	virtual ~CrossroadClass() = default; //destructor
+
 	bool takeVehicle( Vehicle* ptrToCar, const RoadObjectClass* ptrToRoadObject ) override;
 
 	void performTimeStep() override;
@@ -47,6 +54,9 @@ class CrossroadClass : public RoadObjectClass
 	//get coordinates
 	int getX();
 	int getY();
+
+	//forbid copy assignment
+	CrossroadClass& operator = ( const CrossroadClass& a ) = delete;
 
 	bool operator==(const CrossroadClass& a);
 

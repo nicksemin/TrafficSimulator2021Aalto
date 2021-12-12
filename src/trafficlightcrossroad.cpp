@@ -35,7 +35,6 @@ TrafficLightCrossroad::performTimeStep()
 		 *-----------------------------------------------------------------------------*/
 		if ( ++m_lightCounter > m_trafficLightTime && m_trafficLights.size() != 0 ) {
 			//search for the only green light
-			std::cout << "Switching lights\n";
 			auto it { std::find_if( m_trafficLights.begin(), m_trafficLights.end(), []( const TrafficLight& a ) -> bool{
 					return a.color;
 					} ) };

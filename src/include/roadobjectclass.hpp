@@ -21,6 +21,13 @@ class RoadObjectClass
 		/* ====================  LIFECYCLE     ======================================= */
 		RoadObjectClass ( bool hasTriangle = false );                             /* constructor */
 
+		/*-----------------------------------------------------------------------------
+		 * Copy constructors to be forbidden 
+		 *-----------------------------------------------------------------------------*/
+		RoadObjectClass( const RoadObjectClass& a ) = delete;
+
+		virtual ~RoadObjectClass() = default; //destructor
+
 		/* ====================  ACCESSORS     ======================================= */
 		bool hasTriangle() const;
 
@@ -31,6 +38,7 @@ class RoadObjectClass
 		virtual void performTimeStep() = 0;
 
 		/* ====================  OPERATORS     ======================================= */
+		RoadObjectClass& operator = ( const RoadObjectClass& a ) = delete;
 
 	protected:
 		/* ====================  METHODS       ======================================= */
