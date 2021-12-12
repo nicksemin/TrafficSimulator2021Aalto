@@ -10,7 +10,6 @@ The output of the software is a csv file containing the average hourly traffic d
 - Member 2 Emma Rauhala
 - Member 3 Nikolai Semin
 - Member 4 Alexey Serous
-- Member 5 Lauri Sivuoja
 
 # Repository organization
 Your project implementation should follow the skelaton organization in this repository.
