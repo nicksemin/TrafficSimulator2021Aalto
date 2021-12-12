@@ -32,6 +32,26 @@ add_executable(
         tests/NavigatorTest.cpp
 )
 
+add_executable(
+        building_test
+        tests/BuildingTest.cpp
+)
+
+add_executable(
+        vehicle_test
+        tests/VehicleTest.cpp
+)
+
+add_executable(
+        crossroad_test
+        tests/CrossroadTest.cpp
+)
+
+add_executable(
+        roadline_test
+        tests/RoadLineTest.cpp
+)
+
 target_link_libraries(
         person_test
         gtest_main
@@ -42,9 +62,32 @@ target_link_libraries(
         gtest_main
 )
 
+target_link_libraries(
+        building_test
+        gtest_main
+)
+
+
+target_link_libraries(
+        vehicle_test
+        gtest_main
+)
+
+target_link_libraries(
+        crossroad_test
+        gtest_main
+)
+
+target_link_libraries(
+        roadline_test
+        gtest_main
+)
+
 include(GoogleTest)
 gtest_discover_tests(person_test)
 gtest_discover_tests(navigator_test)
+gtest_discover_tests(building_test)
+gtest_discover_tests(vehicle_test)
 
 file(GLOB SOURCES "src/*.cpp")
 
