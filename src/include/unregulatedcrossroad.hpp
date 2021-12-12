@@ -21,6 +21,8 @@ class UnregulatedCrossroad : public CrossroadClass
 
 	~UnregulatedCrossroad() override = default; //destructor
 
+	void performTimeStep() override;
+
 	UnregulatedCrossroad& operator = ( const UnregulatedCrossroad& a ) = delete;
 
     protected:
