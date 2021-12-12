@@ -102,9 +102,9 @@ set_property(SOURCE ${SOURCES} PROPERTY SKIP_AUTOUIC ON)
 include_directories(src/include)
 include_directories(interface)
 add_executable(simulation
-        ./interface/simulationView.ui
-        ./interface/simulationView.cpp
-        ./interface/simulationView.h
+        interface/simulationView.ui
+        interface/simulationView.cpp
+        interface/simulationView.h
 
         ${SOURCES})
 target_link_libraries(simulation Qt5::Widgets Qt5::Core)

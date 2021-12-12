@@ -6,7 +6,7 @@
 
 #include "simulationView.h"
 #include "ui_SimulationView.h"
-#include "./ui_simulationview.h"
+#include "./ui_SimulationView.h"
 #include <QPainter>
 #include <QGraphicsScene>
 
