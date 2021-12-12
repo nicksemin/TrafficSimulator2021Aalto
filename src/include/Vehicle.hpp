@@ -27,6 +27,7 @@ public:
     const int& GetSize() const;
 
      void setRoute( std::vector<RoadLineClass*> newRoute);
+     std::vector<RoadLineClass*> getRoute();
      //FindNextRoad defined in roadlineclass.cpp because of circular dependency
 
      /*-----------------------------------------------------------------------------

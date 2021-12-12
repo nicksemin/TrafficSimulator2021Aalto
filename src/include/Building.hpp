@@ -123,7 +123,7 @@ public:
 
 	RecreationalBuilding& operator = ( const RecreationalBuilding& a ) = delete;
 
-    virtual void performTimeStep();
+    virtual void performTimeStep() override;
 };
 
 class ResidentialBuilding : public Building
@@ -140,7 +140,7 @@ public:
 	ResidentialBuilding& operator = ( const ResidentialBuilding& a ) = delete;
 
     ResidentialBuilding(CrossroadClass* exitCrossRoad, unsigned int vehiclecapacity) : Building(exitCrossRoad, vehiclecapacity, "Residential") {}
-    virtual void performTimeStep();
+    virtual void performTimeStep() override;
 };
 
 class IndustrialBuilding : public Building
@@ -157,7 +157,7 @@ public:
 
 	IndustrialBuilding& operator = ( const IndustrialBuilding& a ) = delete;
 
-    virtual void performTimeStep();
+    virtual void performTimeStep() override;
 };
 
 class CommercialBuilding : public Building
@@ -174,7 +174,7 @@ public:
 
 	CommercialBuilding& operator = ( const CommercialBuilding& a ) = delete;
 
-    virtual void performTimeStep();
+    virtual void performTimeStep() override;
 };
 
 

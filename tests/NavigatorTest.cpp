@@ -16,22 +16,30 @@ UnregulatedCrossroad secondCross{ 20, 0 };
 UnregulatedCrossroad thirdCross{ 40, 40 };
 UnregulatedCrossroad fourthCross{ 60, 40 };
 UnregulatedCrossroad fifthCross{ 60, 60 };
+UnregulatedCrossroad sixthCross{ 80, 80 };
 
 RoadLineClass Mannerheimintie{ &firstCross, &secondCross };
 RoadLineClass Runeberginkatu{ &secondCross, &thirdCross };
 RoadLineClass Helsiginkatu{ &thirdCross, &fourthCross };
 RoadLineClass Sturenkatu{ &fourthCross, &fifthCross };
+RoadLineClass Haamentie{ &thirdCross, &sixthCross };
 
-std::vector<RoadLineClass*> map = { &Mannerheimintie, &Runeberginkatu, &Helsiginkatu, &Sturenkatu };
-std::vector<CrossroadClass*> crossroads = {&firstCross, &secondCross, &thirdCross, &fourthCross, &fifthCross };
+std::vector<RoadLineClass*> map = { &Mannerheimintie, &Runeberginkatu, &Helsiginkatu, &Sturenkatu, &Haamentie };
+std::vector<CrossroadClass*> crossroads = {&firstCross, &secondCross, &thirdCross, &fourthCross, &fifthCross, &sixthCross };
 
 
 TEST(navigator_test, Constructor){
     Navigator n =   Navigator(map, crossroads);
     std::vector<RoadLineClass*> route = n.MakeRoute(&firstCross, &fifthCross);
-    //EXPECT_EQ(route, map); //todo: fix comparison of vector of
-
-    EXPECT_TRUE(true); 
+    std::vector<RoadLineClass*> expected_result = {&Mannerheimintie, &Runeberginkatu, &Helsiginkatu, &Sturenkatu };
+    EXPECT_EQ(route, expected_result); 
 }
 
 
+TEST(navigator_test, makeRoute){
+    Navigator n = Navigator(map, crossroads);
+    std::vector<RoadLineClass*> route = n.MakeRoute(&firstCross, &sixthCross);
+    std::vector<RoadLineClass*> expected_result = {&Mannerheimintie, &Runeberginkatu, &Haamentie };
+
+    EXPECT_EQ(route, expected_result); 
+}

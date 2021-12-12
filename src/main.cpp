@@ -89,7 +89,7 @@ int main( int argc, char* argv[] )
                 while (std::cin.get() != '\n') ;
             }
         }
-
+        
         std::cout << "Please input the desired output file\n";
         std::cin >> outputFile;
         std::cout << "Please input the desired road name for output\n";
@@ -106,4 +106,3 @@ int main( int argc, char* argv[] )
         std::cout << e.what() << e.getCustomMessage() << std::endl;
     }
     return 0;
-}
