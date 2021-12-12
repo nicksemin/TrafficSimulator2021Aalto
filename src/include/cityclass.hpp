@@ -19,12 +19,9 @@
 #include "./include/Car.hpp"
 #include "./include/Navigator.hpp"
 #include "./include/Building.hpp"
-#include <QObject>
 
-class CityClass : public QObject
+class CityClass
 {
-    Q_OBJECT
-
     public:
         CityClass(std::string fileName);
 	~CityClass();
@@ -34,19 +31,9 @@ class CityClass : public QObject
         std::vector<std::pair<std::string,Building*>>& GetRESBuildings();
         std::vector<std::pair<std::string,Building*>>& GetINDBuildings();
         std::vector<std::pair<std::string,Building*>>& GetCOMBuildings();
-        std::vector<std::pair<int, int>> crossroadsCoordinates_;
-        std::vector<std::pair<std::pair<int, int>,std::pair<int, int>>> roadsCoordinates_;
-        void sendCoords();
-
-signals:
-
-    void sendX(std::vector<std::pair<int, int>>);
-    void sendR( std::vector<std::pair<std::pair<int, int>,std::pair<int, int>>>);
 
 
-
-
-protected:
+    protected:
 
     private:
 	std::string m_fileName;

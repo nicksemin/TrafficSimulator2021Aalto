@@ -38,8 +38,6 @@
 #include "./include/Navigator.hpp"
 #include "./include/Building.hpp"
 #include "./include/Simulation.hpp"
-#include <QApplication>
-#include <simulationview.h>
 
 static int tickTime;
 
@@ -99,18 +97,10 @@ int main( int argc, char* argv[] )
 	}
         
 	try{
-        QApplication a(argc, argv);
-        SimulationView w;
-        CityClass testCity { fileName };
+		CityClass testCity { fileName };
 		Simulation testSimulation{&testCity, population, time, outputFile, road};
-        QObject::connect(&testCity, &CityClass::sendX, &w, &SimulationView::getCross);
-        QObject::connect(&testCity, &CityClass::sendR, &w, &SimulationView::getRoads);
 		testSimulation.Init();
 		testSimulation.Simulate();
-        testCity.sendCoords();
-        w.drawCity();
-        w.show();
-        QApplication::exec();
 	}
 	catch( UserInputException& e ){
 		std::cout << e.what() << e.getCustomMessage() << std::endl;

@@ -151,8 +151,6 @@ void Simulation::Simulate(){
 				person->performTimeStep(tickindex);
 			}
 
-	// At each tick, get the amount of cars on all roads into this
-	std::vector<double> newline;
 
 			// Get the amount of cars on each road
 			std::transform(roads.cbegin(), roads.cend(),std::back_inserter(newline),[](std::pair<std::string,RoadLineClass*> pair) {return (double) pair.second->getNumberOfCars(); });

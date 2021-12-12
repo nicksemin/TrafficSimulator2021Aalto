@@ -16,8 +16,6 @@ FetchContent_MakeAvailable(googletest)
 
 # Compiler options necessary for debug (Alexey)
 add_compile_options(-g --pedantic-errors)
-
-#FOR GOOGLE TESTS
 include_directories(tests)
 
 enable_testing()
@@ -29,43 +27,25 @@ add_executable(
         tests/PersonTest.cpp
 )
 
+add_executable(
+        navigator_test
+        tests/NavigatorTest.cpp
+)
+
 target_link_libraries(
         person_test
         gtest_main
 )
 
+target_link_libraries(
+        navigator_test
+        gtest_main
+)
+
 include(GoogleTest)
 gtest_discover_tests(person_test)
-#GOOGLE TESTS END
+gtest_discover_tests(navigator_test)
 
-#FOR GUI
-
-include_directories(src)
-file(GLOB SOURCES "src/*.cpp")
-
-include_directories(interface)
-#set(CMAKE_PREFIX_PATH "/Users/nicksemin/Qt/5.15.2")
-find_package(QT NAMES Qt6 Qt5 COMPONENTS Widgets REQUIRED)
-find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Widgets REQUIRED)
-set(CMAKE_AUTOMOC ON)
-set(CMAKE_AUTORCC ON)
-set(CMAKE_AUTOUIC ON)
-set_property(SOURCE ${SOURCES} PROPERTY SKIP_AUTOUIC ON)
-include_directories(src/include)
-add_executable(interface
-        interface/simulationview.ui
-        interface/simulationview.cpp
-        interface/simulationview.h
-        interface/progressbar.ui
-        interface/progressbar.cpp
-        interface/progressbar.h
-        ${SOURCES}
-        interface/CustomView.cpp interface/CustomView.h interface/startwindow.cpp interface/startwindow.h interface/startwindow.ui)
-
-
-
-target_link_libraries(interface Qt5::Widgets Qt5::Core)
-#GUI ENDS
 file(GLOB SOURCES "src/*.cpp")
 
 add_executable(simulation ${SOURCES})
