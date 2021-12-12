@@ -16,6 +16,10 @@ void Vehicle::setRoute( std::vector<RoadLineClass*> newRoute){
     route_ = newRoute;
 }
 
+std::vector<RoadLineClass*> Vehicle::getRoute(){
+    return route_;
+}
+
 void Vehicle::takePassenger(Person* person){
         passengers_.push_back(person);
 }
