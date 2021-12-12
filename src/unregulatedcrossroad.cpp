@@ -85,3 +85,30 @@ UnregulatedCrossroad::checkRightToGo ( const RoadObjectClass* ptrToEntry, RoadOb
 	}
 	return canGo;
 }		/* -----  end of function UnregulatedCrossroad::checkRightToGo  ----- */
+
+/* 
+ * ===  FUNCTION  ======================================================================
+ *         Name:  UnregulatedCrossroad::performTimeStep
+ *  Description:  An override of the base class function
+ * =====================================================================================
+ */
+	void
+UnregulatedCrossroad::performTimeStep ()
+{
+	CrossroadClass::performTimeStep();
+
+	/*-----------------------------------------------------------------------------
+	 * sometimes, every car has ab obstacle on the right
+	 * then the first one tries to go. So, trying to find a nullptr among
+	 * entry roads
+	 *-----------------------------------------------------------------------------*/
+	if ( std::find_if( m_entryRoads.begin(), m_entryRoads.end(), []( const auto& a ) -> bool{
+				return !a.second;
+				} ) == m_entryRoads.end() )
+	{
+		//try to push the first road car to its desired exit road
+		 if ( m_entryRoads.begin()->second->FindNextRoad( this )->takeVehicle( m_entryRoads.begin()->second, this ) ){
+			m_entryRoads.begin()->second = nullptr;
+		 }
+	}
+}		/* -----  end of function UnregulatedCrossroad::performTimeStep  ----- */
