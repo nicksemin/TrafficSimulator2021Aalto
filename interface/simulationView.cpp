@@ -5,7 +5,7 @@
 // You may need to build the project (run Qt uic code generator) to get "ui_SimulationView.h" resolved
 
 #include "simulationView.h"
-#include "ui_SimulationView.h"
+#include "ui_simulationView.h"
 #include "./ui_simulationView.h"
 #include <QPainter>
 #include <QGraphicsScene>
