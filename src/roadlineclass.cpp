@@ -1,5 +1,6 @@
 #include "./include/roadlineclass.hpp"
 #include <cmath>
+#include <sstream>
 
 /*-----------------------------------------------------------------------------
  * RoadLineClass, for the description see the header file
@@ -38,6 +39,12 @@ RoadLineClass::RoadLineClass ( CrossroadClass* start, CrossroadClass* end, bool 
 	//compute the integer size
 	std::size_t size{ static_cast<std::size_t>( d / cellSize ) };
 	m_size = size;
+	if ( size == 0 ) {
+		std::stringstream convert{};
+		convert << end->getX() << ' ' << end->getY() << ' ' << start->getX() << ' ' << start->getY() <<
+			" The following crossroad coordinates create a road with the size 0";
+		throw UserInputException( convert.str() );
+	}
 	//make the cell vector to have required number of elements
 	m_cells.resize( size );
 

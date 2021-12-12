@@ -1,44 +1,42 @@
-//
-// Created by Nick Semin on 04.12.2021.
-//
-
-#ifndef TRAFFIC_SIMULATOR_SIMULATIONVIEW_H
-#define TRAFFIC_SIMULATOR_SIMULATIONVIEW_H
+#ifndef SIMULATIONVIEW_H
+#define SIMULATIONVIEW_H
 
 #include <QMainWindow>
 #include <QGraphicsScene>
-
+#include <QWheelEvent>
 
 QT_BEGIN_NAMESPACE
-namespace Ui { class MainWindow; }
+namespace Ui { class SimulationView; }
 QT_END_NAMESPACE
 
-class MainWindow : public QMainWindow {
-Q_OBJECT
+class SimulationView : public QMainWindow
+{
+    Q_OBJECT
 
 public:
-    explicit MainWindow(QWidget *parent = nullptr);
-    int testValue;
+    SimulationView(QWidget *parent = nullptr);
     std::vector<std::pair<int, int>> crossRoads_;
     std::vector<std::pair<std::pair<int, int>,std::pair<int, int>>> roads_;
-    ~MainWindow() override;
+    ~SimulationView() override;
 
     void drawCity();
+
 
 public slots:
     void getCross(std::vector<std::pair<int, int>>);
     void getRoads(std::vector<std::pair<std::pair<int, int>,std::pair<int, int>>>);
 
+protected:
+    virtual void wheelEvent(QWheelEvent* event);
+    //bool eventFilter(QObject *obj, QGraphicsSceneWheelEvent *event);
+
 private:
-    Ui::MainWindow *ui;
 
     QGraphicsScene *scene;
     QGraphicsRectItem *rectangle;
     QGraphicsEllipseItem *ellipse;
     QGraphicsLineItem *line;
-/*protected:
-    void paintEvent(QPaintEvent *e) override;*/
+
+    Ui::SimulationView *ui;
 };
-
-
-#endif //TRAFFIC_SIMULATOR_SIMULATIONVIEW_H
+#endif // SIMULATIONVIEW_H

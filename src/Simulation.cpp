@@ -197,8 +197,7 @@ void Simulation::Simulate(){
 			// 			<< tickindex << std::endl;
 			// 	}
 			// }
-            progressStatus = double(tickindex)/double(maxticks);
-            emit sendStatus(progressStatus);
+                std::cout << double(tickindex)/double(maxticks)*100<< "% ready!"<<std::endl;
 		}
 		outfile.close();
     }
@@ -266,5 +265,3 @@ void Simulation::Simulate(){
 	/* ################### END OF HISTOGRAM PRINTING ##########################################*/
 
 }
-
-#include "moc_simulation.cpp"

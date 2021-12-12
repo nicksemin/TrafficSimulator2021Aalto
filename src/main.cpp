@@ -39,7 +39,7 @@
 #include "./include/Building.hpp"
 #include "./include/Simulation.hpp"
 #include <QApplication>
-#include <simulationView.h>
+#include <simulationview.h>
 
 static int tickTime;
 
@@ -57,16 +57,17 @@ int main( int argc, char* argv[] )
         // for (auto const& building : testCity.GetRESBuildings()){
         //     std::cout<< building.first<<std::endl;
         // }
+
         Simulation testSimulation{&testCity,2160,24,"output_file/output.csv","1"};
         QApplication a(argc, argv);
-        MainWindow w;
+        SimulationView view;
         testSimulation.Init();
         testSimulation.Simulate();
-        QObject::connect(&testCity, &CityClass::sendX, &w, &MainWindow::getCross);
-        QObject::connect(&testCity, &CityClass::sendR, &w, &MainWindow::getRoads);
+        QObject::connect(&testCity, &CityClass::sendX, &view, &SimulationView::getCross);
+        QObject::connect(&testCity, &CityClass::sendR, &view, &SimulationView::getRoads);
         testCity.sendCoords();
-        w.drawCity();
-        w.show();
+        view.drawCity();
+        view.show();
         QApplication::exec();
     }
     catch( UserInputException& e ){

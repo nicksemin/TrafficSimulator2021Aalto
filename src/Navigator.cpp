@@ -27,7 +27,7 @@ std::vector<std::pair<CrossroadClass*,RoadLineClass*>> Navigator::successors(Cro
 
 
 std::vector<RoadLineClass*> Navigator::MakeRoute(CrossroadClass* start, CrossroadClass* finish) {    
-    std::cout<<"Calling makeroute for navigator to go from: "<<start<< " to " <<finish <<std::endl;
+    //std::cout<<"Calling makeroute for navigator to go from: "<<start<< " to " <<finish <<std::endl;
 
     /*Init returnvector*/
     std::vector<RoadLineClass*> actions;

@@ -53,11 +53,14 @@ set(CMAKE_AUTOUIC ON)
 set_property(SOURCE ${SOURCES} PROPERTY SKIP_AUTOUIC ON)
 include_directories(src/include)
 add_executable(interface
-        interface/mainwindow.ui
-        interface/simulationView.cpp
-        interface/simulationView.h
+        interface/simulationview.ui
+        interface/simulationview.cpp
+        interface/simulationview.h
+        interface/progressbar.ui
+        interface/progressbar.cpp
+        interface/progressbar.h
         ${SOURCES}
-        )
+        interface/CustomView.cpp interface/CustomView.h)
 
 
 

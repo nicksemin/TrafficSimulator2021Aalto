@@ -8,19 +8,14 @@
 
 #include <stdlib.h>
 
-class Simulation : public QObject{
-
-    Q_OBJECT
- signals:
-   void sendStatus(double);
-
+class Simulation {
 public:
 
     Simulation(CityClass* city, unsigned int npeople, double endtime, std::string outputfile, std::string RoadToAnalyze); //outputfile
 
     void Init();
 
-    double progressStatus;
+    int progressStatus;
 
     void Simulate();
 
