@@ -67,15 +67,35 @@ int main( int argc, char* argv[] )
 	else {
 		std::cout << "Please input the filename that contains the information about a city\n";
 		std::cin >> fileName;
-		std::cout << "Please input the desired population\n";
-		std::cin >> population;
+        std::cout << "Please input the desired population\n";
+        while (1) {
+  	    if (std::cin >> population) {
+        break;
+  		} else {
+        std::cout << "Wrong input, please enter a numberical value: " << std:: endl;
+        std::cin.clear();
+	    while (std::cin.get() != '\n') ;
+        }}
+
 		std::cout << "Please input the desired simulation time in hours\n";
-		std::cin >> time;
+
+
+		while (1) {
+  	    if (std::cin >> time && time > 0 && time <= 24 ) {
+        break;
+  		} else {
+        std::cout << "Wrong time input, please enter a value between 0 and 24: " << std:: endl;
+        std::cin.clear();
+        while (std::cin.get() != '\n') ;
+        }
+		}
+
 		std::cout << "Please input the desired output file\n";
 		std::cin >> outputFile;
 		std::cout << "Please input the desired road name for output\n";
 		std::cin >> road;
 	}
+        
 	try{
 		CityClass testCity { fileName };
 		Simulation testSimulation{&testCity, population, time, outputFile, road};
@@ -87,5 +107,3 @@ int main( int argc, char* argv[] )
 	}
 	return 0;
 }
-
-
