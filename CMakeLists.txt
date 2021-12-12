@@ -60,7 +60,7 @@ add_executable(interface
         interface/progressbar.cpp
         interface/progressbar.h
         ${SOURCES}
-        interface/CustomView.cpp interface/CustomView.h)
+        interface/CustomView.cpp interface/CustomView.h interface/startwindow.cpp interface/startwindow.h interface/startwindow.ui)
 
 
 
