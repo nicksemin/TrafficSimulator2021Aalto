@@ -73,13 +73,10 @@ public:
     virtual void performTimeStep() override = 0;
 
     /*Remove a vehicle*/
-    bool RemoveVehicle (Vehicle* vehicle);
+    bool TakeVehicleAndLeave (Person* person);
 
     // /*Take in a person*/
     void TakePerson(Person* person);
-
-    // /*Remove a person*/
-    bool RemovePerson(Person* person);
 
     /*Get the unique ID of the building*/
     unsigned int GetID() const;
