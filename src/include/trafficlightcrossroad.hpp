@@ -16,6 +16,13 @@ class TrafficLightCrossroad : public CrossroadClass
     public:
         TrafficLightCrossroad( int x, int y, double trafficLightTimeInSeconds = defaultTrafficLightTime );
 
+	/*-----------------------------------------------------------------------------
+	 * Copy constructors to be forbidden 
+	 *-----------------------------------------------------------------------------*/
+	TrafficLightCrossroad( const TrafficLightCrossroad& a ) = delete;
+
+	~TrafficLightCrossroad() override = default; //destructor
+
 	//traffic light crossroad needs to count the time, so it overrides the
 	//superclass performTimeStep()
 	void performTimeStep() override;
@@ -23,6 +30,8 @@ class TrafficLightCrossroad : public CrossroadClass
 
 	//the default traffic light time in seconds
 	static const double defaultTrafficLightTime;
+
+	TrafficLightCrossroad& operator = ( const TrafficLightCrossroad& a ) = delete;
 
     protected:
 

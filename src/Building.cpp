@@ -43,31 +43,14 @@ bool Building::takeVehicle( Vehicle* ptrToCar, const RoadObjectClass* ptrToRoadO
     return false;
 }
 
-/*Remove a vehicle*/
-bool Building::RemoveVehicle (Vehicle* vehicle){
-    auto it = std::find(vehicles_.begin(), vehicles_.end(), vehicle);
-    if (it != vehicles_.end()) {
-    //send the vehicle to the crossroad and erase it only if the crossroad accepts it
-	if ( exitCrossRoad_->takeVehicle( *it, this ) ) {
-		vehicles_.erase(it);
-		return true;
-	}
-    }
-    return false;
-}
-
-// /*Take in a person*/
-void Building::TakePerson(Person* person){
-    people_.push_back(person);
-    person->set_current_place(this);
-    person->reset_destination();
- }
-
-// /*Remove a person*/
-
-bool Building::RemovePerson(Person* person){
-    auto it = std::find(this->people_.begin(), this->people_.end(), person);
-    if (it != people_.end()) {
+/*Make person try to leave from Building. Returns true if the crossroad is ready to take their vehicle anf false otherwise*/
+bool Building::TakeVehicleAndLeave (Person* person){
+    
+    Vehicle* takevehicle = vehicles_[0];
+    
+    //send the vehicle to the crossroad and erase it only if the crossroad accepts it        
+    if ( exitCrossRoad_->takeVehicle( takevehicle, this ) ) {        
+        
         Navigator* n = person->getNavigator();
 
         Building* start = person->get_current_place();
@@ -85,18 +68,27 @@ bool Building::RemovePerson(Person* person){
 
         std::vector<RoadLineClass*> route = n->MakeRoute(startCr, endCr);
 
+        takevehicle->takePassenger(person);
+        takevehicle->setRoute(route);
+        takevehicle->setDestination(person->get_destination());
 
-
-        vehicles_[0]->takePassenger(person);
-        vehicles_[0]->setRoute(route);
-        vehicles_[0]->setDestination(person->get_destination());
+        auto it = std::find(this->people_.begin(), this->people_.end(), person);
         people_.erase(it);
-        this->RemoveVehicle(vehicles_[0]);
+
         person->set_current_place(nullptr);
+        vehicles_.erase(vehicles_.begin());
         return true;
     }
     return false;
 }
+
+// /*Take in a person*/
+void Building::TakePerson(Person* person){
+    people_.push_back(person);
+    person->set_current_place(this);
+    person->reset_destination();
+ }
+
 
 unsigned int Building::GetID() const{
     return id_;
@@ -130,17 +122,27 @@ void Person::set_destination(unsigned int tickTime){
     if(current_place_ == nullptr){ // Means a person is on the road, can't change their mind
         return;
     }
-    if(tickTime % 192000 == time_leaving_){ // ELSE if they are in any other building, but it's their time to go to work, they will do it no matter what
-        destination_ = work_; 
-        current_place_->RemovePerson(this);
-        return;
+    if((tickTime % 192000) == time_leaving_){ // ELSE if they are in any other building, but it's their time to go to work, they will try to do it
+
+        destination_ = work_;
+
+        if(current_place_->TakeVehicleAndLeave(this)){ // if the crossroad will take a vehicle, they will leave
+            //std::cout<<"WORK"<<std::endl;
+            return;
+        }else{ // if not, they will try to leave on the next tick
+            //std::cout<<"WAIT"<<std::endl;
+            time_leaving_+=1;
+            // maybe also time_coming?
+            return;
+        }
     }
-    if((tickTime % 192000 == time_coming_) || (current_place_ != work_) ){ // if they are not at work or it's their time to leave work, they may go according to their needs.
+    if(((tickTime % 192000) >= time_coming_) || (current_place_ != work_) ){ // if they are not at work or it's their time to leave work, they may go according to their needs.
         if(this->is_hungry() && (this->get_food() <= 0 && this->get_money()>5)){ // => if they are hungry, have no food but have enough money, they WILL go shopping
             // check if they are already there and set only if needed
             if(current_place_ != fav_commercial_){
+                //std::cout<<"SHOP"<<std::endl;
                 destination_ = fav_commercial_; 
-                current_place_->RemovePerson(this);
+                current_place_->TakeVehicleAndLeave(this);
                 return;
             }else{ // IF they are, they just stay
                 return;
@@ -149,8 +151,9 @@ void Person::set_destination(unsigned int tickTime){
         if( !(this->is_happy()) && this->get_money()>10){ // => else, if they are unhappy, and have enough of money, they WILL go to recreational
             // check if they are already there and set only if needed
             if(current_place_ != fav_recreational_){
+                //std::cout<<"FREE"<<std::endl;
                 destination_ = fav_recreational_; 
-                current_place_->RemovePerson(this);
+                current_place_->TakeVehicleAndLeave(this);
                 return;
             }else{ // IF they are, they just stay
                 return;
@@ -158,7 +161,8 @@ void Person::set_destination(unsigned int tickTime){
         }
         if(current_place_ != home_){  // => and finally, if they have no needs to be filled and are not yet at home, they just go home, or stay home
             destination_ = home_;
-            current_place_->RemovePerson(this);
+            //std::cout<<"HOME"<<std::endl;
+            current_place_->TakeVehicleAndLeave(this);
             return;
         }else{ // IF they are, they just stay
             return;
@@ -170,6 +174,8 @@ void Person::set_destination(unsigned int tickTime){
 
 void Person::performTimeStep(unsigned int tickTime){
     this->set_destination(tickTime);
+    this->increase_hunger(1);
+    this->decrease_happiness(1);
 }
 
 /*
@@ -184,7 +190,7 @@ void RecreationalBuilding::performTimeStep(){
      for(auto person : people_) {
          person->increase_happiness(20);
          person->remove_money(10);
-         person->increase_hunger(1);
+
      }
 }
 
@@ -208,6 +214,5 @@ void CommercialBuilding::performTimeStep(){
      for(auto person : people_) {
         person->add_food(5);
         person->remove_money(5);
-        person->increase_hunger(1);
      }
 }

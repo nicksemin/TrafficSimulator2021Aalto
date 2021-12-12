@@ -101,7 +101,6 @@ CityClass::CityClass(std::string fileName) : m_fileName{ fileName }
 		trafficLightTime = 0;
 		std::getline( input, fileLine );
 	}
-
 	if ( input.eof() ) {
 		throw UserInputException( "Error, the input file does not contain \"ROADS\" section!" );
 	}
@@ -258,7 +257,6 @@ std::vector<std::pair<std::string,Building*>>& CityClass::GetCOMBuildings(){
  */
 CityClass::~CityClass ()
 {
-    std::cout << "Destructor called\n";
 	//delete all the crossroads
 	for( auto& element : m_crossroads ){
 		delete element.second;

@@ -6,7 +6,7 @@
  *-----------------------------------------------------------------------------*/
 
 const double TrafficLightCrossroad::tickTime{ 0.45 };
-const double TrafficLightCrossroad::angleDifference{ 0.69 };
+const double TrafficLightCrossroad::angleDifference{ 0.15 };
 const double TrafficLightCrossroad::defaultTrafficLightTime{ 30.00 };
 
 TrafficLightCrossroad::TrafficLightCrossroad( int x, int y, double trafficLightTimeInSeconds ) : CrossroadClass( x, y ),
@@ -51,9 +51,8 @@ TrafficLightCrossroad::performTimeStep()
 				it->color = false;
 				( ++it )->color = true;
 			}
+			m_lightCounter = 0;
 		}
-
-		m_lightCounter = 0;
 }		/* -----  end of function TrafficLightCrossroad::performTimeStep()  ----- */
 
 /*
@@ -95,6 +94,7 @@ TrafficLightCrossroad::addEntryAngle ( const RoadObjectClass* ptrToEntryRoad, do
 	if ( it == m_lightsOfRoads.end() ) {
 		//add a new traffic light for our road
 		m_trafficLights.push_back( TrafficLight() );
+		m_trafficLights[ m_trafficLights.size() - 1 ].color = false;
 		m_lightsOfRoads[ ptrToEntryRoad ] = &m_trafficLights[ m_trafficLights.size() - 1 ];
 	}
 	//if there is such a road, we can assign the same traffic light to ours
@@ -115,5 +115,12 @@ TrafficLightCrossroad::addEntryAngle ( const RoadObjectClass* ptrToEntryRoad, do
 	bool
 TrafficLightCrossroad::checkRightToGo ( const RoadObjectClass* ptrToEntry, RoadObjectClass* ptrToExit )
 {
+    /*
+    if (!m_lightsOfRoads.at( ptrToEntry )->color){
+        std::cout << "Traffic light forbids to go\n";
+    }
+    */
 	return m_lightsOfRoads.at( ptrToEntry )->color;
+	//return false;
+
 }		/* -----  end of function TrafficLightCrossroad::checkRightToGo  ----- */

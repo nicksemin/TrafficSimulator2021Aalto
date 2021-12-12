@@ -8,16 +8,16 @@ Person::Person(Navigator* n, Building* home, Building* fav_recreational,Building
 
     std::random_device rd;
     std::mt19937 mt(rd());
-    std::uniform_int_distribution<int> dist_leaving(48001, 72001); //from 6 to 9
-    std::uniform_int_distribution<int> dist_coming(120001, 144001); //from 15 to 18
+    std::uniform_int_distribution<int> dist_leaving(40001, 80001); //from 5 to 10
+    std::uniform_int_distribution<int> dist_coming(112001, 152001); //from 14 to 19
 
     time_leaving_ = dist_leaving(rd) % 192000;//192 000 ticks in one day of the simulation, if tick is 0.45 seconds
     time_coming_ = dist_coming(rd) % 192000;
 
-    money_ = 500;
-    hunger_ =1500;
-    happiness_ = 1000;
-    food_ = 100;
+    money_ = 0;
+    hunger_ =15000;
+    happiness_ = 10000;
+    food_ = 10000;
 
 }
 

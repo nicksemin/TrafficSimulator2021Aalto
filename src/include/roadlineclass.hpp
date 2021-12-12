@@ -26,6 +26,13 @@ class RoadLineClass : public RoadObjectClass
     public:
         RoadLineClass( CrossroadClass* start, CrossroadClass* end, bool hasTriangle = false, std::size_t speedLimit = 40 );
 
+	/*-----------------------------------------------------------------------------
+	 * Copy constructors to be forbidden 
+	 *-----------------------------------------------------------------------------*/
+	RoadLineClass( const RoadLineClass& a ) = delete;
+
+	~RoadLineClass() override = default; //destructor
+
 	bool takeVehicle( Vehicle* ptrToCar, const RoadObjectClass* ptrToRoadObject ) override;
 
 	void performTimeStep() override;
@@ -44,6 +51,7 @@ class RoadLineClass : public RoadObjectClass
 
 	std::size_t getNumberOfCars() const;
 
+	RoadLineClass& operator = ( const RoadLineClass& a ) = delete;
 
     protected:
 

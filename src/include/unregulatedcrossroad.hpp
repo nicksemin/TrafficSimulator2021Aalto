@@ -14,6 +14,15 @@ class UnregulatedCrossroad : public CrossroadClass
     public:
         UnregulatedCrossroad( int x, int y );
 
+	/*-----------------------------------------------------------------------------
+	 * Copy constructors to be forbidden 
+	 *-----------------------------------------------------------------------------*/
+	UnregulatedCrossroad( const UnregulatedCrossroad& a ) = delete;
+
+	~UnregulatedCrossroad() override = default; //destructor
+
+	UnregulatedCrossroad& operator = ( const UnregulatedCrossroad& a ) = delete;
+
     protected:
 
     private:

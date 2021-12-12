@@ -59,8 +59,12 @@ public:
     /*Constructor*/
     Building( CrossroadClass* exitCrossRoad, unsigned int vehiclecapacity, const std::string& type);
 
-    /*Destructor MIGHT NOT BE NEEDED*/
-    //~Building();
+	/*-----------------------------------------------------------------------------
+	 * Copy constructors to be forbidden 
+	 *-----------------------------------------------------------------------------*/
+	Building( const Building& a ) = delete;
+
+	virtual ~Building() = default; //destructor
 
     /*Take in a vehicle*/
     bool takeVehicle( Vehicle* ptrToCar, const RoadObjectClass* ptrToRoadObject ) override;
@@ -69,13 +73,10 @@ public:
     virtual void performTimeStep() override = 0;
 
     /*Remove a vehicle*/
-    bool RemoveVehicle (Vehicle* vehicle);
+    bool TakeVehicleAndLeave (Person* person);
 
     // /*Take in a person*/
     void TakePerson(Person* person);
-
-    // /*Remove a person*/
-    bool RemovePerson(Person* person);
 
     /*Get the unique ID of the building*/
     unsigned int GetID() const;
@@ -94,6 +95,8 @@ public:
     /*Get all people currently in this building*/
     std::vector<Person*> GetPeople() const;
 
+	Building& operator = ( const Building& a ) = delete;
+
 private:
 
     /*The unique id of the buildin*/
@@ -110,12 +113,32 @@ class RecreationalBuilding : public Building
 {
 public:
     RecreationalBuilding(CrossroadClass* exitCrossRoad, unsigned int vehiclecapacity) : Building(exitCrossRoad, vehiclecapacity, "Recreational") {}
+
+	/*-----------------------------------------------------------------------------
+	 * Copy constructors to be forbidden 
+	 *-----------------------------------------------------------------------------*/
+	RecreationalBuilding( const RecreationalBuilding& a ) = delete;
+
+	~RecreationalBuilding() override = default; //destructor
+
+	RecreationalBuilding& operator = ( const RecreationalBuilding& a ) = delete;
+
     virtual void performTimeStep();
 };
 
 class ResidentialBuilding : public Building
 {
 public:
+
+	/*-----------------------------------------------------------------------------
+	 * Copy constructors to be forbidden 
+	 *-----------------------------------------------------------------------------*/
+	ResidentialBuilding( const ResidentialBuilding& a ) = delete;
+
+	~ResidentialBuilding() override = default; //destructor
+
+	ResidentialBuilding& operator = ( const ResidentialBuilding& a ) = delete;
+
     ResidentialBuilding(CrossroadClass* exitCrossRoad, unsigned int vehiclecapacity) : Building(exitCrossRoad, vehiclecapacity, "Residential") {}
     virtual void performTimeStep();
 };
@@ -124,6 +147,16 @@ class IndustrialBuilding : public Building
 {
 public:
     IndustrialBuilding(CrossroadClass* exitCrossRoad, unsigned int vehiclecapacity) : Building(exitCrossRoad, vehiclecapacity, "Industrial") {}
+
+	/*-----------------------------------------------------------------------------
+	 * Copy constructors to be forbidden 
+	 *-----------------------------------------------------------------------------*/
+	IndustrialBuilding( const IndustrialBuilding& a ) = delete;
+
+	~IndustrialBuilding() override = default; //destructor
+
+	IndustrialBuilding& operator = ( const IndustrialBuilding& a ) = delete;
+
     virtual void performTimeStep();
 };
 
@@ -131,6 +164,16 @@ class CommercialBuilding : public Building
 {
 public:
     CommercialBuilding(CrossroadClass* exitCrossRoad, unsigned int vehiclecapacity) : Building(exitCrossRoad, vehiclecapacity, "Commercial") {}
+
+	/*-----------------------------------------------------------------------------
+	 * Copy constructors to be forbidden 
+	 *-----------------------------------------------------------------------------*/
+	CommercialBuilding( const CommercialBuilding& a ) = delete;
+
+	~CommercialBuilding() override = default; //destructor
+
+	CommercialBuilding& operator = ( const CommercialBuilding& a ) = delete;
+
     virtual void performTimeStep();
 };
 

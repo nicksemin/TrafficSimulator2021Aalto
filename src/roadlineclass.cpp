@@ -115,6 +115,7 @@ RoadLineClass::isEnoughSpace ( std::size_t index, std::size_t size )
 	for ( std::size_t i{ index }; i < size; ++i ){
 		if ( m_cells.at( i ) != nullptr ) {
 			valid = false;
+			break;
 		}
 	}
 	return valid;
@@ -133,13 +134,18 @@ RoadLineClass::isEnoughSpace ( std::size_t index, std::size_t size )
 RoadLineClass::takeVehicle ( Vehicle* ptrToCar, const RoadObjectClass* ptrToRoadObject )
 {
 	//if there is enough space, occupy all the required cells with the car
-	if ( isEnoughSpace( 0, ptrToCar->GetSize() ) ) {
+	/*if ( isEnoughSpace( 0, ptrToCar->GetSize() ) ) {
 		for ( int i{ 0 }; i < ptrToCar->GetSize(); ++i ){
 			m_cells.at( i ) = ptrToCar;
 		}
 		return true;
+	} car size assumed 1*/
+	if ( m_cells.at( 0 ) == nullptr ){
+        m_cells.at( 0 ) = ptrToCar;
+        return true;
 	}
 	else {
+        //std::cout << "Not enough size. Size: " << m_cells.size() << " cars: " << getNumberOfCars() << '\n';
 		return false;
 	}
 }		/* -----  end of function RoadLineClass::takeVehicle  ----- */
