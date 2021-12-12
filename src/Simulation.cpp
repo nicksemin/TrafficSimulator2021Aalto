@@ -93,6 +93,8 @@ void Simulation::Simulate(){
     	std::cout << "Failed to open outputfile. Please check the path.\n";
 	}
 
+	std::cout<<"Simulation in progress..."<<std::endl;
+
 	// Get all roads of the city
 	std::vector<std::pair<std::string,RoadLineClass*>> roads = city_->GetRoads();
 
@@ -185,6 +187,20 @@ void Simulation::Simulate(){
 				// then clear outputline and jamticks to start a new hour
 				std::fill(outputline.begin(), outputline.end(), 0.0);
 				hourlyjamticks = 0;
+
+				//Show progress in cout
+				std::cout<<"[";
+				for (int printhour = 0; printhour<endtime_;printhour++){
+					if(printhour<hour){
+						std::cout<<"=";
+					}else if(printhour==hour){
+						std::cout<<">";
+					}else{
+						std::cout<<" ";
+					}
+				}
+				std::cout<<"]    "<< hour+1 << " hours out of " << endtime_ << " done."<<std::endl;;
+
 			}
 
 			//std::cout<<"At tickindex "<<tickindex<<std::endl;
@@ -263,7 +279,7 @@ void Simulation::Simulate(){
 	std::fill_n(std::ostream_iterator<std::string>(std::cout), histogramsize+80, "#");
 	std::cout<<std::endl;
 	/* ################### END OF HISTOGRAM PRINTING ##########################################*/
-
-	std::cout << "The number of cars that entered the roads from buildings: " << BuildingExitCrossroad::carsLeftHome << '\n';
+	std::cout<<"Simulation ready. See the details of all roads in the outputfile."<<std::endl;
+	//std::cout << "The number of cars that entered the roads from buildings: " << BuildingExitCrossroad::carsLeftHome << '\n';
 
 }
