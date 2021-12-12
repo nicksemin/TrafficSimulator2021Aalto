@@ -34,6 +34,7 @@ Then running .\simulation will start the program and make it ask for user input.
 
 which will run a 24 h simulation with 8000 residents on the sample city, with a more specific analysis on a heavily trafficked road number 58.
 
+./tests.sh will lauch tests.
 
 #Working with git and the codebase
 1) Create new branch for the feature you are working it 
