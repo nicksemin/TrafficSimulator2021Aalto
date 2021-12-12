@@ -99,10 +99,18 @@ int main( int argc, char* argv[] )
 	}
         
 	try{
-		CityClass testCity { fileName };
+        QApplication a(argc, argv);
+        SimulationView w;
+        CityClass testCity { fileName };
 		Simulation testSimulation{&testCity, population, time, outputFile, road};
+        QObject::connect(&testCity, &CityClass::sendX, &w, &SimulationView::getCross);
+        QObject::connect(&testCity, &CityClass::sendR, &w, &SimulationView::getRoads);
 		testSimulation.Init();
 		testSimulation.Simulate();
+        testCity.sendCoords();
+        w.drawCity();
+        w.show();
+        QApplication::exec();
 	}
 	catch( UserInputException& e ){
 		std::cout << e.what() << e.getCustomMessage() << std::endl;

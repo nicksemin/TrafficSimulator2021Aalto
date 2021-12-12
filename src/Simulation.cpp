@@ -119,8 +119,6 @@ void Simulation::Simulate(){
     // At each tick of an hour, sum the amount of cards on each road into this, then average and clear hourly.
     std::vector<double> outputline (roads.size(), 0.0);
 
-	// Get all roads of the city
-	std::vector<std::pair<std::string,RoadLineClass*>> roads = city_->GetRoads();
 
     try{
 	    for (unsigned int tickindex = 0; tickindex < maxticks; ++tickindex){
