@@ -1,4 +1,4 @@
-#ifndef BUILDING_HPP
+I#ifndef BUILDING_HPP
 #define BUILDING_HPP
 
 /*-----------------------------------------------------------------------------
